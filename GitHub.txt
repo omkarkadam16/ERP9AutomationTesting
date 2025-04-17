@@ -20,16 +20,5 @@ git commit -m "Initial commit for ERP9AutomationTesting"
 git push -u origin main
 Add Password and Username
 
-✅ Step-by-Step to Install Git Credential Manager on Windows:
-✅ Step 1:https://github.com/Microsoft/Git-Credential-Manager-for-Windows/releases/tag/1.20.0
-✅ Step 2: Configure Git to Use Credential Manager
-git config --global credential.helper manager-core
 
-You can verify it's set correctly:
-git config --global credential.helper
 
-It should return:
-manager-core
-
-✅ Step 3: Push Your Code
-git push -u origin main
