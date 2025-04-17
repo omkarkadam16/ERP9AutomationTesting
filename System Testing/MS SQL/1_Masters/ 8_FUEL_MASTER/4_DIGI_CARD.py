@@ -114,38 +114,38 @@ class DigiCard1(unittest.TestCase):
             {
                 "DigiCardNo": "T-9214",
                 "RefDigiCardNo": "T-9214",
-                "DigiCardType": "FuelCard",
-                "DigiCardCompany": "IOCL"
+                "DigiCardType": "TollCard",
+                "DigiCardCompany": "FASTag"
             },
             {
                 "DigiCardNo": "T-9215",
                 "RefDigiCardNo": "T-9215",
-                "DigiCardType": "FuelCard",
-                "DigiCardCompany": "HPCL"
+                "DigiCardType": "TollCard",
+                "DigiCardCompany": "NHAI Toll Card"
             },
             {
                 "DigiCardNo": "T-9216",
                 "RefDigiCardNo": "T-9216",
-                "DigiCardType": "FuelCard",
-                "DigiCardCompany": "HPCL"
+                "DigiCardType": "TollCard",
+                "DigiCardCompany": "FASTag"
             },
             {
                 "DigiCardNo": "D-9217",
                 "RefDigiCardNo": "D-9217",
-                "DigiCardType": "FuelCard",
-                "DigiCardCompany": "HPCL"
+                "DigiCardType": "RuPay Debit",
+                "DigiCardCompany": "DebitCard"
             },
             {
                 "DigiCardNo": "D-9218",
                 "RefDigiCardNo": "D-9218",
-                "DigiCardType": "FuelCard",
-                "DigiCardCompany": "HPCL"
+                "DigiCardType": "MasterCard Debit",
+                "DigiCardCompany": "DebitCard"
             },
             {
                 "DigiCardNo": "D-9219",
                 "RefDigiCardNo": "D-9219",
-                "DigiCardType": "FuelCard",
-                "DigiCardCompany": "HPCL"
+                "DigiCardType": "RuPay Debit",
+                "DigiCardCompany": "DebitCard"
             }
         ]
 

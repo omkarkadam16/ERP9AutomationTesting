@@ -80,13 +80,15 @@ class DocumentMappingSC(unittest.TestCase):
 
     def test_document_mapping_sc(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        print("Logging in...")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
+        print("Login successful.")
 
-        menus = ["Finance", "Finance Master »", "Account Master »", "Finance Rule"]
+        menus = ["Finance", "Finance Master »", "Account Master »".upper(), "Finance Rule"]
         for link_test in menus:
             self.click_element(By.LINK_TEXT, link_test)
             if self.switch_frames("ddl_SearchField"):
@@ -100,16 +102,14 @@ class DocumentMappingSC(unittest.TestCase):
                 if self.switch_frames("Sign"):
                     self.select_dropdown(By.ID, "Sign", "Cr")
                     self.select_dropdown(By.ID, "ProcessId", "Vehicle LCC")
-                    self.autocomplete_select(By.ID, "LedgerId-select", "Sundry Creditors (Market)")
+                    self.autocomplete_select(By.ID, "AccountGroupId-select", "Sundry Creditors")
                     #time.sleep(2)
-                    self.click_element(By.ID, "ProcessId")
                     self.click_element(By.ID, "btnSave-FinanceRuleConfigSession")
                     time.sleep(2)
                     self.select_dropdown(By.ID, "Sign", "Dr")
                     self.select_dropdown(By.ID, "ProcessId", "Vehicle LCC")
-                    self.autocomplete_select(By.ID, "LedgerId-select", "Sundry Creditors (Market)")
+                    self.autocomplete_select(By.ID, "AccountGroupId-select", "Sundry Creditors")
                     #time.sleep(2)
-                    self.click_element(By.ID, "ProcessId")
                     self.click_element(By.ID, "btnSave-FinanceRuleConfigSession")
                     print("Finance Rule saved")
 

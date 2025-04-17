@@ -120,6 +120,7 @@ class DigiCard(unittest.TestCase):
             if self.switch_frames("MasterName"):
                 self.send_keys(By.ID, "MasterName", i["MasterName"])
                 self.select_dropdown(By.ID, "AdditionalInfo1", i["CardType"])
+                self.send_keys(By.ID,"MasterDescription","Test Description")
 
             if self.switch_frames("mysubmit"):
                 self.click_element(By.ID, "mysubmit")
