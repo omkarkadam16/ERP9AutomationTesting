@@ -92,11 +92,13 @@ class ProfileRights(unittest.TestCase):
 
     def test_profile_rights(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        print("Logging in...")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
+        print("Login successful.")
 
         menus = ["Administration", "User Config »", "User Rights"]
         for link_test in menus:
@@ -167,9 +169,9 @@ class ProfileRights(unittest.TestCase):
         for i in data:
             # General Details
             if self.switch_frames("UserId"):
-                self.select_dropdown(By.ID, "UserId", "admin")
+                self.select_dropdown(By.ID, "UserId", "RIDDHI")
                 self.select_dropdown(By.ID, "GroupId", i["Group"])
-                time.sleep(5)
+                time.sleep(3)
                 self.click_element(By.ID, "LinkchkIsSelectAll")
                 self.click_element(By.ID, "btnLinkRightsSave")
                 time.sleep(1)
