@@ -111,11 +111,11 @@ class Placement(unittest.TestCase):
 
     def test_Placement_Master(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -146,7 +146,7 @@ class Placement(unittest.TestCase):
                 # Vehicle Placement Details
                 self.autocomplete_select(By.ID, "VehicleId-select", "MH04TT9008")
                 self.select_dropdown(By.ID, "FreightUnitId", "Fixed")
-                self.send_keys(By.ID, "AdvanceAmount", "30000")
+                self.send_keys(By.ID, "AdvanceAmount", "3000")
 
 
 

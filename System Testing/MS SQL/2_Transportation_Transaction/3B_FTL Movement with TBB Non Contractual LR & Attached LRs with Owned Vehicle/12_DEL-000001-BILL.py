@@ -92,11 +92,11 @@ class Bill(unittest.TestCase):
     def test_Bill_Master(self):
         """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -125,13 +125,20 @@ class Bill(unittest.TestCase):
             time.sleep(1)
             self.click_element(By.ID, "GSTPayableById")
             time.sleep(2)
+
             # Document Search
-            self.select_dropdown(By.ID, "ddlSearchOn", "Document Print No")
-            self.send_keys(By.ID, "DocumentSearchSessionName670DocumentNo", "DEL-000501-BKG,DEL-000502-BKG,DEL-000503-BKG")
-            self.click_element(By.ID, "btn_Search")
+            self.click_element(By.ID, "btn_Pick_TransportItem")
             time.sleep(2)
+            if self.switch_frames("btn_GetBillItem"):
+                self.click_element(By.ID, "btn_GetBillItem")
+                time.sleep(1)
+                self.click_element(By.ID, "IsSelectTransportInvoiceItemSearchSessionName6701")
+                self.click_element(By.ID, "IsSelectTransportInvoiceItemSearchSessionName6702")
+                self.click_element(By.ID, "IsSelectTransportInvoiceItemSearchSessionName6703")
+                self.click_element(By.ID, "btn_PickSelectedBillItem")
 
             # Submit Bill
+            self.switch_frames("mysubmit")
             self.click_element(By.ID, "mysubmit")
             time.sleep(1)
 
