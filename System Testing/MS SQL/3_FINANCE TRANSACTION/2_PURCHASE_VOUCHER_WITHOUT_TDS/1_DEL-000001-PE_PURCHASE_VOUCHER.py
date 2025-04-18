@@ -11,7 +11,7 @@ import selenium.common.exceptions as ex
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-class Payment(unittest.TestCase):
+class PurchaseVoucher(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver=webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -95,7 +95,7 @@ class Payment(unittest.TestCase):
         except Exception as e:
             print(f"Error in autocomplete_select: {str(e)}")
 
-    def test_Payment_Master(self):
+    def test_purchase_voucher(self):
         """Main test case"""
         driver = self.driver
         driver.get("http://192.168.0.72/Rlogic9RLS/")
@@ -108,8 +108,8 @@ class Payment(unittest.TestCase):
 
         for i in ("Finance",
                   "Finance Transaction »",
-                  "Ledger Openings »",
-                  "Ledger Opening Balance",):
+                  "Purchase Voucher »",
+                  "Purchase Voucher",):
             self.click_element(By.LINK_TEXT, i)
             print(f"Navigated to {i}.")
 
@@ -117,31 +117,41 @@ class Payment(unittest.TestCase):
             self.click_element(By.ID, "btn_NewRecord")
 
             if self.switch_frames("OrganizationId"):
-                self.select_dropdown(By.ID, "OrganizationId", "AHMEDABAD")
+                self.select_dropdown(By.ID, "OrganizationId", "DELHI")
                 # Calendar
                 self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
                 self.click_element(By.XPATH, "//a[text()='1']")
 
-            # Voucher Ledger Details
-            #self.autocomplete_select(By.ID, "LedgerVoucherLegderSubledgerSession-select", "Sundry Creditors (Market)")
+            #Header Ledger Info
+            self.autocomplete_select(By.ID, "SubLedgerVoucherSubledgerMainSession-select", "BHORUKA")
+            self.click_element(By.ID, "btnHeaderShowLedgerBalance")
+            time.sleep(2)
+            self.send_keys(By.ID, "HeaderBillNo", "DEL-BILL-8674538472")
             time.sleep(1)
-            self.autocomplete_select(By.ID, "SubLedgerVoucherLegderSubledgerSession-select", "P M Enterprise")
+            self.send_keys(By.ID, "HeaderGrossAmount", "3000")
+            time.sleep(2)
+            self.click_element(By.ID, "btnHeaderShowLedgerBalance")
+
+            # Voucher Ledger Details
+            self.switch_frames("SubLedgerVoucherSubledgerMainSession-select")
+            self.autocomplete_select(By.ID, "LedgerVoucherLegderSubledgerSession-select", "Rent")
+            time.sleep(1)
             self.click_element(By.ID,"btnShowLedgerBalance")
             time.sleep(2)
-            self.send_keys(By.ID, "Credit", "1000")
-            self.send_keys(By.ID, "Narration", "OPENING")
+            self.send_keys(By.ID, "Debit", "3000")
+            self.send_keys(By.ID, "Narration", "BILL BOOKED")
+            self.autocomplete_select(By.ID, "LedgerVoucherLegderSubledgerSession-select", "Rent")
+            self.click_element(By.ID, "btnShowLedgerBalance")
+            time.sleep(2)
+            self.click_element(By.ID, "btnSave-VoucherLedgerCollectionSession842")
+            time.sleep(2)
 
-            # Adjustment Details
-            if self.switch_frames("BillRefNoTextBox"):
-                self.send_keys(By.ID, "BillRefNoTextBox", "AHM-BILL-845875")
-                self.send_keys(By.ID, "BillDate", "01-06-2024")
-                self.send_keys(By.ID, "BillAmount", "1000")
-                self.click_element(By.ID, "btnSave-VoucherLedgerCollectionSession894VoucherLedgerBillRefSession")
-                time.sleep(2)
-            self.click_element(By.ID, "btnSave-VoucherLedgerCollectionSession894")
-            time.sleep(5)
+            #Update Narration
+            self.send_keys(By.XPATH, "(//textarea[@id='Narration'])[2]", "BILL BOOKED")
+            self.click_element(By.ID, "UpdateNarration")
+
 
             # Submit Payment
             self.click_element(By.ID, "mysubmit")

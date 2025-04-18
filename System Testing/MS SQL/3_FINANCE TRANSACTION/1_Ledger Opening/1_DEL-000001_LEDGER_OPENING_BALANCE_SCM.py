@@ -73,21 +73,27 @@ class Payment(unittest.TestCase):
         except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
             return False
 
-    def autocomplete_select(self,by,value,text):
-        input_text=self.wait.until(EC.visibility_of_element_located((by,value)))
-        input_text.clear()
-        input_text.send_keys(text)
-        time.sleep(1)
-        suggest=self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME,"ui-menu-item")))
-        for i in suggest:
-            if text.upper() in i .text.upper():
-                i.click()
-                time.sleep(1)
-                print("Selected autocomplete option:", text)
-                return
-        input_text.send_keys(Keys.DOWN)
-        input_text.send_keys(Keys.ENTER)
-        print("Selected autocomplete option using keyboard:", text)
+    def autocomplete_select(self, by, value, text):
+        try:
+            input_text = self.wait.until(EC.visibility_of_element_located((by, value)))
+            input_text.clear()
+            input_text.send_keys(text)
+            time.sleep(3)
+
+            suggest = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "ui-menu-item")))
+            for i in suggest:
+                if text.upper() in i.text.upper():
+                    i.click()
+                    time.sleep(1)
+                    print("Selected autocomplete option:", text)
+                    return
+
+            input_text.send_keys(Keys.DOWN)
+            input_text.send_keys(Keys.ENTER)
+            print("Selected autocomplete option using keyboard:", text)
+
+        except Exception as e:
+            print(f"Error in autocomplete_select: {str(e)}")
 
     def test_Payment_Master(self):
         """Main test case"""
@@ -113,35 +119,34 @@ class Payment(unittest.TestCase):
             if self.switch_frames("OrganizationId"):
                 self.select_dropdown(By.ID, "OrganizationId", "DELHI")
                 # Calendar
-                self.click_element(By.ID, "DocumentDate")
+                self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
                 self.click_element(By.XPATH, "//a[text()='1']")
 
             # Voucher Ledger Details
-            self.autocomplete_select(By.ID,"LedgerVoucherLegderSubledgerSession-select","Sundry Creditors (Market)")
+            #self.autocomplete_select(By.ID, "LedgerVoucherLegderSubledgerSession-select", "Sundry Creditors (Market)")
             time.sleep(1)
-            self.autocomplete_select(By.ID, "SubLedgerVoucherLegderSubledgerSession-select", "VIJAY ENTERPRISES")
+            self.autocomplete_select(By.ID, "SubLedgerVoucherLegderSubledgerSession-select", "Vijay")
+            self.click_element(By.ID,"btnShowLedgerBalance")
             time.sleep(2)
-            self.send_keys(By.ID, "Credit","2000")
+            self.send_keys(By.ID, "Credit", "2000")
             self.send_keys(By.ID, "Narration", "OPENING")
 
-            #Adjustment Details
+            # Adjustment Details
             if self.switch_frames("BillRefNoTextBox"):
-                self.send_keys(By.ID, "BillRefNoTextBox","DEL-BILL-561234")
+                self.send_keys(By.ID, "BillRefNoTextBox", "DEL-BILL-561235")
                 self.send_keys(By.ID, "BillDate", "01-06-2024")
-                self.send_keys(By.ID, "BillAmount","2000")
+                self.send_keys(By.ID, "BillAmount", "2000")
                 self.click_element(By.ID, "btnSave-VoucherLedgerCollectionSession894VoucherLedgerBillRefSession")
                 time.sleep(2)
             self.click_element(By.ID, "btnSave-VoucherLedgerCollectionSession894")
-            time.sleep(1)
+            time.sleep(5)
 
-
-            #Submit Payment
+            # Submit Payment
             self.click_element(By.ID, "mysubmit")
             print("Advanced Payment submitted successfully.")
             time.sleep(2)
-
 
     @classmethod
     def tearDownClass(cls):

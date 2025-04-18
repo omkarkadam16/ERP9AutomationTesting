@@ -108,8 +108,8 @@ class Payment(unittest.TestCase):
 
         for i in ("Finance",
                   "Finance Transaction »",
-                  "Ledger Openings »",
-                  "Ledger Opening Balance",):
+                  "Payment Voucher »",
+                  "Bank Payment",):
             self.click_element(By.LINK_TEXT, i)
             print(f"Navigated to {i}.")
 
@@ -117,31 +117,43 @@ class Payment(unittest.TestCase):
             self.click_element(By.ID, "btn_NewRecord")
 
             if self.switch_frames("OrganizationId"):
-                self.select_dropdown(By.ID, "OrganizationId", "AHMEDABAD")
+                self.select_dropdown(By.ID, "OrganizationId", "DELHI")
                 # Calendar
                 self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
                 self.click_element(By.XPATH, "//a[text()='1']")
 
+                # Header Ledger Info
+                self.autocomplete_select(By.ID, "LedgerVoucherSubledgerMainSession-select", "HDFC Bank")
+                self.click_element(By.ID, "btnHeaderShowLedgerBalance")
+                time.sleep(2)
+
             # Voucher Ledger Details
-            #self.autocomplete_select(By.ID, "LedgerVoucherLegderSubledgerSession-select", "Sundry Creditors (Market)")
-            time.sleep(1)
-            self.autocomplete_select(By.ID, "SubLedgerVoucherLegderSubledgerSession-select", "P M Enterprise")
-            self.click_element(By.ID,"btnShowLedgerBalance")
+            self.autocomplete_select(By.ID, "SubLedgerPartyVoucherLegderSubledgerSessionName-select", "BHORUKA")
+            self.click_element(By.ID,"btnHeaderShowLedgerBalance")
             time.sleep(2)
-            self.send_keys(By.ID, "Credit", "1000")
-            self.send_keys(By.ID, "Narration", "OPENING")
+            self.send_keys(By.ID, "Debit", "3000")
+            self.send_keys(By.ID, "Narration", "PAYMENT TO PARTY")
 
             # Adjustment Details
-            if self.switch_frames("BillRefNoTextBox"):
-                self.send_keys(By.ID, "BillRefNoTextBox", "AHM-BILL-845875")
-                self.send_keys(By.ID, "BillDate", "01-06-2024")
-                self.send_keys(By.ID, "BillAmount", "1000")
-                self.click_element(By.ID, "btnSave-VoucherLedgerCollectionSession894VoucherLedgerBillRefSession")
+            self.click_element(By.XPATH, "(//a[normalize-space()='Adjustment Details'])[1]")
+            if self.switch_frames("BillRefTypeId"):
+                self.select_dropdown(By.ID,"BillRefTypeId","Against Ref")
+                self.autocomplete_select(By.ID, "BillRefNoDropDown-select", "DEL-BILL-8674538472")
+                time.sleep(1)
+                self.click_element(By.ID, "BillAmount")
+                self.click_element(By.ID, "btnSave-VoucherLedgerCollectionSession310VoucherLedgerBillRefSession")
                 time.sleep(2)
-            self.click_element(By.ID, "btnSave-VoucherLedgerCollectionSession894")
-            time.sleep(5)
+            self.click_element(By.ID, "btnSave-VoucherLedgerCollectionSession310")
+            time.sleep(3)
+
+            # Update Narration
+            self.send_keys(By.XPATH, "(//textarea[@id='Narration'])[2]", "PAYMENT TO PARTY")
+            self.click_element(By.ID, "UpdateNarration")
+
+            #Payment Details
+            self.send_keys(By.ID, "ChequeNo", "1234567890")
 
             # Submit Payment
             self.click_element(By.ID, "mysubmit")
