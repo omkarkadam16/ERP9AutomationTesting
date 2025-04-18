@@ -41,12 +41,15 @@ class LHC(unittest.TestCase):
             try:
                 print(f"[INFO] Attempt {attempt + 1}: Entering text...")
                 element = self.wait.until(EC.visibility_of_element_located((by, value)))
+                element.is_enabled()
                 element.clear()
                 element.send_keys(text)
                 print("Sent keys", text)
                 return True
-            except (ex.NoSuchElementException, ex.UnexpectedAlertPresentException, ex.TimeoutException,ex.StaleElementReferenceException) as e:
+            except (ex.NoSuchElementException, ex.UnexpectedAlertPresentException, ex.TimeoutException,
+                    ex.StaleElementReferenceException) as e:
                 print(f"[WARNING]Error : {type(e)} occurred. Retrying...")
+        return False
 
     def switch_frames(self, element_id):
         """Switch frames dynamically"""

@@ -61,6 +61,7 @@ class Booking(unittest.TestCase):
             except (ex.NoSuchElementException, ex.UnexpectedAlertPresentException, ex.TimeoutException,
                     ex.StaleElementReferenceException) as e:
                 print(f"[WARNING]Error : {type(e)} occurred. Retrying...")
+        return False
 
     def select_dropdown(self, by, value, text):
         try:

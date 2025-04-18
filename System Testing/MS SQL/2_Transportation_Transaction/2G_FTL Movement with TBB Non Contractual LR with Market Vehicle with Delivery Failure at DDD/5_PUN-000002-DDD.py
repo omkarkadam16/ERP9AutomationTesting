@@ -92,11 +92,11 @@ class Delivery(unittest.TestCase):
     def test_Delivery_Master(self):
         """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -121,8 +121,8 @@ class Delivery(unittest.TestCase):
 
         # Booking Detail
         self.autocomplete_select(By.ID, "VehicleId-select", "MH18AC0358")
-        self.select_dropdown(By.ID, "VehicleTripId", "BWD-000101-LHC")
-        self.select_dropdown(By.ID, "BookingId", "BWD-000101-BKG")
+        self.select_dropdown(By.ID, "VehicleTripId", "BWD-000501-LHC")
+        self.select_dropdown(By.ID, "BookingId", "BWD-000501-BKG")
         self.select_dropdown(By.ID, "BookingId", "Select LR")
         time.sleep(2)
 

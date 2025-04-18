@@ -45,8 +45,10 @@ class LHC(unittest.TestCase):
                 element.send_keys(text)
                 print("Sent keys", text)
                 return True
-            except (ex.NoSuchElementException, ex.UnexpectedAlertPresentException, ex.TimeoutException,ex.StaleElementReferenceException) as e:
+            except (ex.NoSuchElementException, ex.UnexpectedAlertPresentException, ex.TimeoutException,
+                    ex.StaleElementReferenceException) as e:
                 print(f"[WARNING]Error : {type(e)} occurred. Retrying...")
+        return False
 
     def switch_frames(self, element_id):
         """Switch frames dynamically"""
@@ -108,11 +110,11 @@ class LHC(unittest.TestCase):
     def test_LHC(self):
         """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 

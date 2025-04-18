@@ -47,6 +47,7 @@ class LHC(unittest.TestCase):
                 return True
             except (ex.NoSuchElementException, ex.UnexpectedAlertPresentException, ex.TimeoutException,ex.StaleElementReferenceException) as e:
                 print(f"[WARNING]Error : {type(e)} occurred. Retrying...")
+        return False
 
     def switch_frames(self, element_id):
         """Switch frames dynamically"""
