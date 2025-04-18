@@ -46,18 +46,16 @@ class Indent(unittest.TestCase):
         return False
 
     def send_keys(self, by, value, text):
-        """Send keys after checking visibility"""
-        for attempt in range(3):
-            try:
-                print(f"[INFO] Attempt {attempt + 1}: Entering text...")
-                element = self.wait.until(EC.visibility_of_element_located((by, value)))
-                element.clear()
-                element.send_keys(text)
-                print("Sent keys", text)
-                return True
-            except (ex.NoSuchElementException, ex.UnexpectedAlertPresentException, ex.TimeoutException,
-                    ex.StaleElementReferenceException) as e:
-                print(f"[WARNING]Error : {type(e)} occurred. Retrying...")
+        try:
+            element = self.wait.until(EC.visibility_of_element_located((by, value)))
+            element.is_enabled()
+            element.clear()
+            element.send_keys(text)
+            print("Sent keys", text)
+            return True
+        except ex.NoSuchElementException:
+            print(f"Element not found: {value}")
+            return False
 
     def select_dropdown(self, by, value, text):
         try:

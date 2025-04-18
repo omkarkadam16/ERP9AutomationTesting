@@ -57,7 +57,7 @@ class Placement(unittest.TestCase):
                 return True
             except(ex.ElementClickInterceptedException, ex.StaleElementReferenceException, ex.TimeoutException):
                 print(f"Element not found: {value}")
-
+        return False
 
     def select_dropdown(self, by, value, text):
         for retry in range(2):
@@ -71,8 +71,9 @@ class Placement(unittest.TestCase):
                 element.select_by_visible_text(text)
                 print(f"[SUCCESS] Selected dropdown option: {text}")
                 return True
-            except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
-                return False
+            except (ex.StaleElementReferenceException, ex.NoSuchElementException, ex.TimeoutException):
+                print(f"[RETRY] exception occurred for {value}, retrying...")
+        return False
 
     def autocomplete_select(self,by,value,text):
         input_text=self.wait.until(EC.visibility_of_element_located((by,value)))
