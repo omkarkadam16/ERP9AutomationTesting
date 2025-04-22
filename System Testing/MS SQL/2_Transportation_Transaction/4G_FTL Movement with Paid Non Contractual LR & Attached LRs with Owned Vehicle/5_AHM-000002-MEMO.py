@@ -89,11 +89,11 @@ class Memo(unittest.TestCase):
 
     def test_memo(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -114,7 +114,7 @@ class Memo(unittest.TestCase):
                 self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-                self.click_element(By.XPATH, "//a[text()='1']")
+                self.click_element(By.XPATH, "//a[text()='2']")
 
             # Memo Info
             self.select_dropdown(By.ID, "MemoTypeId", "Direct Door Delivery")
@@ -133,7 +133,7 @@ class Memo(unittest.TestCase):
                 self.click_element(By.ID, "btn_PickSelectedBookingStock")
             time.sleep(2)
             if self.switch_frames("CheckAll"):
-                self.wait.until(EC.visibility_of_element_located((By.ID, "MemoBookingMovementGrid")))
+                self.wait.until(EC.element_to_be_clickable((By.ID, "MemoBookingMovementGrid")))
                 self.click_element(By.ID, "CheckAll")
 
             #Save Memo

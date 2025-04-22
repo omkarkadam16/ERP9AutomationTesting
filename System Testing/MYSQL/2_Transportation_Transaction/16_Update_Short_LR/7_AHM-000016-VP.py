@@ -11,7 +11,7 @@ import selenium.common.exceptions as ex
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-class Booking2(unittest.TestCase):
+class Payment(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver=webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -47,18 +47,19 @@ class Booking2(unittest.TestCase):
                 driver.switch_to.default_content()
         return False
 
-    def send_keys(self,by,value,text):
+    def send_keys(self, by, value, text):
         try:
             element = self.wait.until(EC.visibility_of_element_located((by, value)))
+            element.is_enabled()
             element.clear()
             element.send_keys(text)
-            print(f'Sent keys {text} to {by} with value {value}')
+            print("Sent keys", text)
             return True
         except ex.NoSuchElementException:
-            print(f'Element not found: {value}')
+            print(f"Element not found: {value}")
             return False
 
-    def select_dropdown(self,by,value,text):
+    def select_dropdown(self, by, value, text):
         try:
             e = self.wait.until(EC.element_to_be_clickable((by, value)))
             e.is_enabled()
@@ -88,58 +89,59 @@ class Booking2(unittest.TestCase):
         input_text.send_keys(Keys.ENTER)
         print("Selected autocomplete option using keyboard:", text)
 
-    def test_booking2(self):
+    def test_Payment_Master(self):
+        """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9RLS/")
+        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "Riddhi")
-        self.send_keys(By.ID, "Password", "omsgn9")
+        self.send_keys(By.ID, "Login", "admin")
+        self.send_keys(By.ID, "Password", "Omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
-        for i in ("Transportation",
-            "Transportation Transaction »",
-            "Booking »",
-            "Attach LR",):
+        for i in ("Finance",
+                  "Finance Transaction »",
+                  "Operational Payment »",
+                  "Operational Payment (Vendor)",):
             self.click_element(By.LINK_TEXT, i)
             print(f"Navigated to {i}.")
 
-    #Attach LR
-        if self.switch_frames("LocationId-select"):
-            self.autocomplete_select(By.ID,"LocationId-select","AHMEDABAD")
-            self.autocomplete_select(By.ID,"BookingId-select","AHM-000501-BKG")
-            self.select_dropdown(By.ID,"SeriesId","AHMEDABAD - 501 To 1000")
-            self.click_element(By.ID,"btn_GetDocumentNoSearch")
-            time.sleep(1)
+        if self.switch_frames("btn_NewRecord"):
+            self.click_element(By.ID, "btn_NewRecord")
 
-            # Calendar
-        if self.switch_frames("DocumentDate"):
-            self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
-            self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
-            self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-            self.click_element(By.XPATH, "//a[text()='2']")
+            if self.switch_frames("OrganizationId"):
+                self.select_dropdown(By.ID, "OrganizationId", "AHMEDABAD")
+                # Calendar
+                #self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
+                #self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
+                #self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
+                #self.click_element(By.XPATH, "//a[text()='1']")
 
-        #Item Details
-            self.autocomplete_select(By.ID, "ItemId-select", "Cotton")
-            self.select_dropdown(By.ID, "PackingTypeId", "BOX")
-            self.send_keys(By.ID, "Packets", "1000")
-            self.send_keys(By.ID, "UnitWeight", "5")
-            self.send_keys(By.ID, "BasicFreight", "15000")
-            self.click_element(By.ID, "btnSave-BookingItemSession633")
-            time.sleep(1)
-            self.click_element(By.ID, "RFRSGSTDetails")
+            # general Details
+            self.autocomplete_select(By.ID,"VendorId-select","Vijay Enterprise")
+            self.click_element(By.ID, "btnSave-VendorPaymentOnSession667")
+            self.click_element(By.ID, "btn_Pick_OperationaBillReference")
+            time.sleep(2)
 
-        #Invoice Details
-            self.send_keys(By.ID, "InvoiceNo", "1")
-            self.send_keys(By.ID, "InvoiceDate", "02-06-2024")
-            self.send_keys(By.ID, "InvoiceValue", "1")
-            self.click_element(By.ID,"btnSave-BookingInvoiceSession633")
-            time.sleep(1)
+            #Trip Reference Info
+            if self.switch_frames("btn_GetOperationalBillReference"):
+                self.click_element(By.ID, "btn_GetOperationalBillReference")
+                self.click_element(By.ID, "IsSelectOperationalBillSearchSessionName6671")
+                self.click_element(By.ID, "btn_OperationalBillReference")
 
-        #Submit Details
+            #Payment Detail
+            if self.switch_frames("PaymentModeId"):
+                self.select_dropdown(By.ID, "PaymentModeId","Cheque")
+                self.select_dropdown(By.ID, "BankId", "HDFC Bank")
+                self.send_keys(By.ID, "ChequeNo","467413")
+                self.send_keys(By.ID, "PaymentPaidTo","Vijay Enterprise")
+
+            #Submit Payment
             self.click_element(By.ID, "mysubmit")
-            time.sleep(1)
+            print("Advanced Payment submitted successfully.")
+            time.sleep(2)
+
 
     @classmethod
     def tearDownClass(cls):
@@ -148,4 +150,3 @@ class Booking2(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

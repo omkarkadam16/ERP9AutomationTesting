@@ -90,11 +90,11 @@ class Indent(unittest.TestCase):
 
     def test_Indent_Master(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -115,15 +115,15 @@ class Indent(unittest.TestCase):
                 self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-                self.click_element(By.XPATH, "//a[text()='1']")
+                self.click_element(By.XPATH, "//a[text()='2']")
 
             #Indent Details
             self.select_dropdown(By.ID, "VehicleIndentTypeId","Non-Contractual")
             self.select_dropdown(By.ID, "CommChannelId", "Phone")
-            self.send_keys(By.ID, "VehicleRequiredOn","01-06-2024")
+            self.send_keys(By.ID, "VehicleRequiredOn","02-06-2024")
             self.select_dropdown(By.ID, "VehicleTypeId", "20 MT")
             self.send_keys(By.ID, "VehicleCount", "1")
-            self.send_keys(By.ID, "ExpiryDate", "01-06-2025")
+            self.send_keys(By.ID, "ExpiryDate", "05-06-2025")
             self.autocomplete_select(By.ID, "FromServiceNetworkId-select", "AHMEDABAD")
             self.autocomplete_select(By.ID, "ToServiceNetworkId-select", "DELHI")
             self.autocomplete_select(By.ID, "TransportItemId-select", "Cotton")

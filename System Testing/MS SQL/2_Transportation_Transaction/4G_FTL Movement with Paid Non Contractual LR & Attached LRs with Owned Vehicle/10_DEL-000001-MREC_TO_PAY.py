@@ -92,11 +92,11 @@ class MoneyReceipt(unittest.TestCase):
     def test_MoneyReceipt_Master(self):
         """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -115,7 +115,7 @@ class MoneyReceipt(unittest.TestCase):
                 self.select_dropdown(By.ID, "OrganizationId", "DELHI")
                 time.sleep(1)
                 # Calendar
-                self.send_keys(By.ID, "DocumentDate", "01-06-2024")
+                self.send_keys(By.ID, "DocumentDate", "02-06-2024")
 
             # Customer Info
             if self.switch_frames("CustomerId-select"):
@@ -138,7 +138,7 @@ class MoneyReceipt(unittest.TestCase):
                 self.select_dropdown(By.ID, "PaymentModeId", "Cheque")
                 self.select_dropdown(By.ID, "BankId", "HDFC Bank")
                 self.send_keys(By.ID, "ChequeNo", "12345")
-                self.send_keys(By.ID, "PaymentReceivedFrom", "	Prasad Industries Ltd.")
+                self.send_keys(By.ID, "PaymentReceivedFrom", "Prasad Industries Ltd.")
                 time.sleep(1)
 
             # Submit Money Receipt

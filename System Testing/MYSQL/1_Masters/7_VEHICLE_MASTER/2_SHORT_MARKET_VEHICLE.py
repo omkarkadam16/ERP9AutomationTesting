@@ -103,7 +103,7 @@ class ShortVehicleMaster(unittest.TestCase):
                 "VehicleNo": "MH04AA456",
                 "VehicleTypeId": "10 MT",
                 "PurchasedBooked": "Broker",
-                "VehicleBrokerId": "Vijay Enterprises",
+                "VehicleBrokerId": "AKIL KHAN",
                 "Manufacture": "EICHER MOTORS",
                 "VehicleModel": "EML"
             },
@@ -118,8 +118,8 @@ class ShortVehicleMaster(unittest.TestCase):
             {
                 "VehicleNo": "MHO4FR2001",
                 "VehicleTypeId": "10 MT",
-                "PurchasedBooked": "Broker",
-                "VehicleBrokerId": "Vijay Enterprises",
+                "PurchasedBooked": "Owner",
+                "VehicleOwnerId": "INTER INDIA",
                 "Manufacture": "TATA MOTORS",
                 "VehicleModel": "TATA - 3520"
             },

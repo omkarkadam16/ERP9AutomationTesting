@@ -91,11 +91,11 @@ class Booking(unittest.TestCase):
 
     def test_booking(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -117,7 +117,7 @@ class Booking(unittest.TestCase):
             self.click_element(By.CLASS_NAME,"ui-datepicker-trigger")
             self.select_dropdown(By.CLASS_NAME,"ui-datepicker-month","Jun")
             self.select_dropdown(By.CLASS_NAME,"ui-datepicker-year","2024")
-            self.click_element(By.XPATH,"//a[text()='1']")
+            self.click_element(By.XPATH,"//a[text()='2']")
 
     #Booking Details
         self.select_dropdown(By.ID, "FreightOnId", "Fixed")
@@ -151,7 +151,7 @@ class Booking(unittest.TestCase):
 
     # Invoice Details
         self.send_keys(By.ID, "InvoiceNo", "1")
-        self.send_keys(By.ID, "InvoiceDate", "01-06-2024")
+        self.send_keys(By.ID, "InvoiceDate", "02-06-2024")
         self.send_keys(By.ID, "InvoiceValue", "1")
         self.click_element(By.ID, "btnSave-BookingInvoiceSession633")
         time.sleep(1)

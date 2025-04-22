@@ -93,17 +93,17 @@ class DocumentMappingSC(unittest.TestCase):
             self.click_element(By.LINK_TEXT, link_test)
             if self.switch_frames("ddl_SearchField"):
                 self.select_dropdown(By.ID, "ddl_SearchField","Rule Name")
-                self.send_keys(By.ID, "txt_search", "ANALYSIS APPLICABLE")
+                self.send_keys(By.ID, "txt_search", "Analysis Applicable")
                 self.click_element(By.ID, "btn_Seach")
                 self.click_element(By.ID, "dd 2")
                 self.click_element(By.PARTIAL_LINK_TEXT, "Edit")
                 time.sleep(2)
             # Finance Rule
-                if self.switch_frames("LocationTypeId"):
-                    self.select_dropdown(By.ID, "LocationTypeId", "BRANCH OFFICE")
-                    self.autocomplete_select(By.ID, "OrganizationLocationId-select", "HYDERABAD")
-                    self.autocomplete_select(By.ID, "CostCenterId-select", "HYDERABAD")
-                    self.autocomplete_select(By.ID, "CostCenterGroupId-select", "SITE")
+                if self.switch_frames("AccountGroupId-select"):
+                    self.autocomplete_select(By.ID, "AccountGroupId-select", "Direct Expense")
+                    self.autocomplete_select(By.ID, "LedgerId-select", "Electricity Expenses")
+                    self.autocomplete_select(By.ID, "AnalysisGroupId-select", "HYDERABAD")
+                    self.autocomplete_select(By.ID, "AnalysisHeadId-select", "HYD-ANALYSIS HEAD")
                     self.click_element(By.ID, "btnSave-FinanceRuleConfigSession")
                     time.sleep(2)
                     print("Finance Rule saved")

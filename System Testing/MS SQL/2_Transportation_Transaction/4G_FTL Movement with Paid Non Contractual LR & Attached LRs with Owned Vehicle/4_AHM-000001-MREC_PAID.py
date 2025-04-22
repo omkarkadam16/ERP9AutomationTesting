@@ -92,11 +92,11 @@ class MoneyReceipt(unittest.TestCase):
     def test_MoneyReceipt_Master(self):
         """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -115,18 +115,18 @@ class MoneyReceipt(unittest.TestCase):
                 self.select_dropdown(By.ID, "OrganizationId", "AHMEDABAD")
                 time.sleep(1)
                 # Calendar
-                self.send_keys(By.ID, "DocumentDate", "01-06-2024")
+                self.send_keys(By.ID, "DocumentDate", "02-06-2024")
 
             # Operation Bill Reference Info
             self.click_element(By.ID, "btn_Pick_OperationaBillReference")
             if self.switch_frames("btn_GetOperationalBillReference"):
                 self.click_element(By.ID, "btn_GetOperationalBillReference")
-                time.sleep(2)
+                self.wait.until(EC.element_to_be_clickable((By.ID, "divOperationalBillSearchCollection")))
                 self.click_element(By.ID, "IsSelectOperationalBillSearchCollectionSessionName6731")
                 self.click_element(By.ID, "IsSelectOperationalBillSearchCollectionSessionName6732")
                 self.click_element(By.ID, "IsSelectOperationalBillSearchCollectionSessionName6733")
                 self.click_element(By.ID, "btn_OperationalBillReference")
-                time.sleep(1)
+                time.sleep(2)
 
             # Submit Money Receipt
             if self.switch_frames("mysubmit"):

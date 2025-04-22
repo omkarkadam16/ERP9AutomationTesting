@@ -110,11 +110,11 @@ class LHC(unittest.TestCase):
     def test_LHC(self):
         """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -135,16 +135,17 @@ class LHC(unittest.TestCase):
             self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
             self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
             self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-            self.click_element(By.XPATH, "//a[text()='1']")
+            self.click_element(By.XPATH, "//a[text()='2']")
             time.sleep(1)
 
         # Route Details
         self.auto_select(By.ID, "ServiceNetworkId-select", "DELHI")
-        self.send_keys(By.ID, "ScheduleTime", "01-06-2024")
+        self.send_keys(By.ID, "ScheduleTime", "02-06-2024")
         self.click_element(By.ID, "btnSave-VehicleTripRouteVehicleTripSessionName661")
         self.select_dropdown(By.ID, "VehiclePlacementId", "AHM-000001-Vehicle Placement")
         time.sleep(1)
         self.select_dropdown(By.ID, "VehiclePlacementId", "Select One")
+        time.sleep(1)
         self.select_dropdown(By.ID, "VehiclePlacementId", "AHM-000001-Vehicle Placement")
         time.sleep(2)
 
@@ -164,14 +165,14 @@ class LHC(unittest.TestCase):
         # Hire Charges Details
         self.select_dropdown(By.ID, "FreightUnitId", "Fixed")
         time.sleep(2)
-        self.send_keys(By.ID, "FreightRate", "20000")
+        self.send_keys(By.ID, "FreightRate", "5000")
         self.click_element(By.ID, "FreightUnitId")
         time.sleep(2)
         self.handle_alert()
 
         if self.switch_frames("OrganizationalLocationId-select"):
             self.auto_select(By.ID, "OrganizationalLocationId-select", "DELHI")
-            self.send_keys(By.ID, "AdvanceAmount", "8000")
+            self.send_keys(By.ID, "AdvanceAmount", "3000")
             self.click_element(By.ID, "btnSave-VehicleTripAdvanceVehicleTripSessionName661")
             time.sleep(1)
 

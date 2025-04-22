@@ -10,12 +10,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-class ShortVehicleMaster(unittest.TestCase):
+class DocumentMappingSC(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         cls.driver.maximize_window()
-        cls.wait = WebDriverWait(cls.driver, 10)
+        cls.wait = WebDriverWait(cls.driver, 15)
 
     def click_element(self, by, value, retry=2):
         for i in range(retry):
@@ -78,7 +78,7 @@ class ShortVehicleMaster(unittest.TestCase):
         input_text.send_keys(Keys.DOWN)
         input_text.send_keys(Keys.ENTER)
 
-    def test_short_market_vehicle(self):
+    def test_document_mapping_sc(self):
         driver = self.driver
         driver.get("http://192.168.0.72/Rlogic9RLS/")
 
@@ -88,83 +88,26 @@ class ShortVehicleMaster(unittest.TestCase):
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
-        menus = ["Fleet", "Fleet Master »", "Vehicle »", "Short Market Vehicle"]
+        menus = ["Finance", "Finance Master »", "Account Master »".upper(), "Finance Rule"]
         for link_test in menus:
             self.click_element(By.LINK_TEXT, link_test)
-
-        Series = [
-            {
-                "VehicleNo": "MHO4ER9009",
-                "VehicleTypeId": "10 MT",
-                "PurchasedBooked": "Broker",
-                "VehicleBrokerId": "Vijay Enterprises",
-                "Manufacture": "EICHER MOTORS",
-                "VehicleModel": "EML"
-            },
-            {
-                "VehicleNo": "MH04AA456",
-                "VehicleTypeId": "10 MT",
-                "PurchasedBooked": "Broker",
-                "VehicleBrokerId": "AKIL KHAN",
-                "Manufacture": "EICHER MOTORS",
-                "VehicleModel": "EML"
-            },
-            {
-                "VehicleNo": "MH05SA101",
-                "VehicleTypeId": "10 MT",
-                "PurchasedBooked": "Owner",
-                "VehicleOwnerId": "BAJAJ CORPORATION PVT LTD",
-                "Manufacture": "TATA MOTORS",
-                "VehicleModel": "TATA - 3520"
-            },
-            {
-                "VehicleNo": "MHO4FR2001",
-                "VehicleTypeId": "10 MT",
-                "PurchasedBooked": "Owner",
-                "VehicleOwnerId": "INTER INDIA",
-                "Manufacture": "TATA MOTORS",
-                "VehicleModel": "TATA - 3520"
-            },
-            {
-                "VehicleNo": "MH18AC0358",
-                "VehicleTypeId": "10 MT",
-                "PurchasedBooked": "Owner",
-                "VehicleOwnerId": "BHAGAT SINGH",
-                "Manufacture": "TATA MOTORS",
-                "VehicleModel": "TATA - 3520"
-            },
-            {
-                "VehicleNo": "MH16AY9744",
-                "VehicleTypeId": "10 MT",
-                "PurchasedBooked": "Owner",
-                "VehicleOwnerId": "DARSHAN SINGH",
-                "Manufacture": "EICHER MOTORS",
-                "VehicleModel": "EML"
-            }
-        ]
-
-        # Iterate over each location and create it
-        for i in Series:
-            if self.switch_frames("btn_NewRecord"):
-                self.click_element(By.ID, "btn_NewRecord")
-
-            # Fill out the form
-            if self.switch_frames("VehicleNo"):
-                self.send_keys(By.ID, "VehicleNo", i["VehicleNo"])
-                self.select_dropdown(By.ID, "VehicleTypeId", i["VehicleTypeId"])
-                self.select_dropdown(By.ID, "PurchasedBookedOnId", i["PurchasedBooked"])
-            if i["PurchasedBooked"] != "Broker":
-                self.autocomplete_select(By.ID, "VehicleOwnerId-select", i["VehicleOwnerId"])
-            else:
-                self.autocomplete_select(By.ID, "VehicleBrokerId-select", i["VehicleBrokerId"])
-            self.select_dropdown(By.ID, "ManufactureId", i["Manufacture"])
-            self.select_dropdown(By.ID, "VehicleModelId", i["VehicleModel"])
-
-            if self.switch_frames("mysubmit"):
-                self.click_element(By.ID, "mysubmit")
-                print("Successfully submitted", i["VehicleNo"])
+            if self.switch_frames("ddl_SearchField"):
+                self.select_dropdown(By.ID, "ddl_SearchField","Rule Name")
+                self.send_keys(By.ID, "txt_search", "ANALYSIS LOACTION MAPPING")
+                self.click_element(By.ID, "btn_Seach")
+                self.click_element(By.ID, "dd 6")
+                self.click_element(By.PARTIAL_LINK_TEXT, "Edit")
                 time.sleep(2)
-        print("All data created successfully.")
+            # Finance Rule
+                if self.switch_frames("LocationTypeId"):
+                    self.select_dropdown(By.ID, "LocationTypeId", "BRANCH OFFICE")
+                    self.autocomplete_select(By.ID, "OrganizationLocationId-select", "HYDERABAD")
+                    self.autocomplete_select(By.ID, "AnalysisGroupId-select", "HYDERABAD")
+                    self.autocomplete_select(By.ID, "AnalysisHeadId-select", "HYD-ANALYSIS HEAD")
+                    self.click_element(By.ID, "btnSave-FinanceRuleConfigSession")
+                    time.sleep(2)
+                    print("Finance Rule saved")
+
 
     @classmethod
     def tearDownClass(cls):

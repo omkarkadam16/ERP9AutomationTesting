@@ -113,7 +113,7 @@ class Booking2(unittest.TestCase):
             self.click_element(By.ID,"btn_GetDocumentNoSearch")
             time.sleep(1)
 
-            # Calendor
+            # Calendar
         if self.switch_frames("DocumentDate"):
             self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
             self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
