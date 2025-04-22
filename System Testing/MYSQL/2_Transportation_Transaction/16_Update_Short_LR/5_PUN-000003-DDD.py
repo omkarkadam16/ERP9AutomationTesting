@@ -117,18 +117,14 @@ class Delivery(unittest.TestCase):
             self.click_element(By.ID, "DocumentDate")
             self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
             self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-            self.click_element(By.XPATH, "//a[text()='1']")
+            self.click_element(By.XPATH, "//a[text()='10']")
 
         # Booking Detail
-        self.autocomplete_select(By.ID, "VehicleId-select", "MHO4ER9009")
+        self.autocomplete_select(By.ID, "VehicleId-select", "MH05SA101")
         time.sleep(2)
-        self.select_dropdown(By.ID, "VehicleTripId", "AHM-000108-LHC")
+        self.select_dropdown(By.ID, "VehicleTripId", "AHM-000111-LHC")
 
         # Arrival Detail
-        self.click_element(By.XPATH, "(//img[@title='...'])[6]")
-        self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
-        self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
-        self.click_element(By.XPATH, "(//a[normalize-space()='1'])[1]")
         self.select_dropdown(By.ID, "ReasonDelayId", "TRAFFIC JAAM")
 
         # Submit form

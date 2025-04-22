@@ -92,11 +92,11 @@ class Dispatch(unittest.TestCase):
     def test_Dispatch_Master(self):
         """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -114,10 +114,10 @@ class Dispatch(unittest.TestCase):
             if self.switch_frames("OrganizationId"):
                 self.select_dropdown(By.ID, "OrganizationId", "AHMEDABAD")
                 # Calendar
-                self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
-                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
-                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-                self.click_element(By.XPATH, "//a[text()='1']")
+                self.click_element(By.ID, "DocumentDate")
+                self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
+                self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
+                self.click_element(By.XPATH, "//a[text()='4']")
 
             # Dispatch Info
             self.autocomplete_select(By.ID, "ToLocationId-select", "DELHI")
@@ -125,7 +125,7 @@ class Dispatch(unittest.TestCase):
             self.autocomplete_select(By.ID, "VehicleId-select", "MH04AA456")
             self.send_keys(By.ID, "TotalPkg", "1")
             self.send_keys(By.ID, "TotalWeight", "18")
-            self.send_keys(By.ID, "EDD", "01-06-2024")
+            self.send_keys(By.ID, "EDD", "04-06-2024")
             self.click_element(By.ID,"btn_Pick_Booking")
             if self.switch_frames("btn_GetBookingStock"):
                 self.click_element(By.ID, "btn_GetBookingStock")

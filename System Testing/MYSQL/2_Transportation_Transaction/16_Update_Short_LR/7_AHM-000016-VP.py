@@ -113,13 +113,13 @@ class Payment(unittest.TestCase):
             if self.switch_frames("OrganizationId"):
                 self.select_dropdown(By.ID, "OrganizationId", "AHMEDABAD")
                 # Calendar
-                #self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
-                #self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
-                #self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-                #self.click_element(By.XPATH, "//a[text()='1']")
+                self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
+                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
+                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
+                self.click_element(By.XPATH, "//a[text()='10']")
 
             # general Details
-            self.autocomplete_select(By.ID,"VendorId-select","Vijay Enterprise")
+            self.autocomplete_select(By.ID,"VendorId-select","BAJAJ CORPORATION")
             self.click_element(By.ID, "btnSave-VendorPaymentOnSession667")
             self.click_element(By.ID, "btn_Pick_OperationaBillReference")
             time.sleep(2)
@@ -132,10 +132,10 @@ class Payment(unittest.TestCase):
 
             #Payment Detail
             if self.switch_frames("PaymentModeId"):
-                self.select_dropdown(By.ID, "PaymentModeId","Cheque")
+                self.select_dropdown(By.ID, "PaymentModeId", "Cheque")
                 self.select_dropdown(By.ID, "BankId", "HDFC Bank")
-                self.send_keys(By.ID, "ChequeNo","467413")
-                self.send_keys(By.ID, "PaymentPaidTo","Vijay Enterprise")
+                self.send_keys(By.ID, "ChequeNo", "12345")
+                self.send_keys(By.ID, "PaymentPaidTo","BAJAJ CORPORATION")
 
             #Submit Payment
             self.click_element(By.ID, "mysubmit")

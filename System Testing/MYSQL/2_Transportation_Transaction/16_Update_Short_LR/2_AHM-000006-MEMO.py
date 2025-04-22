@@ -114,11 +114,11 @@ class Memo(unittest.TestCase):
                 self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-                self.click_element(By.XPATH, "//a[text()='1']")
+                self.click_element(By.XPATH, "//a[text()='10']")
 
             # Memo Info
             self.select_dropdown(By.ID, "MemoTypeId", "Direct Door Delivery")
-            self.autocomplete_select(By.ID,"VehicleId-select","MHO4ER9009")
+            self.autocomplete_select(By.ID,"VehicleId-select","MH05SA101")
             self.autocomplete_select(By.ID,"ToServiceNetworkId-select","PUNE")
             time.sleep(1)
 

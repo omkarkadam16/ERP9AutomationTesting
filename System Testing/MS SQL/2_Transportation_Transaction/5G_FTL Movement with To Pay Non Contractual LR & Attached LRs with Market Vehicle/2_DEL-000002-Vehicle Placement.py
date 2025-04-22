@@ -93,11 +93,11 @@ class Placement(unittest.TestCase):
 
     def test_Placement_Master(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -116,10 +116,10 @@ class Placement(unittest.TestCase):
                 self.select_dropdown(By.ID, "OrganizationId", "DELHI")
 
                 # Calendar
-                self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
-                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
-                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-                self.click_element(By.XPATH, "//a[text()='1']")
+                self.click_element(By.ID, "DocumentDate")
+                self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
+                self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
+                self.click_element(By.XPATH, "//a[text()='2']")
                 time.sleep(1)
 
                 # Indent Details
@@ -131,7 +131,7 @@ class Placement(unittest.TestCase):
                 # Vehicle Placement Details
                 self.autocomplete_select(By.ID, "VehicleId-select", "MH18AC0358")
                 self.select_dropdown(By.ID, "FreightUnitId", "Fixed")
-                self.send_keys(By.ID, "AdvanceAmount", "14000")
+                self.send_keys(By.ID, "AdvanceAmount", "1400")
                 self.autocomplete_select(By.ID,"BalanceLocationId-select","BHIWANDI")
 
 

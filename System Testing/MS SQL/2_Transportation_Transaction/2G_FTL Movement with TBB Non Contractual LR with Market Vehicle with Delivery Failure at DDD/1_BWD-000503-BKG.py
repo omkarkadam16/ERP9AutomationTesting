@@ -113,9 +113,9 @@ class Booking3(unittest.TestCase):
             self.select_dropdown(By.ID,"OrganizationId","BHIWANDI")
             self.select_dropdown(By.ID,"SeriesId","BHIWANDI - 501 To 1000")
             #Calendor
-            self.click_element(By.CLASS_NAME,"ui-datepicker-trigger")
-            self.select_dropdown(By.CLASS_NAME,"ui-datepicker-month","Jun")
-            self.select_dropdown(By.CLASS_NAME,"ui-datepicker-year","2024")
+            self.click_element(By.ID, "DocumentDate")
+            self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
+            self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
             self.click_element(By.XPATH,"//a[text()='1']")
 
     #Booking Details

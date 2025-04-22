@@ -135,14 +135,14 @@ class LHC(unittest.TestCase):
             self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
             self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
             self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-            self.click_element(By.XPATH, "//a[text()='1']")
+            self.click_element(By.XPATH, "//a[text()='10']")
             time.sleep(1)
 
         # Route Details
         self.auto_select(By.ID, "ServiceNetworkId-select", "PUNE")
-        self.send_keys(By.ID, "ScheduleTime", "01-06-2024")
+        self.send_keys(By.ID, "ScheduleTime", "10-06-2024")
         self.click_element(By.ID, "btnSave-VehicleTripRouteVehicleTripSessionName661")
-        self.auto_select(By.ID, "VehicleId-select", "MHO4ER9009")
+        self.auto_select(By.ID, "VehicleId-select", "MH05SA101")
         self.click_element(By.ID,"StartLocationId-select")
         time.sleep(2)
 

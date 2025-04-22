@@ -117,11 +117,11 @@ class TripSettlement(unittest.TestCase):
                 self.click_element(By.ID, "DocumentDate")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-                self.click_element(By.XPATH, "//a[text()='1']")
+                self.click_element(By.XPATH, "//a[text()='10']")
 
             # General
-            self.autocomplete_select(By.ID, "VehicleId-select", "MHO4ER9009")
-            self.select_dropdown(By.ID, "VehicleTripId", "AHM-000108-LHC")
+            self.autocomplete_select(By.ID, "VehicleId-select", "MH05SA101")
+            self.select_dropdown(By.ID, "VehicleTripId", "AHM-000111-LHC")
             time.sleep(2)
 
             # Balance / Payment Slip Details

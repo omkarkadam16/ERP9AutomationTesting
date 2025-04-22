@@ -11,7 +11,7 @@ import selenium.common.exceptions as ex
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-class Listing(unittest.TestCase):
+class Payment(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver=webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -73,23 +73,29 @@ class Listing(unittest.TestCase):
         except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
             return False
 
-    def autocomplete_select(self,by,value,text):
-        input_text=self.wait.until(EC.visibility_of_element_located((by,value)))
-        input_text.clear()
-        input_text.send_keys(text)
-        time.sleep(1)
-        suggest=self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME,"ui-menu-item")))
-        for i in suggest:
-            if text.upper() in i .text.upper():
-                i.click()
-                time.sleep(1)
-                print("Selected autocomplete option:", text)
-                return
-        input_text.send_keys(Keys.DOWN)
-        input_text.send_keys(Keys.ENTER)
-        print("Selected autocomplete option using keyboard:", text)
+    def autocomplete_select(self, by, value, text):
+        try:
+            input_text = self.wait.until(EC.visibility_of_element_located((by, value)))
+            input_text.clear()
+            input_text.send_keys(text)
+            time.sleep(3)
 
-    def test_listing_Master(self):
+            suggest = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "ui-menu-item")))
+            for i in suggest:
+                if text.upper() in i.text.upper():
+                    i.click()
+                    time.sleep(1)
+                    print("Selected autocomplete option:", text)
+                    return
+
+            input_text.send_keys(Keys.DOWN)
+            input_text.send_keys(Keys.ENTER)
+            print("Selected autocomplete option using keyboard:", text)
+
+        except Exception as e:
+            print(f"Error in autocomplete_select: {str(e)}")
+
+    def test_Payment_Master(self):
         """Main test case"""
         driver = self.driver
         driver.get("http://192.168.0.72/Rlogic9RLS/")
@@ -100,35 +106,55 @@ class Listing(unittest.TestCase):
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
-        for i in ("Transportation",
-                  "Transportation Transaction »",
-                  "Inter Office Memo »",
-                  "IOM Listing",):
+        for i in ("Finance",
+                  "Finance Transaction »",
+                  "Payment Voucher »",
+                  "Bank Payment",):
             self.click_element(By.LINK_TEXT, i)
             print(f"Navigated to {i}.")
 
-        #Listing Panel
-            if self.switch_frames("btn_GetIOM"):
-                self.click_element(By.ID,"btn_GetIOM")
-                self.click_element(By.ID, "TransactionIdIOMListingSessionName8171")
+        if self.switch_frames("btn_NewRecord"):
+            self.click_element(By.ID, "btn_NewRecord")
 
-                # Document Details
             if self.switch_frames("OrganizationId"):
-                self.select_dropdown(By.ID, "OrganizationId", "AHMEDABAD")
+                self.select_dropdown(By.ID, "OrganizationId", "DELHI")
                 # Calendar
                 self.click_element(By.ID, "DocumentDate")
                 self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
                 self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
                 self.click_element(By.XPATH, "//a[text()='2']")
 
-                # Receipt Info
-                self.send_keys(By.ID, "ReceivedPkg", "1")
-                self.send_keys(By.ID, "ReceivedWeight", "2")
+                # Header Ledger Info
+                self.autocomplete_select(By.ID, "LedgerVoucherSubledgerMainSession-select", "HDFC Bank")
+                self.click_element(By.ID, "btnHeaderShowLedgerBalance")
+                time.sleep(2)
 
-                # Submit Trip
-                if self.switch_frames("mysubmit"):
-                    self.click_element(By.ID, "mysubmit")
-                    time.sleep(2)
+            # Voucher Ledger Details
+            self.autocomplete_select(By.ID, "SubLedgerPartyVoucherLegderSubledgerSessionName-select", "BHAGAT")
+            self.click_element(By.ID,"btnHeaderShowLedgerBalance")
+            time.sleep(2)
+            self.send_keys(By.ID, "Debit", "1000")
+            self.send_keys(By.ID, "Narration", "ON ACCOUNT PAYMENT TO CONTRACTOR")
+
+            # Adjustment Details
+            self.click_element(By.XPATH, "(//a[normalize-space()='Adjustment Details'])[1]")
+            if self.switch_frames("BillRefTypeId"):
+                self.click_element(By.ID, "btnSave-VoucherLedgerCollectionSession310VoucherLedgerBillRefSession")
+                time.sleep(2)
+            self.click_element(By.ID, "btnSave-VoucherLedgerCollectionSession310")
+            time.sleep(3)
+
+            # Update Narration
+            self.send_keys(By.XPATH, "(//textarea[@id='Narration'])[2]", "ON ACCOUNT PAYMENT TO CONTRACTOR")
+            self.click_element(By.ID, "UpdateNarration")
+
+            #Payment Details
+            self.send_keys(By.ID, "ChequeNo", "1234567890")
+
+            # Submit Payment
+            self.click_element(By.ID, "mysubmit")
+            print("Advanced Payment submitted successfully.")
+            time.sleep(2)
 
     @classmethod
     def tearDownClass(cls):

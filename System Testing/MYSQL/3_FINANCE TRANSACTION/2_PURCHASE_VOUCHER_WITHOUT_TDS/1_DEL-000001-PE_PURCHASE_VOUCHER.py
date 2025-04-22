@@ -11,7 +11,7 @@ import selenium.common.exceptions as ex
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-class Listing(unittest.TestCase):
+class PurchaseVoucher(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver=webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -73,62 +73,90 @@ class Listing(unittest.TestCase):
         except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
             return False
 
-    def autocomplete_select(self,by,value,text):
-        input_text=self.wait.until(EC.visibility_of_element_located((by,value)))
-        input_text.clear()
-        input_text.send_keys(text)
-        time.sleep(1)
-        suggest=self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME,"ui-menu-item")))
-        for i in suggest:
-            if text.upper() in i .text.upper():
-                i.click()
-                time.sleep(1)
-                print("Selected autocomplete option:", text)
-                return
-        input_text.send_keys(Keys.DOWN)
-        input_text.send_keys(Keys.ENTER)
-        print("Selected autocomplete option using keyboard:", text)
+    def autocomplete_select(self, by, value, text):
+        try:
+            input_text = self.wait.until(EC.visibility_of_element_located((by, value)))
+            input_text.clear()
+            input_text.send_keys(text)
+            time.sleep(3)
 
-    def test_listing_Master(self):
+            suggest = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "ui-menu-item")))
+            for i in suggest:
+                if text.upper() in i.text.upper():
+                    i.click()
+                    time.sleep(1)
+                    print("Selected autocomplete option:", text)
+                    return
+
+            input_text.send_keys(Keys.DOWN)
+            input_text.send_keys(Keys.ENTER)
+            print("Selected autocomplete option using keyboard:", text)
+
+        except Exception as e:
+            print(f"Error in autocomplete_select: {str(e)}")
+
+    def test_purchase_voucher(self):
         """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9RLS/")
+        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "Riddhi")
-        self.send_keys(By.ID, "Password", "omsgn9")
+        self.send_keys(By.ID, "Login", "admin")
+        self.send_keys(By.ID, "Password", "Omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
-        for i in ("Transportation",
-                  "Transportation Transaction »",
-                  "Inter Office Memo »",
-                  "IOM Listing",):
+        for i in ("Finance",
+                  "Finance Transaction »",
+                  "Purchase Voucher »",
+                  "Purchase Voucher",):
             self.click_element(By.LINK_TEXT, i)
             print(f"Navigated to {i}.")
 
-        #Listing Panel
-            if self.switch_frames("btn_GetIOM"):
-                self.click_element(By.ID,"btn_GetIOM")
-                self.click_element(By.ID, "TransactionIdIOMListingSessionName8171")
+        if self.switch_frames("btn_NewRecord"):
+            self.click_element(By.ID, "btn_NewRecord")
 
-                # Document Details
             if self.switch_frames("OrganizationId"):
-                self.select_dropdown(By.ID, "OrganizationId", "AHMEDABAD")
+                self.select_dropdown(By.ID, "OrganizationId", "DELHI")
                 # Calendar
-                self.click_element(By.ID, "DocumentDate")
-                self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
-                self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
-                self.click_element(By.XPATH, "//a[text()='2']")
+                self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
+                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
+                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
+                self.click_element(By.XPATH, "//a[text()='1']")
 
-                # Receipt Info
-                self.send_keys(By.ID, "ReceivedPkg", "1")
-                self.send_keys(By.ID, "ReceivedWeight", "2")
+            #Header Ledger Info
+            self.autocomplete_select(By.ID, "SubLedgerVoucherSubledgerMainSession-select", "BHORUKA")
+            self.click_element(By.ID, "btnHeaderShowLedgerBalance")
+            time.sleep(2)
+            self.send_keys(By.ID, "HeaderBillNo", "DEL-BILL-8674538472")
+            time.sleep(1)
+            self.send_keys(By.ID, "HeaderGrossAmount", "3000")
+            time.sleep(2)
+            self.click_element(By.ID, "btnHeaderShowLedgerBalance")
 
-                # Submit Trip
-                if self.switch_frames("mysubmit"):
-                    self.click_element(By.ID, "mysubmit")
-                    time.sleep(2)
+            # Voucher Ledger Details
+            self.switch_frames("SubLedgerVoucherSubledgerMainSession-select")
+            self.autocomplete_select(By.ID, "LedgerVoucherLegderSubledgerSession-select", "Rent")
+            time.sleep(1)
+            self.click_element(By.ID,"btnShowLedgerBalance")
+            time.sleep(2)
+            self.send_keys(By.ID, "Debit", "3000")
+            self.send_keys(By.ID, "Narration", "BILL BOOKED")
+            self.autocomplete_select(By.ID, "LedgerVoucherLegderSubledgerSession-select", "Rent")
+            self.click_element(By.ID, "btnShowLedgerBalance")
+            time.sleep(2)
+            self.click_element(By.ID, "btnSave-VoucherLedgerCollectionSession842")
+            time.sleep(2)
+
+            #Update Narration
+            self.send_keys(By.XPATH, "(//textarea[@id='Narration'])[2]", "BILL BOOKED")
+            self.click_element(By.ID, "UpdateNarration")
+
+
+            # Submit Payment
+            self.click_element(By.ID, "mysubmit")
+            print("Advanced Payment submitted successfully.")
+            time.sleep(2)
 
     @classmethod
     def tearDownClass(cls):
