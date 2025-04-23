@@ -87,11 +87,11 @@ class Contract(unittest.TestCase):
 
     def test_Contract_Master(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -109,17 +109,17 @@ class Contract(unittest.TestCase):
             if self.switch_frames("OrganizationId"):
                 self.select_dropdown(By.ID, "OrganizationId", "BHIWANDI")
                 # Calendar
-                self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
-                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
-                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-                self.click_element(By.XPATH, "//a[text()='1']")
+                self.click_element(By.ID, "DocumentDate")
+                self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
+                self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
+                self.click_element(By.XPATH, "//a[text()='5']")
 
             # Basic Information
                 self.send_keys(By.ID, "ContractNo", "Adani Wilmar - 000001")
                 self.autocomplete_select(By.ID, "ClientId-select", "Adani Wilmar")
                 self.autocomplete_select(By.ID, "ContractLocationId-select", "BHIWANDI")
-                self.send_keys(By.ID, "FromDate", "01-06-2024")
-                self.send_keys(By.ID, "ToDate", "01-06-2025")
+                self.send_keys(By.ID, "FromDate", "05-06-2024")
+                self.send_keys(By.ID, "ToDate", "05-06-2025")
 
                 driver.execute_script("window.scrollTo(0, 0);")
                 time.sleep(2)
