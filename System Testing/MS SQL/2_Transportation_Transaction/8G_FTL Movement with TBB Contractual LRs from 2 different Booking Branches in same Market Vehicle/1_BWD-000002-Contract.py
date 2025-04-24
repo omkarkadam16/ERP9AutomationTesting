@@ -112,7 +112,7 @@ class Contract(unittest.TestCase):
                 self.click_element(By.ID, "DocumentDate")
                 self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
                 self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
-                self.click_element(By.XPATH, "//a[text()='5']")
+                self.click_element(By.XPATH, "//a[text()='6']")
 
             # Basic Information
                 self.send_keys(By.ID, "ContractNo", "Bharat - 002")

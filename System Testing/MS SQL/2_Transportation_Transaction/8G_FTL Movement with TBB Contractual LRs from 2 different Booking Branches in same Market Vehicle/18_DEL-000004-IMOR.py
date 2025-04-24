@@ -92,11 +92,11 @@ class Listing(unittest.TestCase):
     def test_listing_Master(self):
         """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -116,7 +116,7 @@ class Listing(unittest.TestCase):
             if self.switch_frames("OrganizationId"):
                 self.select_dropdown(By.ID, "OrganizationId", "DELHI")
                 # Calendar
-                self.send_keys(By.ID, "DocumentDate","01-06-2024")
+                self.send_keys(By.ID, "DocumentDate","06-06-2024")
 
                 # Receipt Info
                 self.send_keys(By.ID, "ReceivedPkg", "1")

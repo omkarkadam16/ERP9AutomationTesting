@@ -89,11 +89,11 @@ class Booking(unittest.TestCase):
 
     def test_booking(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -112,19 +112,19 @@ class Booking(unittest.TestCase):
             self.select_dropdown(By.ID,"OrganizationId","DELHI")
             self.select_dropdown(By.ID,"SeriesId","DELHI - 101 To 500")
             #Calendor
-            self.click_element(By.CLASS_NAME,"ui-datepicker-trigger")
-            self.select_dropdown(By.CLASS_NAME,"ui-datepicker-month","Jun")
-            self.select_dropdown(By.CLASS_NAME,"ui-datepicker-year","2024")
-            self.click_element(By.XPATH,"//a[text()='1']")
+            self.click_element(By.ID, "DocumentDate")
+            self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
+            self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
+            self.click_element(By.XPATH, "//a[text()='6']")
 
     #Booking Details
         self.select_dropdown(By.ID, "ConsignmentTypeId", "Contractual")
         self.autocomplete_select(By.ID, "ContractPartyId-select", "Bharat Earth")
         time.sleep(1)
         self.select_dropdown(By.ID, "ContractId", "Bharat - 002")
-        self.select_dropdown(By.ID, "PickupTypeId", "Door")
         self.select_dropdown(By.ID, "RiskTypeId", "Owners Risk")
         self.select_dropdown(By.ID, "ConsigneeCopyWithId", "Consignor")
+        self.select_dropdown(By.ID, "PickupTypeId", "Door")
         self.click_element(By.ID, "IsPOD")
 
     #Route Details
@@ -147,7 +147,7 @@ class Booking(unittest.TestCase):
 
     # Invoice Details
         self.send_keys(By.ID, "InvoiceNo", "1")
-        self.send_keys(By.ID, "InvoiceDate", "01-06-2024")
+        self.send_keys(By.ID, "InvoiceDate", "06-06-2024")
         self.send_keys(By.ID, "InvoiceValue", "1")
         self.click_element(By.ID, "btnSave-BookingInvoiceSession633")
         time.sleep(1)

@@ -110,11 +110,11 @@ class LHC(unittest.TestCase):
     def test_LHC(self):
         """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -132,10 +132,10 @@ class LHC(unittest.TestCase):
             self.select_dropdown(By.ID, "SeriesId", "BHIWANDI - 101 To 500 - LHC")
             time.sleep(1)
             # Calendar
-            self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
-            self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
-            self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-            self.click_element(By.XPATH, "//a[text()='1']")
+            self.click_element(By.ID, "DocumentDate")
+            self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
+            self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
+            self.click_element(By.XPATH, "//a[text()='6']")
             time.sleep(1)
 
         # Route Details
@@ -146,6 +146,9 @@ class LHC(unittest.TestCase):
         self.click_element(By.ID, "IsCrossing")
         self.click_element(By.ID, "btnSave-VehicleTripRouteVehicleTripSessionName661")
 
+        self.select_dropdown(By.ID, "VehiclePlacementId", "BWD-000002-Vehicle Placement")
+        self.select_dropdown(By.ID, "VehiclePlacementId", "Select One")
+        time.sleep(2)
         self.select_dropdown(By.ID, "VehiclePlacementId", "BWD-000002-Vehicle Placement")
 
         # Wait for memo-related element to be visible (update with the correct ID or class)
