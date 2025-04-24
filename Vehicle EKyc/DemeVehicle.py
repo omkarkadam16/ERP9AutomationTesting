@@ -111,7 +111,7 @@ class ShortVehicleMaster(unittest.TestCase):
                 }
 
                 # Save to Excel using openpyxl
-                vehicle_number = vehicle_data["Vehicle No"]
+                vehicle_number = vehicle_data["Vehicle No"] #skip if file name is random
                 wb = Workbook()
                 ws = wb.active
                 ws.title = "Vehicle Data"
@@ -122,7 +122,7 @@ class ShortVehicleMaster(unittest.TestCase):
                     ws.append([key, value])
 
                 # Save the file
-                file_name = f"{vehicle_number}.xlsx"
+                file_name = f"{vehicle_number}.xlsx" #file_name = "Omkar Data.xlsx"
                 wb.save(file_name)
                 print(f"Data saved to {file_name}")
 
