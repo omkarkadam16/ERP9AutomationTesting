@@ -4,7 +4,6 @@ import selenium.common.exceptions as ex
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
@@ -53,43 +52,30 @@ class ShortVehicleMaster(unittest.TestCase):
         except ex.NoSuchElementException:
             return False
 
-    def select_dropdown(self, by, value, text):
-        try:
-            e = self.wait.until(EC.element_to_be_clickable((by, value)))
-            e.is_enabled()
-            e.click()
-            self.wait.until(EC.visibility_of_element_located((by, value)))
-            element = Select(self.driver.find_element(by, value))
-            element.select_by_visible_text(text)
-            return True
-        except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
-            return False
-
 
     def test_short_market_vehicle(self):
         driver = self.driver
-        driver.get("https://tms.totalgroup.in/RlogicSGTPL/Login")
-        self.send_keys(By.ID, "Login", "Riddhi")
+        driver.get("http://r-logic9.com/RlogicDemoFtl/Login")
+        self.send_keys(By.ID, "Login", "Admin")
         self.send_keys(By.ID, "Password", "Omsgn9")
         self.click_element(By.ID, "btnLogin")
 
         self.click_element(By.XPATH, "(//a[normalize-space()='Fleet'])[1]")
         self.click_element(By.XPATH, "(//a[normalize-space()='Fleet Master »'])[1]")
         self.click_element(By.XPATH, "//a[normalize-space()='Vehicle »']")
-        self.click_element(By.XPATH, "//a[normalize-space()='Market Vehicle']")
+        self.click_element(By.XPATH, "//a[normalize-space()='Short Market Vehicle']")
 
-        if self.switch_frames("txt_search"):
-            self.send_keys(By.ID, "txt_search", "DD01AA9054")
-            self.click_element(By.ID, "btn_Seach")
-            self.click_element(By.ID, "dd 161009")
-
-            self.click_element(By.PARTIAL_LINK_TEXT, "Edit")
+        if self.switch_frames("btn_NewRecord"):
+            self.click_element(By.ID, "btn_NewRecord")
             time.sleep(2)
 
             # Vehicle e-KYC Detail
-            if self.switch_frames("btn_SearchVehicleDtl_Referesh"):
-                self.click_element(By.ID, "btn_SearchVehicleDtl_Referesh")
-                time.sleep(2)
+            if self.switch_frames("acaretdowndivEkycDetails"):
+                self.click_element(By.ID,"acaretdowndivEkycDetails")
+                self.send_keys(By.ID,"ekycVehicleNo","RJ32GE0163")
+                if self.switch_frames("btn_SearchVehicleDtl_Referesh"):
+                    self.click_element(By.ID, "btn_SearchVehicleDtl_Referesh")
+                    time.sleep(2)
                 vehicle_data = {
                     "Vehicle No": driver.find_element(By.ID, "ekycVehicleNo").get_attribute("value"),
                     "RC Status": driver.find_element(By.ID, "ekycVehicleRCStatus").get_attribute("value"),
@@ -139,10 +125,6 @@ class ShortVehicleMaster(unittest.TestCase):
                 file_name = f"{vehicle_number}.xlsx"
                 wb.save(file_name)
                 print(f"Data saved to {file_name}")
-
-            if self.switch_frames("mysubmit"):
-                self.click_element(By.ID, "mysubmit")
-                time.sleep(2)
 
     @classmethod
     def tearDownClass(cls):
