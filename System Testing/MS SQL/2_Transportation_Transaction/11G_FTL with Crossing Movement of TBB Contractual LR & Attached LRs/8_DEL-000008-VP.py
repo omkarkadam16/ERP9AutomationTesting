@@ -92,11 +92,11 @@ class Payment(unittest.TestCase):
     def test_Payment_Master(self):
         """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -113,13 +113,13 @@ class Payment(unittest.TestCase):
             if self.switch_frames("OrganizationId"):
                 self.select_dropdown(By.ID, "OrganizationId", "DELHI")
                 # Calendar
-                self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
-                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
-                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-                self.click_element(By.XPATH, "//a[text()='1']")
+                self.click_element(By.ID, "DocumentDate")
+                self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
+                self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
+                self.click_element(By.XPATH, "//a[text()='9']")
 
             # general Details
-            self.autocomplete_select(By.ID,"VendorId-select","Vijay Enterprise")
+            self.autocomplete_select(By.ID,"VendorId-select","INTER INDIA")
             self.click_element(By.ID, "btnSave-VendorPaymentOnSession667")
             self.click_element(By.ID, "btn_Pick_OperationaBillReference")
             time.sleep(2)
@@ -135,7 +135,7 @@ class Payment(unittest.TestCase):
                 self.select_dropdown(By.ID, "PaymentModeId", "Cheque")
                 self.select_dropdown(By.ID, "BankId", "HDFC Bank")
                 self.send_keys(By.ID, "ChequeNo", "12345")
-                self.send_keys(By.ID, "PaymentPaidTo","Vijay Enterprise")
+                self.send_keys(By.ID, "PaymentPaidTo","INTER INDIA")
 
             #Submit Payment
             self.click_element(By.ID, "mysubmit")
