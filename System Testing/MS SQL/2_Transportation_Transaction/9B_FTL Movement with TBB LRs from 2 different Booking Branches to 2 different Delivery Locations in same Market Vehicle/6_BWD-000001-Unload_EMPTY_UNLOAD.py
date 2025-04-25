@@ -92,11 +92,11 @@ class Delivery(unittest.TestCase):
     def test_Delivery_Master(self):
         """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -114,19 +114,15 @@ class Delivery(unittest.TestCase):
         if self.switch_frames("OrganizationId"):
             self.select_dropdown(By.ID, "OrganizationId", "BHIWANDI")
             # Calendar
-            self.send_keys(By.ID, "DocumentDate","01-06-2024")
+            self.send_keys(By.ID, "DocumentDate","07-06-2024")
 
         # Booking Detail
         self.autocomplete_select(By.ID, "VehicleId-select", "MH04AA456")
         time.sleep(2)
-        self.select_dropdown(By.ID, "VehicleTripId", "AHM-000103-LHC")
+        self.select_dropdown(By.ID, "VehicleTripId", "AHM-000102-LHC")
         time.sleep(2)
 
         # Arrival Detail
-        self.click_element(By.XPATH, "(//img[@title='...'])[6]")
-        self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
-        self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
-        self.click_element(By.XPATH, "(//a[normalize-space()='1'])[1]")
         self.select_dropdown(By.ID, "ReasonDelayId", "TRAFFIC JAAM")
 
         # Submit form

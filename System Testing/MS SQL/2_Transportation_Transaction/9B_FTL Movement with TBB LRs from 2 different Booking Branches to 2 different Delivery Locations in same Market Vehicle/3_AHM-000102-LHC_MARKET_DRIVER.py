@@ -110,11 +110,11 @@ class LHC(unittest.TestCase):
     def test_LHC(self):
         """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -132,7 +132,7 @@ class LHC(unittest.TestCase):
             self.select_dropdown(By.ID, "SeriesId", "AHMEDABAD - 101 To 500 - LHC")
 
             # Calendar
-            self.send_keys(By.ID, "DocumentDate","01-06-2024")
+            self.send_keys(By.ID, "DocumentDate","07-06-2024")
             time.sleep(1)
 
             # Route Details
@@ -162,13 +162,13 @@ class LHC(unittest.TestCase):
         # Hire Charges Details
         self.select_dropdown(By.ID, "FreightUnitId", "Fixed")
         time.sleep(2)
-        self.send_keys(By.ID, "FreightRate", "20000")
+        self.send_keys(By.ID, "FreightRate", "2000")
         self.click_element(By.ID, "FreightUnitId")
         time.sleep(2)
         self.handle_alert()
 
         self.auto_select(By.ID, "OrganizationalLocationId-select", "AHMEDABAD")
-        self.send_keys(By.ID, "AdvanceAmount", "12000")
+        self.send_keys(By.ID, "AdvanceAmount", "1200")
         self.click_element(By.ID, "btnSave-VehicleTripAdvanceVehicleTripSessionName661")
         time.sleep(1)
 

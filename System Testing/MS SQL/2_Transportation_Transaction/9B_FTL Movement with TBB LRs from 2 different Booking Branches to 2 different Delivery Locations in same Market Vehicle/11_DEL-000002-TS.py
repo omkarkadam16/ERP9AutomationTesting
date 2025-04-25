@@ -92,11 +92,11 @@ class TripSettlement(unittest.TestCase):
     def test_trip_Master(self):
         """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -114,19 +114,19 @@ class TripSettlement(unittest.TestCase):
             if self.switch_frames("OrganizationId"):
                 self.select_dropdown(By.ID, "OrganizationId", "DELHI")
                 # Calendar
-                self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
-                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
-                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-                self.click_element(By.XPATH, "//a[text()='1']")
+                self.click_element(By.ID, "DocumentDate")
+                self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
+                self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
+                self.click_element(By.XPATH, "//a[text()='7']")
 
             # General
             self.autocomplete_select(By.ID, "VehicleId-select", "MH04AA456")
-            self.select_dropdown(By.ID, "VehicleTripId", "AHM-000103-LHC")
+            self.select_dropdown(By.ID, "VehicleTripId", "AHM-000102-LHC")
             time.sleep(1)
 
             # Balance / Payment Slip Details
             self.autocomplete_select(By.ID, "OrganizationalLocationId-select", "DELHI")
-            self.send_keys(By.ID, "AdvanceAmount", "8000")
+            self.send_keys(By.ID, "AdvanceAmount", "800")
             self.click_element(By.ID, "btnSave-VehicleTripAdvanceVehicleTripSessionName658")
 
             # Submit Trip

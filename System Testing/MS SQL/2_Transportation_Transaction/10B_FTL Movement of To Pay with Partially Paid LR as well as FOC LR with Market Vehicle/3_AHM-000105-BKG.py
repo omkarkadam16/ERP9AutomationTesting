@@ -91,11 +91,11 @@ class Booking(unittest.TestCase):
 
     def test_booking(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -114,10 +114,10 @@ class Booking(unittest.TestCase):
             self.select_dropdown(By.ID,"OrganizationId","AHMEDABAD")
             self.select_dropdown(By.ID,"SeriesId","AHMEDABAD - 101 To 500")
             #Calendor
-            self.click_element(By.CLASS_NAME,"ui-datepicker-trigger")
-            self.select_dropdown(By.CLASS_NAME,"ui-datepicker-month","Jun")
-            self.select_dropdown(By.CLASS_NAME,"ui-datepicker-year","2024")
-            self.click_element(By.XPATH,"//a[text()='1']")
+            self.click_element(By.ID, "DocumentDate")
+            self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
+            self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
+            self.click_element(By.XPATH, "//a[text()='8']")
 
     #Booking Details
         self.select_dropdown(By.ID, "FreightOnId", "Fixed")

@@ -94,11 +94,11 @@ class Placement(unittest.TestCase):
 
     def test_Placement_Master(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -117,7 +117,7 @@ class Placement(unittest.TestCase):
                 self.select_dropdown(By.ID, "OrganizationId", "AHMEDABAD")
 
                 # Calendar
-                self.send_keys(By.ID, "DocumentDate", "01-06-2024")
+                self.send_keys(By.ID, "DocumentDate", "08-06-2024")
                 time.sleep(1)
 
                 # Indent Details
@@ -129,7 +129,7 @@ class Placement(unittest.TestCase):
                 # Vehicle Placement Details
                 self.autocomplete_select(By.ID, "VehicleId-select", "MH18AC0358")
                 self.select_dropdown(By.ID, "FreightUnitId", "Fixed")
-                self.send_keys(By.ID, "AdvanceAmount", "32000")
+                self.send_keys(By.ID, "AdvanceAmount", "3200")
                 self.autocomplete_select(By.ID, "BalanceLocationId-select", "DELHI")
 
 
