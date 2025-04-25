@@ -61,6 +61,7 @@ class Booking(unittest.TestCase):
             except (ex.NoSuchElementException, ex.UnexpectedAlertPresentException, ex.TimeoutException,
                     ex.StaleElementReferenceException) as e:
                 print(f"[WARNING]Error : {type(e)} occurred. Retrying...")
+        return False
 
     def select_dropdown(self,by,value,text):
         try:
@@ -107,11 +108,11 @@ class Booking(unittest.TestCase):
 
     def test_booking(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -130,10 +131,10 @@ class Booking(unittest.TestCase):
             self.select_dropdown(By.ID,"OrganizationId","AHMEDABAD")
             self.select_dropdown(By.ID,"SeriesId","AHMEDABAD - 101 To 500")
             #Calendor
-            self.click_element(By.CLASS_NAME,"ui-datepicker-trigger")
-            self.select_dropdown(By.CLASS_NAME,"ui-datepicker-month","Jun")
-            self.select_dropdown(By.CLASS_NAME,"ui-datepicker-year","2024")
-            self.click_element(By.XPATH,"//a[text()='1']")
+            self.click_element(By.ID, "DocumentDate")
+            self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
+            self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
+            self.click_element(By.XPATH, "//a[text()='11']")
 
     #Booking Details
         self.auto_select(By.ID, "VehicleId-select", "MHO4ER9009")
@@ -149,7 +150,7 @@ class Booking(unittest.TestCase):
 
         #Pick Booking
         self.select_dropdown(By.ID, "ddlSearchOn","Document Print No")
-        self.send_keys(By.ID, "DocumentSearchSession665DocumentNo","AHM-000108-BKG")
+        self.send_keys(By.ID, "DocumentSearchSession665DocumentNo","AHM-000107-BKG")
         self.click_element(By.ID, "btn_Search")
 
 
