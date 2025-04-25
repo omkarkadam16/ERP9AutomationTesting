@@ -92,11 +92,11 @@ class BillSubmission(unittest.TestCase):
     def test_BillSub_Master(self):
         """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -114,18 +114,18 @@ class BillSubmission(unittest.TestCase):
             if self.switch_frames("OrganizationId"):
                 self.select_dropdown(By.ID, "OrganizationId", "DELHI")
                 time.sleep(1)
-                # Calendor
-                self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
-                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
-                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-                self.click_element(By.XPATH, "//a[text()='1']")
+                # Calendar
+                self.click_element(By.ID, "DocumentDate")
+                self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
+                self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
+                self.click_element(By.XPATH, "//a[text()='10']")
 
             # Bill Search
-            self.send_keys(By.ID, "FromDate", "01-06-2024")
-            self.send_keys(By.ID, "ToDate", "01-06-2024")
+            self.send_keys(By.ID, "FromDate", "10-06-2024")
+            self.send_keys(By.ID, "ToDate", "10-06-2024")
             self.autocomplete_select(By.ID, "PartyId-select", "Adani Wilmar")
             self.send_keys(By.ID, "SubmittedTo", "Omkar")
-            self.send_keys(By.ID, "SubmittedDate", "01-06-2024")
+            self.send_keys(By.ID, "SubmittedDate", "10-06-2024")
 
             # Bill Info
             self.click_element(By.ID, "BtnSearch")
@@ -134,8 +134,8 @@ class BillSubmission(unittest.TestCase):
 
             # Submission Info
             self.send_keys(By.ID, "SubmittedBy", "Parth")
-            self.send_keys(By.ID, "AcknowledgedDate", "01-06-2024")
-            self.send_keys(By.ID, "ReceivedDate", "01-06-2024")
+            self.send_keys(By.ID, "AcknowledgedDate", "10-06-2024")
+            self.send_keys(By.ID, "ReceivedDate", "10-06-2024")
 
             # Submit Bill
             self.click_element(By.ID, "mysubmit")
