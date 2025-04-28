@@ -201,6 +201,9 @@ class SeleniumHelper:
             except (ex.NoSuchElementException, ex.UnexpectedAlertPresentException, ex.TimeoutException,
                     ex.StaleElementReferenceException) as e:
                 print(f"[WARNING]Error : {type(e)} occurred. Retrying...")
+                time.sleep(1)
+        return False
+
 
     def handle_alert(self):
         """Check for an alert and handle it if present."""
