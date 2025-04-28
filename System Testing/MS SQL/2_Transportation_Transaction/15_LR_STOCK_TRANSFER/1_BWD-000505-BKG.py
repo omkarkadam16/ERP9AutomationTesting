@@ -91,11 +91,11 @@ class Booking(unittest.TestCase):
 
     def test_booking(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -114,10 +114,10 @@ class Booking(unittest.TestCase):
             self.select_dropdown(By.ID,"OrganizationId","BHIWANDI")
             self.select_dropdown(By.ID,"SeriesId","BHIWANDI - 501 To 1000")
             #Calendor
-            self.click_element(By.CLASS_NAME,"ui-datepicker-trigger")
-            self.select_dropdown(By.CLASS_NAME,"ui-datepicker-month","Jun")
-            self.select_dropdown(By.CLASS_NAME,"ui-datepicker-year","2024")
-            self.click_element(By.XPATH,"//a[text()='1']")
+            self.click_element(By.ID, "DocumentDate")
+            self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
+            self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
+            self.click_element(By.XPATH, "//a[text()='12']")
 
     #Booking Details
         self.select_dropdown(By.ID, "FreightOnId", "Fixed")
@@ -151,7 +151,7 @@ class Booking(unittest.TestCase):
 
     # Invoice Details
         self.send_keys(By.ID, "InvoiceNo", "784555")
-        self.send_keys(By.ID, "InvoiceDate", "01-06-2024")
+        self.send_keys(By.ID, "InvoiceDate", "12-06-2024")
         self.send_keys(By.ID, "InvoiceValue", "5")
         self.click_element(By.ID, "btnSave-BookingInvoiceSession633")
         time.sleep(1)
