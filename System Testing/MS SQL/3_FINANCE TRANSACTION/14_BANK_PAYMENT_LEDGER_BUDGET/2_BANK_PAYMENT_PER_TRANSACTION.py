@@ -73,37 +73,43 @@ class Payment(unittest.TestCase):
         except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
             return False
 
-    def autocomplete_select(self,by,value,text):
-        input_text=self.wait.until(EC.visibility_of_element_located((by,value)))
-        input_text.clear()
-        input_text.send_keys(text)
-        time.sleep(1)
-        suggest=self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME,"ui-menu-item")))
-        for i in suggest:
-            if text.upper() in i .text.upper():
-                i.click()
-                time.sleep(1)
-                print("Selected autocomplete option:", text)
-                return
-        input_text.send_keys(Keys.DOWN)
-        input_text.send_keys(Keys.ENTER)
-        print("Selected autocomplete option using keyboard:", text)
+    def autocomplete_select(self, by, value, text):
+        try:
+            input_text = self.wait.until(EC.visibility_of_element_located((by, value)))
+            input_text.clear()
+            input_text.send_keys(text)
+            time.sleep(3)
+
+            suggest = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "ui-menu-item")))
+            for i in suggest:
+                if text.upper() in i.text.upper():
+                    i.click()
+                    time.sleep(1)
+                    print("Selected autocomplete option:", text)
+                    return
+
+            input_text.send_keys(Keys.DOWN)
+            input_text.send_keys(Keys.ENTER)
+            print("Selected autocomplete option using keyboard:", text)
+
+        except Exception as e:
+            print(f"Error in autocomplete_select: {str(e)}")
 
     def test_Payment_Master(self):
         """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
         for i in ("Finance",
                   "Finance Transaction »",
-                  "Operational Payment »",
-                  "Operational Payment (Vendor)",):
+                  "Payment Voucher »",
+                  "Bank Payment",):
             self.click_element(By.LINK_TEXT, i)
             print(f"Navigated to {i}.")
 
@@ -111,35 +117,50 @@ class Payment(unittest.TestCase):
             self.click_element(By.ID, "btn_NewRecord")
 
             if self.switch_frames("OrganizationId"):
-                self.select_dropdown(By.ID, "OrganizationId", "AHMEDABAD")
+                self.select_dropdown(By.ID, "OrganizationId", "HYDERABAD")
                 # Calendar
                 self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-                self.click_element(By.XPATH, "//a[text()='1']")
+                self.click_element(By.XPATH, "//a[text()='2']")
 
-            # general Details
-            self.autocomplete_select(By.ID,"VendorId-select","Vijay Enterprise")
-            self.click_element(By.ID, "btnSave-VendorPaymentOnSession667")
-            self.click_element(By.ID, "btn_Pick_OperationaBillReference")
+                # Header Ledger Info
+                self.autocomplete_select(By.ID, "LedgerVoucherSubledgerMainSession-select", "SBI Bank")
+                self.click_element(By.ID, "btnHeaderShowLedgerBalance")
+                time.sleep(2)
+
+            # Voucher Ledger Details
+            self.autocomplete_select(By.ID, "LedgerPartyVoucherLegderSubledgerSessionName-select", "Electricity Expenses")
+            self.click_element(By.ID,"btnHeaderShowLedgerBalance")
             time.sleep(2)
+            self.send_keys(By.ID, "Debit", "7000")
+            self.send_keys(By.ID, "Narration", "BILL PAID")
 
-            #Trip Reference Info
-            if self.switch_frames("btn_GetOperationalBillReference"):
-                self.click_element(By.ID, "btn_GetOperationalBillReference")
-                self.click_element(By.ID, "IsSelectOperationalBillSearchSessionName6671")
-                self.click_element(By.ID, "btn_OperationalBillReference")
 
-            #Payment Detail
-            if self.switch_frames("PaymentModeId"):
-                self.select_dropdown(By.ID, "PaymentModeId","Cash")
-                self.send_keys(By.ID, "PaymentPaidTo","Vijay Enterprise")
+            # Adjustment Details
+            self.autocomplete_select(By.ID, "AnalysisHeadId-select", "HYD-ANALYSIS HEAD")
+            self.click_element(By.ID, "btnSave-VoucherLedgerCollectionSession310VoucherLedgerAnalysisSession")
+            self.click_element(By.XPATH, "(//a[normalize-space()='Cost Center'])[1]")
+            if self.switch_frames("CostCenterId-select"):
+                self.autocomplete_select(By.ID,"CostCenterId-select","HYDERABAD")
+                time.sleep(1)
+                self.click_element(By.ID, "btnSave-VoucherLedgerCollectionSession310VoucherLedgerCostCenterSession")
+                time.sleep(2)
+            self.click_element(By.ID, "btnSave-VoucherLedgerCollectionSession310")
+            time.sleep(3)
 
-            #Submit Payment
+            # Update Narration
+            self.send_keys(By.XPATH, "(//textarea[@id='Narration'])[2]", "BILL PAID")
+            self.click_element(By.ID, "UpdateNarration")
+
+            #Payment Details
+            self.send_keys(By.ID, "PaymentPaidTo", "ABCD PVT LTD")
+            self.send_keys(By.ID, "ChequeNo", "1234567890")
+
+            # Submit Payment
             self.click_element(By.ID, "mysubmit")
             print("Advanced Payment submitted successfully.")
             time.sleep(2)
-
 
     @classmethod
     def tearDownClass(cls):

@@ -110,11 +110,11 @@ class LHC(unittest.TestCase):
     def test_LHC(self):
         """Main test case"""
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -132,17 +132,17 @@ class LHC(unittest.TestCase):
             self.select_dropdown(By.ID, "SeriesId", "AHMEDABAD - 101 To 500 - LHC")
             time.sleep(1)
             # Calendar
-            self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
-            self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
-            self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-            self.click_element(By.XPATH, "//a[text()='1']")
+            self.click_element(By.ID, "DocumentDate")
+            self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
+            self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
+            self.click_element(By.XPATH, "//a[text()='14']")
             time.sleep(1)
 
         # Route Details
         self.auto_select(By.ID, "ServiceNetworkId-select", "PUNE")
-        self.send_keys(By.ID, "ScheduleTime", "01-06-2024")
+        self.send_keys(By.ID, "ScheduleTime", "14-06-2024")
         self.click_element(By.ID, "btnSave-VehicleTripRouteVehicleTripSessionName661")
-        self.auto_select(By.ID, "VehicleId-select", "MHO4ER9009")
+        self.auto_select(By.ID, "VehicleId-select", "MH04TT9008")
         self.click_element(By.ID,"StartLocationId-select")
         time.sleep(2)
 
@@ -154,12 +154,11 @@ class LHC(unittest.TestCase):
             print("[WARNING] Memo section did not load in time.")
 
         # Hire Details
+        self.click_element(By.ID, "IsMarketDriver")
         self.send_keys(By.ID, "DriverName", "Ram")
         self.send_keys(By.ID, "LicenseExpDate", "31-12-2027")
         self.send_keys(By.ID, "LicenseNo", "98765")
         self.send_keys(By.ID, "ContactNo", "9863575754")
-        self.auto_select(By.ID, "BalanceLocationId-select", "PUNE")
-
 
         # Booking movement
         self.click_element(By.ID, "IsSelectMemoSearchSessionName6611")

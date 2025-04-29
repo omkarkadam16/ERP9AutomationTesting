@@ -89,11 +89,11 @@ class Memo(unittest.TestCase):
 
     def test_memo(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -109,16 +109,16 @@ class Memo(unittest.TestCase):
 
         # Document Info
             if self.switch_frames("OrganizationId"):
-                self.select_dropdown(By.ID, "OrganizationId", "AHMEDABAD")
+                self.select_dropdown(By.ID, "OrganizationId", "DELHI")
                 # Calendar
-                self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
-                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
-                self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-                self.click_element(By.XPATH, "//a[text()='1']")
+                self.click_element(By.ID, "DocumentDate")
+                self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
+                self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
+                self.click_element(By.XPATH, "//a[text()='14']")
 
             # Memo Info
             self.select_dropdown(By.ID, "MemoTypeId", "Direct Door Delivery")
-            self.autocomplete_select(By.ID,"VehicleId-select","MHO4ER9009")
+            self.autocomplete_select(By.ID,"VehicleId-select","MH04TT9008")
             self.autocomplete_select(By.ID,"ToServiceNetworkId-select","PUNE")
             time.sleep(1)
 
@@ -131,7 +131,7 @@ class Memo(unittest.TestCase):
                 self.click_element(By.ID, "btn_PickSelectedBookingStock")
             time.sleep(2)
             if self.switch_frames("CheckAll"):
-                self.wait.until(EC.visibility_of_element_located((By.ID, "MemoBookingMovementGrid")))
+                self.wait.until(EC.visibility_of_all_elements_located((By.ID, "MemoBookingMovementGrid")))
                 self.click_element(By.ID, "CheckAll")
 
             #Save Memo
