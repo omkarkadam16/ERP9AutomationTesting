@@ -130,7 +130,7 @@ class ProductParameter(unittest.TestCase):
                         time.sleep(1)
 
                         # Tyre RO2
-                        self.click_element(By.XPATH, "//body[1]/div[2]/div[2]/form[1]/div[1]/table[2]/tbody[1]/tr[1]/td[1]/table[3]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[5]/a[1]/img[1]")
+                        self.click_element(By.XPATH, "//table[3]//td[5]//a/img")
                         time.sleep(1)
                         if self.switch_frames("FromStorageHouseId"):
                             self.select_dropdown(By.ID, "FromStorageHouseId", Location)
@@ -140,7 +140,7 @@ class ProductParameter(unittest.TestCase):
                             self.click_element(By.ID, "btnSave-TyreMountSession")
 
                         # Tyre RO3
-                        self.click_element(By.XPATH, "//body[1]/div[2]/div[2]/form[1]/div[1]/table[2]/tbody[1]/tr[1]/td[1]/table[5]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[5]/a[1]/img[1]")
+                        self.click_element(By.XPATH, "//table[5]//td[5]//a/img")
                         time.sleep(1)
                         if self.switch_frames("FromStorageHouseId"):
                             self.select_dropdown(By.ID, "FromStorageHouseId", Location)
@@ -150,7 +150,7 @@ class ProductParameter(unittest.TestCase):
                             self.click_element(By.ID, "btnSave-TyreMountSession")
 
                         # Tyre RI2
-                        self.click_element(By.XPATH, "//body[1]/div[2]/div[2]/form[1]/div[1]/table[2]/tbody[1]/tr[1]/td[1]/table[3]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[4]/a[1]/img[1]")
+                        self.click_element(By.XPATH, "//table[3]//td[4]//a/img")
                         time.sleep(1)
                         if self.switch_frames("FromStorageHouseId"):
                             self.select_dropdown(By.ID, "FromStorageHouseId", Location)
@@ -160,7 +160,7 @@ class ProductParameter(unittest.TestCase):
                             self.click_element(By.ID, "btnSave-TyreMountSession")
 
                         # Tyre RI3
-                        self.click_element(By.XPATH, "//body[1]/div[2]/div[2]/form[1]/div[1]/table[2]/tbody[1]/tr[1]/td[1]/table[5]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[4]/a[1]/img[1]")
+                        self.click_element(By.XPATH, "//table[5]//td[4]//a/img")
                         time.sleep(1)
                         if self.switch_frames("FromStorageHouseId"):
                             self.select_dropdown(By.ID, "FromStorageHouseId", Location)
@@ -170,7 +170,7 @@ class ProductParameter(unittest.TestCase):
                             self.click_element(By.ID, "btnSave-TyreMountSession")
 
                         # Tyre LO1
-                        self.click_element(By.XPATH, "//body[1]/div[2]/div[2]/form[1]/div[1]/table[2]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/a[1]/img[1]")
+                        self.click_element(By.XPATH, "//table[1]//td[1]//a/img")
                         time.sleep(1)
                         if self.switch_frames("FromStorageHouseId"):
                             self.select_dropdown(By.ID, "FromStorageHouseId", Location)
@@ -180,7 +180,7 @@ class ProductParameter(unittest.TestCase):
                             self.click_element(By.ID, "btnSave-TyreMountSession")
 
                         # Tyre LO2
-                        self.click_element(By.XPATH, "//body[1]/div[2]/div[2]/form[1]/div[1]/table[2]/tbody[1]/tr[1]/td[1]/table[3]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/a[1]/img[1]")
+                        self.click_element(By.XPATH, "//table[3]//td[1]//a/img")
                         time.sleep(1)
                         if self.switch_frames("FromStorageHouseId"):
                             self.select_dropdown(By.ID, "FromStorageHouseId", Location)
@@ -190,7 +190,7 @@ class ProductParameter(unittest.TestCase):
                             self.click_element(By.ID, "btnSave-TyreMountSession")
 
                         # Tyre LO3
-                        self.click_element(By.XPATH, "//body[1]/div[2]/div[2]/form[1]/div[1]/table[2]/tbody[1]/tr[1]/td[1]/table[5]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/a[1]/img[1]")
+                        self.click_element(By.XPATH, "//table[5]//td[1]//a/img")
                         time.sleep(1)
                         if self.switch_frames("FromStorageHouseId"):
                             self.select_dropdown(By.ID, "FromStorageHouseId",Location)
@@ -200,7 +200,7 @@ class ProductParameter(unittest.TestCase):
                             self.click_element(By.ID, "btnSave-TyreMountSession")
 
                         # Tyre LI2
-                        self.click_element(By.XPATH, "//body[1]/div[2]/div[2]/form[1]/div[1]/table[2]/tbody[1]/tr[1]/td[1]/table[3]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[2]/a[1]/img[1]")
+                        self.click_element(By.XPATH, "//table[3]//td[2]//a/img")
                         time.sleep(1)
                         if self.switch_frames("FromStorageHouseId"):
                             self.select_dropdown(By.ID, "FromStorageHouseId", Location)
@@ -210,7 +210,7 @@ class ProductParameter(unittest.TestCase):
                             self.click_element(By.ID, "btnSave-TyreMountSession")
 
                         # Tyre LI3
-                        self.click_element(By.XPATH, "//body[1]/div[2]/div[2]/form[1]/div[1]/table[2]/tbody[1]/tr[1]/td[1]/table[5]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[2]/a[1]/img[1]")
+                        self.click_element(By.XPATH, "//table[5]//td[2]//a/img")
                         time.sleep(1)
                         if self.switch_frames("FromStorageHouseId"):
                             self.select_dropdown(By.ID, "FromStorageHouseId",Location)
