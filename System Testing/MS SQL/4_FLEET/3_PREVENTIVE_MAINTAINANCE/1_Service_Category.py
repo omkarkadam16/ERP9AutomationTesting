@@ -1,5 +1,4 @@
 
-
 import unittest
 import time
 import selenium.common.exceptions as ex
@@ -92,11 +91,13 @@ class ProductParameter(unittest.TestCase):
 
     def test_product_parameter(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        print("Logging in...")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
+        print("Login successful.")
 
         menus = ["Fleet", "Fleet Master »", "Preventive Maintainance »", "Service Category"]
         for link_test in menus:
