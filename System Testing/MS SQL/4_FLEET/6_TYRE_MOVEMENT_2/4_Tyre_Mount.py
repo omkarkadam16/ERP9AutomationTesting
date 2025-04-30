@@ -107,48 +107,71 @@ class ProductParameter(unittest.TestCase):
                 self.click_element(By.ID, "btn_NewRecord")
                 time.sleep(2)
 
+            if self.switch_frames("OrganizationId"):
+                self.select_dropdown(By.ID, "OrganizationId", "HYDERABAD")
+
                 # Driver Info
                 if self.switch_frames("VehicleId-select"):
-                    self.autocomplete_select(By.ID, "VehicleId-select", "MH04AA7007")
+                    self.autocomplete_select(By.ID, "VehicleId-select", "MH04TT9008")
                     self.click_element(By.ID, "WorkDoneBy")
 
                     # Tyre RO1
-                    self.click_element(By.XPATH, "(//img)[6]")
+                    self.click_element(By.XPATH, "(//img[@class='ImgR'])[1]")
                     time.sleep(1)
                     if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-001")
+                        self.select_dropdown(By.ID, "FromStorageHouseId", "HYDERABAD")
+                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "ELDR-001")
                         self.click_element(By.ID, "Remarks")
                         time.sleep(2)
                         self.click_element(By.ID, "btnSave-TyreMountSession")
                     time.sleep(1)
 
                     # Tyre RO2
-                    self.click_element(By.XPATH, "(//img)[10]")
+                    self.click_element(By.XPATH, "/html[1]/body[1]/div[2]/div[2]/form[1]/div[1]/div[1]/table[2]/tbody[1]/tr[1]/td[1]/table[3]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[5]/a[1]/img[1]")
                     time.sleep(1)
                     if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-002")
+                        self.select_dropdown(By.ID, "FromStorageHouseId", "HYDERABAD")
+                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "ELDR-002")
+                        self.click_element(By.ID, "Remarks")
+                        time.sleep(2)
+                        self.click_element(By.ID, "btnSave-TyreMountSession")
+
+                    # Tyre RI2
+                    self.click_element(By.XPATH, "/html[1]/body[1]/div[2]/div[2]/form[1]/div[1]/div[1]/table[2]/tbody[1]/tr[1]/td[1]/table[3]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[4]/a[1]/img[1]")
+                    time.sleep(1)
+                    if self.switch_frames("FromStorageHouseId"):
+                        self.select_dropdown(By.ID, "FromStorageHouseId", "HYDERABAD")
+                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "ELDR-002")
                         self.click_element(By.ID, "Remarks")
                         time.sleep(2)
                         self.click_element(By.ID, "btnSave-TyreMountSession")
 
                     # Tyre LO1
-                    self.click_element(By.XPATH, "(//img)[4]")
+                    self.click_element(By.XPATH, "/html[1]/body[1]/div[2]/div[2]/form[1]/div[1]/div[1]/table[2]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/a[1]/img[1]")
                     time.sleep(1)
                     if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-003")
+                        self.select_dropdown(By.ID, "FromStorageHouseId", "HYDERABAD")
+                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "ELDR-003")
                         self.click_element(By.ID, "Remarks")
                         time.sleep(2)
                         self.click_element(By.ID, "btnSave-TyreMountSession")
 
                     # Tyre LO2
-                    self.click_element(By.XPATH, "(//img)[8]")
+                    self.click_element(By.XPATH, "/html[1]/body[1]/div[2]/div[2]/form[1]/div[1]/div[1]/table[2]/tbody[1]/tr[1]/td[1]/table[3]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/a[1]/img[1]")
                     time.sleep(1)
                     if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-004")
+                        self.select_dropdown(By.ID, "FromStorageHouseId", "HYDERABAD")
+                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "ELDR-005")
+                        self.click_element(By.ID, "Remarks")
+                        time.sleep(2)
+                        self.click_element(By.ID, "btnSave-TyreMountSession")
+
+                    # Tyre LI2
+                    self.click_element(By.XPATH, "/html[1]/body[1]/div[2]/div[2]/form[1]/div[1]/div[1]/table[2]/tbody[1]/tr[1]/td[1]/table[3]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[2]/a[1]/img[1]")
+                    time.sleep(1)
+                    if self.switch_frames("FromStorageHouseId"):
+                        self.select_dropdown(By.ID, "FromStorageHouseId", "HYDERABAD")
+                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "ELDR-006")
                         self.click_element(By.ID, "Remarks")
                         time.sleep(2)
                         self.click_element(By.ID, "btnSave-TyreMountSession")

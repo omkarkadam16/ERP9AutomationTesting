@@ -1,3 +1,4 @@
+
 import unittest
 import time
 import selenium.common.exceptions as ex
@@ -49,7 +50,6 @@ class PurchaseOrder(unittest.TestCase):
     def send_keys(self, by, value, text):
         try:
             element = self.wait.until(EC.visibility_of_element_located((by, value)))
-            element.is_enabled()
             element.clear()
             element.send_keys(text)
             print("Sent keys", text)
@@ -98,7 +98,7 @@ class PurchaseOrder(unittest.TestCase):
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
-        menus = ["Fleet", "Purchase »", "Purchase Order"]
+        menus = ["Fleet", "Fleet Master »", "Tyre Movement »", "Tyre Inspection"]
         for link_test in menus:
             self.click_element(By.LINK_TEXT, link_test)
 
@@ -114,24 +114,46 @@ class PurchaseOrder(unittest.TestCase):
                     self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2025")
                     self.click_element(By.XPATH, "//a[text()='1']")
 
-                # Vendor Information
-                if self.switch_frames("PartyId-select"):
-                    self.autocomplete_select(By.ID, "PartyId-select", "VIJAY ENTERPRISE")
-                    self.click_element(By.ID,"VehicleId-select")
+                # Vehicle Info
+                if self.switch_frames("VehicleId-select"):
+                    self.autocomplete_select(By.ID, "VehicleId-select", "MH04AA7007")
+                    self.autocomplete_select(By.ID, "InspectLocationId-select", "AHMEDABAD")
+                    self.send_keys(By.ID,"VehicleOdometer","1000")
+                    time.sleep(1)
+                    self.select_dropdown(By.ID,"PlaceOfSupplyId","MAHARASHTRA")
                     time.sleep(1)
 
-                #Item Details
-                self.click_element(By.ID,"ui-id-3")
-                self.switch_frames("ProductId-select")
-                self.autocomplete_select(By.ID,"ProductId-select","EnduraceLDR")
-                self.send_keys(By.ID,"Qunatity","04")
-                self.send_keys(By.ID, "Rate", "22000")
-                self.click_element(By.ID, "CalValue")
-                time.sleep(1)
-                self.click_element(By.ID,"btnSave-PurchaseOrderProductTransactionSession")
-                time.sleep(1)
+                #Endu-001 Tyre Details
+                if self.switch_frames("NsdValue1TyreInspectionSession1"):
+                    self.send_keys(By.ID, "NsdValue1TyreInspectionSession1", "14.9")
+                    self.send_keys(By.ID,"NsdValue2TyreInspectionSession1","14.3")
+                    self.send_keys(By.ID,"NsdValue3TyreInspectionSession1","13.5")
+                    self.send_keys(By.ID, "NsdValue4TyreInspectionSession1", "13.7")
+
+                #Endu-002 Tyre Details
+                if self.switch_frames("NsdValue1TyreInspectionSession2"):
+                    self.send_keys(By.ID, "NsdValue1TyreInspectionSession2", "14.2")
+                    self.send_keys(By.ID, "NsdValue2TyreInspectionSession2", "14.4")
+                    self.send_keys(By.ID, "NsdValue3TyreInspectionSession2", "13.7")
+                    self.send_keys(By.ID, "NsdValue4TyreInspectionSession2", "13.3")
+
+                #Endu-003 Tyre Details
+                if self.switch_frames("NsdValue1TyreInspectionSession3"):
+                    self.send_keys(By.ID, "NsdValue1TyreInspectionSession3", "14.4")
+                    self.send_keys(By.ID, "NsdValue2TyreInspectionSession3", "14.6")
+                    self.send_keys(By.ID, "NsdValue3TyreInspectionSession3", "13.7")
+                    self.send_keys(By.ID, "NsdValue4TyreInspectionSession3", "13.3")
+
+                #Endu-004 Tyre Details
+                if self.switch_frames("NsdValue1TyreInspectionSession4"):
+                    self.send_keys(By.ID, "NsdValue1TyreInspectionSession4", "14.9")
+                    self.send_keys(By.ID, "NsdValue2TyreInspectionSession4", "14.4")
+                    self.send_keys(By.ID, "NsdValue3TyreInspectionSession4", "13.6")
+                    self.send_keys(By.ID, "NsdValue4TyreInspectionSession4", "13.5")
+
                 if self.switch_frames("mysubmit"):
                     self.click_element(By.ID, "mysubmit")
+                    time.sleep(2)
                     time.sleep(2)
 
     @classmethod

@@ -91,11 +91,13 @@ class ProductParameter(unittest.TestCase):
 
     def test_product_parameter(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
+        driver.get("http://192.168.0.72/Rlogic9RLS/")
 
-        self.send_keys(By.ID, "Login", "admin")
-        self.send_keys(By.ID, "Password", "Omsgn9")
+        print("Logging in...")
+        self.send_keys(By.ID, "Login", "Riddhi")
+        self.send_keys(By.ID, "Password", "omsgn9")
         self.click_element(By.ID, "btnLogin")
+        print("Login successful.")
 
         menus = ["Fleet", "Fleet Master »", "Vehicle »", "Vehicle Chasis"]
         for link_test in menus:
@@ -114,7 +116,7 @@ class ProductParameter(unittest.TestCase):
                     time.sleep(1)
                     self.select_dropdown(By.ID, "StructureType", "Single")
                     self.click_element(By.ID, "btnSave-VehicleChasisSessionName1096")
-                    time.sleep(1)
+                    time.sleep(2)
                 if self.switch_frames("mysubmit"):
                     self.click_element(By.ID, "mysubmit")
                     time.sleep(2)

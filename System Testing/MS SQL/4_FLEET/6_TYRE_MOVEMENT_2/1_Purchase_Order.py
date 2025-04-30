@@ -107,7 +107,7 @@ class PurchaseOrder(unittest.TestCase):
                 time.sleep(2)
 
                 if self.switch_frames("OrganizationId"):
-                    self.select_dropdown(By.ID, "OrganizationId", "AHMEDABAD")
+                    self.select_dropdown(By.ID, "OrganizationId", "HYDERABAD")
                     # Calendar
                     self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
                     self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Feb")
@@ -116,7 +116,7 @@ class PurchaseOrder(unittest.TestCase):
 
                 # Vendor Information
                 if self.switch_frames("PartyId-select"):
-                    self.autocomplete_select(By.ID, "PartyId-select", "VIJAY ENTERPRISE")
+                    self.autocomplete_select(By.ID, "PartyId-select", "BAJAJ CORPORATION")
                     self.click_element(By.ID,"VehicleId-select")
                     time.sleep(1)
 
@@ -124,8 +124,8 @@ class PurchaseOrder(unittest.TestCase):
                 self.click_element(By.ID,"ui-id-3")
                 self.switch_frames("ProductId-select")
                 self.autocomplete_select(By.ID,"ProductId-select","EnduraceLDR")
-                self.send_keys(By.ID,"Qunatity","04")
-                self.send_keys(By.ID, "Rate", "22000")
+                self.send_keys(By.ID,"Qunatity","06")
+                self.send_keys(By.ID, "Rate", "20000")
                 self.click_element(By.ID, "CalValue")
                 time.sleep(1)
                 self.click_element(By.ID,"btnSave-PurchaseOrderProductTransactionSession")

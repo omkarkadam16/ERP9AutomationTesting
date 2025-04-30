@@ -1,3 +1,4 @@
+
 import unittest
 import time
 import selenium.common.exceptions as ex
@@ -98,7 +99,7 @@ class PurchaseOrder(unittest.TestCase):
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
-        menus = ["Fleet", "Purchase »", "Purchase Order"]
+        menus = ["Fleet", "Purchase »", "Goods Receipt Note"]
         for link_test in menus:
             self.click_element(By.LINK_TEXT, link_test)
 
@@ -107,7 +108,7 @@ class PurchaseOrder(unittest.TestCase):
                 time.sleep(2)
 
                 if self.switch_frames("OrganizationId"):
-                    self.select_dropdown(By.ID, "OrganizationId", "AHMEDABAD")
+                    self.select_dropdown(By.ID, "OrganizationId", "HYDERABAD")
                     # Calendar
                     self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
                     self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Feb")
@@ -116,20 +117,45 @@ class PurchaseOrder(unittest.TestCase):
 
                 # Vendor Information
                 if self.switch_frames("PartyId-select"):
-                    self.autocomplete_select(By.ID, "PartyId-select", "VIJAY ENTERPRISE")
-                    self.click_element(By.ID,"VehicleId-select")
+                    self.autocomplete_select(By.ID, "PartyId-select", "BAJAJ CORPORATION")
+                    self.send_keys(By.ID,"PartyDescription","TEST")
+                    time.sleep(2)
+                    self.select_dropdown(By.ID,"PlaceOfSupplyId","DELHI")
                     time.sleep(1)
 
-                #Item Details
-                self.click_element(By.ID,"ui-id-3")
-                self.switch_frames("ProductId-select")
-                self.autocomplete_select(By.ID,"ProductId-select","EnduraceLDR")
-                self.send_keys(By.ID,"Qunatity","04")
-                self.send_keys(By.ID, "Rate", "22000")
-                self.click_element(By.ID, "CalValue")
+                #Document Reference
+                self.click_element(By.ID,"ui-id-2")
+                self.click_element(By.ID,"PickItems")
+                self.switch_frames("FromDate")
+                self.send_keys(By.ID,"FromDate","01-06-2024")
+                self.send_keys(By.ID, "ToDate", "31-03-2025")
+                self.click_element(By.ID, "FilterByDateRange")
+                time.sleep(2)
+                self.click_element(By.ID,"IsSelectPendingList1")
+                self.click_element(By.ID,"SavePickSelected")
                 time.sleep(1)
-                self.click_element(By.ID,"btnSave-PurchaseOrderProductTransactionSession")
-                time.sleep(1)
+                self.switch_frames("UpdateSerial")
+                self.click_element(By.ID,"UpdateSerial")
+                time.sleep(2)
+                self.switch_frames("SerialNoProductListSession1")
+                self.wait.until(EC.visibility_of_element_located((By.ID, "SerialNoProductListSession1")))
+                self.send_keys(By.ID,"SerialNoProductListSession1","ELDR-001")
+                self.switch_frames("SerialNoProductListSession2")
+                self.wait.until(EC.visibility_of_element_located((By.ID, "SerialNoProductListSession2")))
+                self.send_keys(By.ID, "SerialNoProductListSession2", "ELDR-002")
+                self.switch_frames("SerialNoProductListSession3")
+                self.wait.until(EC.visibility_of_element_located((By.ID, "SerialNoProductListSession3")))
+                self.send_keys(By.ID, "SerialNoProductListSession3", "ELDR-003")
+                self.switch_frames("SerialNoProductListSession4")
+                self.wait.until(EC.visibility_of_element_located((By.ID, "SerialNoProductListSession4")))
+                self.send_keys(By.ID, "SerialNoProductListSession4", "ELDR-004")
+                self.switch_frames("SerialNoProductListSession5")
+                self.wait.until(EC.visibility_of_element_located((By.ID, "SerialNoProductListSession5")))
+                self.send_keys(By.ID, "SerialNoProductListSession5", "ELDR-005")
+                self.switch_frames("SerialNoProductListSession6")
+                self.wait.until(EC.visibility_of_element_located((By.ID, "SerialNoProductListSession6")))
+                self.send_keys(By.ID, "SerialNoProductListSession6", "ELDR-006")
+                self.click_element(By.ID,"GenerateSerialNo")
                 if self.switch_frames("mysubmit"):
                     self.click_element(By.ID, "mysubmit")
                     time.sleep(2)

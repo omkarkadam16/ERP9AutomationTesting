@@ -112,8 +112,8 @@ class VehicleMaster1(unittest.TestCase):
                 "VehicleBody": "CLOSED BODY",
                 "ControllingBranchId": "Jaipur",
                 "VehicleOwnerId": "None",
-                "Manufacture": "EICHER MOTORS",
-                "VehicleModel": "EML",
+                "Manufacture": "TATA MOTORS",
+                "VehicleModel": "TATA - 2516 TC",
                 "ChasisNo": "ch99",
                 "EngineNo": "eng99"
             },
@@ -137,7 +137,7 @@ class VehicleMaster1(unittest.TestCase):
                 "ControllingBranchId": "PUNE",
                 "VehicleOwnerId": "None",
                 "Manufacture": "TATA MOTORS",
-                "VehicleModel": "TATA - 2516 TC",
+                "VehicleModel": "TATA - 3516",
                 "ChasisNo": "ch07",
                 "EngineNo": "eng07"
             }
