@@ -93,6 +93,7 @@ class SubLedgerMaster(unittest.TestCase):
             self.click_element(By.LINK_TEXT, link_test)
 
         series = [
+            {"LedgerName": "MH12XB2005", "LedgerAlias": "MH12XB2005"},
             {"LedgerName": "MH04AA7007", "LedgerAlias": "MH04AA7007"},
             {"LedgerName": "MH04AA0099", "LedgerAlias": "MH04AA0099"},
             {"LedgerName": "MH04TT9008", "LedgerAlias": "MH04TT9008"},

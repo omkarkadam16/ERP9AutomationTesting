@@ -11,7 +11,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-class ProductParameter(unittest.TestCase):
+class PurchaseOrder(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -89,7 +89,7 @@ class ProductParameter(unittest.TestCase):
         input_text.send_keys(Keys.ENTER)
         print("Selected autocomplete option using keyboard:", text)
 
-    def test_product_parameter(self):
+    def test_purchase_order(self):
         driver = self.driver
         driver.get("http://192.168.0.72/Rlogic9RLS/")
 
@@ -99,7 +99,7 @@ class ProductParameter(unittest.TestCase):
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
-        menus = ["Fleet", "Fleet Master »", "Vehicle »", "Vehicle Chasis"]
+        menus = ["Fleet", "Purchase »", "Goods Receipt Note"]
         for link_test in menus:
             self.click_element(By.LINK_TEXT, link_test)
 
@@ -107,20 +107,56 @@ class ProductParameter(unittest.TestCase):
                 self.click_element(By.ID, "btn_NewRecord")
                 time.sleep(2)
 
-                # Driver Info
-                if self.switch_frames("VehicleModelId"):
-                    self.select_dropdown(By.ID, "VehicleModelId", "EML")
-                    time.sleep(1)
-                    self.select_dropdown(By.ID, "StructureType", "Single")
-                    self.click_element(By.ID,"btnSave-VehicleChasisSessionName1096")
-                    time.sleep(1)
-                    self.select_dropdown(By.ID, "StructureType", "Dual")
-                    self.click_element(By.ID, "btnSave-VehicleChasisSessionName1096")
+                if self.switch_frames("OrganizationId"):
+                    self.select_dropdown(By.ID, "OrganizationId", "PUNE")
+                    # Calendar
+                    self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
+                    self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Feb")
+                    self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2025")
+                    self.click_element(By.XPATH, "//a[text()='5']")
+
+                # Vendor Information
+                if self.switch_frames("PartyId-select"):
+                    self.autocomplete_select(By.ID, "PartyId-select", "INTER INDIA")
+                    self.send_keys(By.ID,"PartyDescription","TEST")
                     time.sleep(2)
+                    self.select_dropdown(By.ID,"PlaceOfSupplyId","MAHARASHTRA")
+                    time.sleep(1)
+
+                #Document Reference
+                self.click_element(By.ID,"ui-id-2")
+                self.click_element(By.ID,"PickItems")
+                self.switch_frames("FromDate")
+                self.send_keys(By.ID,"FromDate","01-06-2024")
+                self.send_keys(By.ID, "ToDate", "31-03-2025")
+                self.click_element(By.ID, "FilterByDateRange")
+                time.sleep(2)
+                self.click_element(By.ID,"IsSelectPendingList1")
+                self.click_element(By.ID,"SavePickSelected")
+                time.sleep(1)
+                self.switch_frames("UpdateSerial")
+                self.click_element(By.ID,"UpdateSerial")
+                time.sleep(4)
+                self.switch_frames("SerialNoProductListSession1")
+                self.send_keys(By.ID,"SerialNoProductListSession1","MRF-001")
+                self.switch_frames("SerialNoProductListSession2")
+                self.send_keys(By.ID, "SerialNoProductListSession2", "MRF-002")
+                self.switch_frames("SerialNoProductListSession3")
+                self.send_keys(By.ID, "SerialNoProductListSession3", "MRF-003")
+                self.switch_frames("SerialNoProductListSession4")
+                self.send_keys(By.ID, "SerialNoProductListSession4", "MRF-004")
+                self.switch_frames("SerialNoProductListSession5")
+                self.send_keys(By.ID, "SerialNoProductListSession5", "MRF-005")
+                self.switch_frames("SerialNoProductListSession6")
+                self.send_keys(By.ID, "SerialNoProductListSession6", "MRF-006")
+                self.switch_frames("SerialNoProductListSession7")
+                self.send_keys(By.ID, "SerialNoProductListSession7", "MRF-007")
+                self.switch_frames("SerialNoProductListSession8")
+                self.send_keys(By.ID, "SerialNoProductListSession8", "MRF-008")
+                self.click_element(By.ID,"GenerateSerialNo")
                 if self.switch_frames("mysubmit"):
                     self.click_element(By.ID, "mysubmit")
                     time.sleep(2)
-
 
     @classmethod
     def tearDownClass(cls):

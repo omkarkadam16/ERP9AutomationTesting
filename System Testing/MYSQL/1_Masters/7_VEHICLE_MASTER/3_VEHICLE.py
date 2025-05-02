@@ -92,6 +92,18 @@ class VehicleMaster1(unittest.TestCase):
 
         Series = [
             {
+                "VehicleNo": "MH12XB2005",
+                "VehicleTypeId": "10 MT",
+                "VehicleCategory": "Attached",
+                "VehicleBody": "CONTAINER BODY",
+                "ControllingBranchId": "Ahmedabad",
+                "VehicleOwnerId": "None",
+                "Manufacture": "EICHER MOTORS",
+                "VehicleModel": "EML",
+                "ChasisNo": "ch88",
+                "EngineNo": "eng88"
+            },
+            {
                 "VehicleNo": "MH06RR1006",
                 "VehicleTypeId": "10 MT",
                 "VehicleCategory": "Attached",
@@ -110,8 +122,8 @@ class VehicleMaster1(unittest.TestCase):
                 "VehicleBody": "CLOSED BODY",
                 "ControllingBranchId": "Jaipur",
                 "VehicleOwnerId": "None",
-                "Manufacture": "EICHER MOTORS",
-                "VehicleModel": "EML",
+                "Manufacture": "TATA MOTORS",
+                "VehicleModel": "TATA - 2516 TC",
                 "ChasisNo": "ch99",
                 "EngineNo": "eng99"
             },
@@ -135,7 +147,7 @@ class VehicleMaster1(unittest.TestCase):
                 "ControllingBranchId": "PUNE",
                 "VehicleOwnerId": "None",
                 "Manufacture": "TATA MOTORS",
-                "VehicleModel": "TATA - 2516 TC",
+                "VehicleModel": "TATA - 3516",
                 "ChasisNo": "ch07",
                 "EngineNo": "eng07"
             }

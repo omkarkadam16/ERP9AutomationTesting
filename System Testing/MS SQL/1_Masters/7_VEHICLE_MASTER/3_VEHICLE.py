@@ -94,6 +94,18 @@ class VehicleMaster1(unittest.TestCase):
 
         Series = [
             {
+                "VehicleNo": "MH12XB2005",
+                "VehicleTypeId": "10 MT",
+                "VehicleCategory": "Owned",
+                "VehicleBody": "CONTAINER BODY",
+                "ControllingBranchId": "Ahmedabad",
+                "VehicleOwnerId": "None",
+                "Manufacture": "EICHER MOTORS",
+                "VehicleModel": "EML",
+                "ChasisNo": "ch88",
+                "EngineNo": "eng88"
+            },
+            {
                 "VehicleNo": "MH06RR1006",
                 "VehicleTypeId": "10 MT",
                 "VehicleCategory": "Attached",

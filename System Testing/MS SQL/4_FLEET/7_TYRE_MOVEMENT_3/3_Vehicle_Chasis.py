@@ -1,3 +1,4 @@
+
 import unittest
 import time
 import selenium.common.exceptions as ex
@@ -5,13 +6,12 @@ from selenium import webdriver
 from selenium.webdriver import Keys
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-class VehicleMapping(unittest.TestCase):
+class ProductParameter(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -22,8 +22,10 @@ class VehicleMapping(unittest.TestCase):
         for i in range(retry):
             try:
                 self.wait.until(EC.element_to_be_clickable((by, value))).click()
+                print("Clicked on element", value)
                 return True
-            except (ex.ElementClickInterceptedException, ex.StaleElementReferenceException, ex.TimeoutException):
+            except(ex.ElementClickInterceptedException, ex.StaleElementReferenceException, ex.TimeoutException):
+                print(f'Retrying click on {by} with value {value}, attempt {i + 1}/{retry}')
                 time.sleep(1)
         try:
             element = self.driver.find_element(by, value)
@@ -46,29 +48,27 @@ class VehicleMapping(unittest.TestCase):
         return False
 
     def send_keys(self, by, value, text):
-        """Send keys after checking visibility"""
-        for attempt in range(3):
-            try:
-                print(f"[INFO] Attempt {attempt + 1}: Entering text...")
-                element = self.wait.until(EC.visibility_of_element_located((by, value)))
-                element.is_enabled()
-                element.clear()
-                element.send_keys(text)
-                print("Sent keys", text)
-                return True
-            except (ex.NoSuchElementException, ex.UnexpectedAlertPresentException, ex.TimeoutException,
-                    ex.StaleElementReferenceException) as e:
-                print(f"[WARNING]Error : {type(e)} occurred. Retrying...")
-                time.sleep(1)
-        return False
+        try:
+            element = self.wait.until(EC.visibility_of_element_located((by, value)))
+            element.is_enabled()
+            element.clear()
+            element.send_keys(text)
+            print("Sent keys", text)
+            return True
+        except ex.NoSuchElementException:
+            print(f"Element not found: {value}")
+            return False
 
     def select_dropdown(self, by, value, text):
         try:
             e = self.wait.until(EC.element_to_be_clickable((by, value)))
+            e.is_enabled()
             e.click()
+            print("[SUCCESS] Clicked dropdown")
             self.wait.until(EC.visibility_of_element_located((by, value)))
             element = Select(self.driver.find_element(by, value))
             element.select_by_visible_text(text)
+            print(f"[SUCCESS] Selected dropdown option: {text}")
             return True
         except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
             return False
@@ -82,11 +82,14 @@ class VehicleMapping(unittest.TestCase):
         for i in suggest:
             if text.upper() in i.text.upper():
                 i.click()
+                time.sleep(1)
+                print("Selected autocomplete option:", text)
                 return
         input_text.send_keys(Keys.DOWN)
         input_text.send_keys(Keys.ENTER)
+        print("Selected autocomplete option using keyboard:", text)
 
-    def test_Vehicle_Mapping(self):
+    def test_product_parameter(self):
         driver = self.driver
         driver.get("http://192.168.0.72/Rlogic9RLS/")
 
@@ -96,41 +99,27 @@ class VehicleMapping(unittest.TestCase):
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
-        menus = ["Finance", "Mapping »", "Vehicle Mapping"]
+        menus = ["Fleet", "Fleet Master »", "Vehicle »", "Vehicle Chasis"]
         for link_test in menus:
             self.click_element(By.LINK_TEXT, link_test)
 
-        series = [
-            {"LedgerName": "MH12XB2005", "LedgerAlias": "MH12XB2005"},
-            {"LedgerName": "MH04AA7007", "LedgerAlias": "MH04AA7007"},
-            {"LedgerName": "MH04AA0099", "LedgerAlias": "MH04AA0099"},
-            {"LedgerName": "MH04TT9008", "LedgerAlias": "MH04TT9008"},
-            {"LedgerName": "MH06RR1006", "LedgerAlias": "MH06RR1006"},
-        ]
-
-        for i in series:
-
-            # General Information
-            if self.switch_frames("MappingType"):
-                self.select_dropdown(By.ID, "MappingType", "General Mapping")
-                self.send_keys(By.ID, "txt_search", i["LedgerName"])
-                self.click_element(By.ID, "btn_Seach")
-                self.click_element(By.ID, "LedgerMappingGridSession777-1")
-                self.autocomplete_select(By.ID, "SubLedgerLedgerMappingSession-select", i["LedgerAlias"])
-                # Save after each selection
-                self.click_element(By.ID, "btnSave-LedgerMappingGridSession777")
-                time.sleep(2)
-                self.click_element(By.ID, "LedgerMappingGridSession777-1")
-                time.sleep(2)
-                self.click_element(By.ID, "btnSave-LedgerMappingGridSession777")
-
-                # Switch back to default content after submission
-                driver.switch_to.default_content()
+            if self.switch_frames("btn_NewRecord"):
+                self.click_element(By.ID, "btn_NewRecord")
                 time.sleep(2)
 
-                menus = ["Finance", "Mapping »", "Vehicle Mapping"]
-                for link_test in menus:
-                    self.click_element(By.LINK_TEXT, link_test)
+                # Driver Info
+                if self.switch_frames("VehicleModelId"):
+                    self.select_dropdown(By.ID, "VehicleModelId", "TATA - 2516 TC")
+                    time.sleep(1)
+                    self.select_dropdown(By.ID, "StructureType", "Single")
+                    self.click_element(By.ID,"btnSave-VehicleChasisSessionName1096")
+                    time.sleep(1)
+                    self.select_dropdown(By.ID, "StructureType", "Dual")
+                    self.click_element(By.ID, "btnSave-VehicleChasisSessionName1096")
+                    time.sleep(2)
+                if self.switch_frames("mysubmit"):
+                    self.click_element(By.ID, "mysubmit")
+                    time.sleep(2)
 
 
     @classmethod
