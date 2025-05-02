@@ -11,7 +11,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-class ProductParameter(unittest.TestCase):
+class PurchaseOrder(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -50,7 +50,6 @@ class ProductParameter(unittest.TestCase):
     def send_keys(self, by, value, text):
         try:
             element = self.wait.until(EC.visibility_of_element_located((by, value)))
-            element.is_enabled()
             element.clear()
             element.send_keys(text)
             print("Sent keys", text)
@@ -89,15 +88,16 @@ class ProductParameter(unittest.TestCase):
         input_text.send_keys(Keys.ENTER)
         print("Selected autocomplete option using keyboard:", text)
 
-    def test_product_parameter(self):
+    def test_purchase_order(self):
         driver = self.driver
         driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
 
         self.send_keys(By.ID, "Login", "admin")
         self.send_keys(By.ID, "Password", "Omsgn9")
         self.click_element(By.ID, "btnLogin")
+        print("Login successful.")
 
-        menus = ["Fleet", "Fleet Master »", "Tyre Movement »", "Tyre Mount"]
+        menus = ["Fleet", "Fleet Master »", "Tyre Movement »", "Tyre Inspection"]
         for link_test in menus:
             self.click_element(By.LINK_TEXT, link_test)
 
@@ -105,53 +105,45 @@ class ProductParameter(unittest.TestCase):
                 self.click_element(By.ID, "btn_NewRecord")
                 time.sleep(2)
 
-                # Driver Info
+                if self.switch_frames("OrganizationId"):
+                    self.select_dropdown(By.ID, "OrganizationId", "AHMEDABAD")
+                    # Calendar
+                    self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
+                    self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Feb")
+                    self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2025")
+                    self.click_element(By.XPATH, "//a[text()='1']")
+
+                # Vehicle Info
                 if self.switch_frames("VehicleId-select"):
                     self.autocomplete_select(By.ID, "VehicleId-select", "MH04AA7007")
-                    self.click_element(By.ID, "WorkDoneBy")
-
-                    # Tyre RO1
-                    self.click_element(By.XPATH, "/html/body/div[2]/div[2]/form/div/div[1]/table[2]/tbody/tr/td[1]/table[1]/tbody/tr/td/table/tbody/tr/td[3]/a/img")
+                    self.autocomplete_select(By.ID, "InspectLocationId-select", "AHMEDABAD")
+                    self.send_keys(By.ID,"VehicleOdometer","1000")
                     time.sleep(1)
-                    if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-001")
-                        self.click_element(By.ID, "Remarks")
-                        time.sleep(2)
-                        self.click_element(By.ID, "btnSave-TyreMountSession")
+                    self.select_dropdown(By.ID,"PlaceOfSupplyId","MAHARASHTRA")
                     time.sleep(1)
 
-                    # Tyre RO2
-                    self.click_element(By.XPATH, "/html/body/div[2]/div[2]/form/div/div[1]/table[2]/tbody/tr/td[1]/table[3]/tbody/tr/td/table/tbody/tr/td[3]/a/img")
-                    time.sleep(1)
-                    if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-002")
-                        self.click_element(By.ID, "Remarks")
-                        time.sleep(2)
-                        self.click_element(By.ID, "btnSave-TyreMountSession")
+                #Endu-001 Tyre Details
+                if self.switch_frames("NsdValue1TyreInspectionSession1"):
+                    self.send_keys(By.ID, "NsdValue1TyreInspectionSession1", "14.9")
+                    self.send_keys(By.ID,"NsdValue2TyreInspectionSession1","14.3")
+                    self.send_keys(By.ID,"NsdValue3TyreInspectionSession1","13.5")
+                    self.send_keys(By.ID, "NsdValue4TyreInspectionSession1", "13.7")
 
-                    # Tyre LO1
-                    self.click_element(By.XPATH, "/html/body/div[2]/div[2]/form/div/div[1]/table[2]/tbody/tr/td[1]/table[1]/tbody/tr/td/table/tbody/tr/td[1]/a/img")
-                    time.sleep(1)
-                    if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-003")
-                        self.click_element(By.ID, "Remarks")
-                        time.sleep(2)
-                        self.click_element(By.ID, "btnSave-TyreMountSession")
+                #Endu-002 Tyre Details
+                if self.switch_frames("NsdValue1TyreInspectionSession2"):
+                    self.send_keys(By.ID, "NsdValue1TyreInspectionSession2", "14.2")
+                    self.send_keys(By.ID, "NsdValue2TyreInspectionSession2", "14.4")
+                    self.send_keys(By.ID, "NsdValue3TyreInspectionSession2", "13.7")
+                    self.send_keys(By.ID, "NsdValue4TyreInspectionSession2", "13.3")
 
-                    # Tyre LO2
-                    self.click_element(By.XPATH, "/html/body/div[2]/div[2]/form/div/div[1]/table[2]/tbody/tr/td[1]/table[3]/tbody/tr/td/table/tbody/tr/td[1]/a/img")
-                    time.sleep(1)
-                    if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-004")
-                        self.click_element(By.ID, "Remarks")
-                        time.sleep(2)
-                        self.click_element(By.ID, "btnSave-TyreMountSession")
+                #Endu-003 Tyre Details
+                if self.switch_frames("NsdValue1TyreInspectionSession3"):
+                    self.send_keys(By.ID, "NsdValue1TyreInspectionSession3", "14.4")
+                    self.send_keys(By.ID, "NsdValue2TyreInspectionSession3", "14.6")
+                    self.send_keys(By.ID, "NsdValue3TyreInspectionSession3", "13.7")
+                    self.send_keys(By.ID, "NsdValue4TyreInspectionSession3", "13.3")
 
-            if self.switch_frames("mysubmit"):
+                if self.switch_frames("mysubmit"):
                     self.click_element(By.ID, "mysubmit")
                     time.sleep(2)
 

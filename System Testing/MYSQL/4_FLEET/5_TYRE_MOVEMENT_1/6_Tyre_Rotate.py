@@ -96,8 +96,9 @@ class ProductParameter(unittest.TestCase):
         self.send_keys(By.ID, "Login", "admin")
         self.send_keys(By.ID, "Password", "Omsgn9")
         self.click_element(By.ID, "btnLogin")
+        print("Login successful.")
 
-        menus = ["Fleet", "Fleet Master »", "Tyre Movement »", "Tyre Mount"]
+        menus = ["Fleet", "Fleet Master »", "Tyre Movement »", "Tyre Rotate"]
         for link_test in menus:
             self.click_element(By.LINK_TEXT, link_test)
 
@@ -110,46 +111,15 @@ class ProductParameter(unittest.TestCase):
                     self.autocomplete_select(By.ID, "VehicleId-select", "MH04AA7007")
                     self.click_element(By.ID, "WorkDoneBy")
 
-                    # Tyre RO1
-                    self.click_element(By.XPATH, "/html/body/div[2]/div[2]/form/div/div[1]/table[2]/tbody/tr/td[1]/table[1]/tbody/tr/td/table/tbody/tr/td[3]/a/img")
+                    # Tyre Info
+                    self.click_element(By.XPATH, "(//img)[6]")
                     time.sleep(1)
-                    if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-001")
+                    self.click_element(By.XPATH, "(//img)[4]")
+                    if self.switch_frames("Remarks"):
                         self.click_element(By.ID, "Remarks")
                         time.sleep(2)
-                        self.click_element(By.ID, "btnSave-TyreMountSession")
+                        self.click_element(By.ID, "btnSave-TyreRotateSession")
                     time.sleep(1)
-
-                    # Tyre RO2
-                    self.click_element(By.XPATH, "/html/body/div[2]/div[2]/form/div/div[1]/table[2]/tbody/tr/td[1]/table[3]/tbody/tr/td/table/tbody/tr/td[3]/a/img")
-                    time.sleep(1)
-                    if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-002")
-                        self.click_element(By.ID, "Remarks")
-                        time.sleep(2)
-                        self.click_element(By.ID, "btnSave-TyreMountSession")
-
-                    # Tyre LO1
-                    self.click_element(By.XPATH, "/html/body/div[2]/div[2]/form/div/div[1]/table[2]/tbody/tr/td[1]/table[1]/tbody/tr/td/table/tbody/tr/td[1]/a/img")
-                    time.sleep(1)
-                    if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-003")
-                        self.click_element(By.ID, "Remarks")
-                        time.sleep(2)
-                        self.click_element(By.ID, "btnSave-TyreMountSession")
-
-                    # Tyre LO2
-                    self.click_element(By.XPATH, "/html/body/div[2]/div[2]/form/div/div[1]/table[2]/tbody/tr/td[1]/table[3]/tbody/tr/td/table/tbody/tr/td[1]/a/img")
-                    time.sleep(1)
-                    if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-004")
-                        self.click_element(By.ID, "Remarks")
-                        time.sleep(2)
-                        self.click_element(By.ID, "btnSave-TyreMountSession")
 
             if self.switch_frames("mysubmit"):
                     self.click_element(By.ID, "mysubmit")

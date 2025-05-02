@@ -11,7 +11,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-class ProductParameter(unittest.TestCase):
+class PurchaseOrder(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -89,15 +89,16 @@ class ProductParameter(unittest.TestCase):
         input_text.send_keys(Keys.ENTER)
         print("Selected autocomplete option using keyboard:", text)
 
-    def test_product_parameter(self):
+    def test_purchase_order(self):
         driver = self.driver
         driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
 
         self.send_keys(By.ID, "Login", "admin")
         self.send_keys(By.ID, "Password", "Omsgn9")
         self.click_element(By.ID, "btnLogin")
+        print("Login successful.")
 
-        menus = ["Fleet", "Fleet Master »", "Tyre Movement »", "Tyre Mount"]
+        menus = ["Fleet", "Purchase »", "Goods Receipt Note"]
         for link_test in menus:
             self.click_element(By.LINK_TEXT, link_test)
 
@@ -105,56 +106,58 @@ class ProductParameter(unittest.TestCase):
                 self.click_element(By.ID, "btn_NewRecord")
                 time.sleep(2)
 
-                # Driver Info
-                if self.switch_frames("VehicleId-select"):
-                    self.autocomplete_select(By.ID, "VehicleId-select", "MH04AA7007")
-                    self.click_element(By.ID, "WorkDoneBy")
+                if self.switch_frames("OrganizationId"):
+                    self.select_dropdown(By.ID, "OrganizationId", "HYDERABAD")
+                    # Calendar
+                    self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
+                    self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Feb")
+                    self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2025")
+                    self.click_element(By.XPATH, "//a[text()='1']")
 
-                    # Tyre RO1
-                    self.click_element(By.XPATH, "/html/body/div[2]/div[2]/form/div/div[1]/table[2]/tbody/tr/td[1]/table[1]/tbody/tr/td/table/tbody/tr/td[3]/a/img")
-                    time.sleep(1)
-                    if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-001")
-                        self.click_element(By.ID, "Remarks")
-                        time.sleep(2)
-                        self.click_element(By.ID, "btnSave-TyreMountSession")
+                # Vendor Information
+                if self.switch_frames("PartyId-select"):
+                    self.autocomplete_select(By.ID, "PartyId-select", "BAJAJ CORPORATION")
+                    self.send_keys(By.ID,"PartyDescription","TEST")
+                    time.sleep(2)
+                    self.select_dropdown(By.ID,"PlaceOfSupplyId","DELHI")
                     time.sleep(1)
 
-                    # Tyre RO2
-                    self.click_element(By.XPATH, "/html/body/div[2]/div[2]/form/div/div[1]/table[2]/tbody/tr/td[1]/table[3]/tbody/tr/td/table/tbody/tr/td[3]/a/img")
-                    time.sleep(1)
-                    if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-002")
-                        self.click_element(By.ID, "Remarks")
-                        time.sleep(2)
-                        self.click_element(By.ID, "btnSave-TyreMountSession")
-
-                    # Tyre LO1
-                    self.click_element(By.XPATH, "/html/body/div[2]/div[2]/form/div/div[1]/table[2]/tbody/tr/td[1]/table[1]/tbody/tr/td/table/tbody/tr/td[1]/a/img")
-                    time.sleep(1)
-                    if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-003")
-                        self.click_element(By.ID, "Remarks")
-                        time.sleep(2)
-                        self.click_element(By.ID, "btnSave-TyreMountSession")
-
-                    # Tyre LO2
-                    self.click_element(By.XPATH, "/html/body/div[2]/div[2]/form/div/div[1]/table[2]/tbody/tr/td[1]/table[3]/tbody/tr/td/table/tbody/tr/td[1]/a/img")
-                    time.sleep(1)
-                    if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-004")
-                        self.click_element(By.ID, "Remarks")
-                        time.sleep(2)
-                        self.click_element(By.ID, "btnSave-TyreMountSession")
-
-            if self.switch_frames("mysubmit"):
+                #Document Reference
+                self.click_element(By.ID,"ui-id-2")
+                self.click_element(By.ID,"PickItems")
+                self.switch_frames("FromDate")
+                self.send_keys(By.ID,"FromDate","01-06-2024")
+                self.send_keys(By.ID, "ToDate", "31-03-2025")
+                self.click_element(By.ID, "FilterByDateRange")
+                time.sleep(2)
+                self.click_element(By.ID,"IsSelectPendingList1")
+                self.click_element(By.ID,"SavePickSelected")
+                time.sleep(1)
+                self.switch_frames("UpdateSerial")
+                self.click_element(By.ID,"UpdateSerial")
+                time.sleep(2)
+                self.switch_frames("SerialNoProductListSession1")
+                self.wait.until(EC.visibility_of_element_located((By.ID, "SerialNoProductListSession1")))
+                self.send_keys(By.ID,"SerialNoProductListSession1","ELDR-001")
+                self.switch_frames("SerialNoProductListSession2")
+                self.wait.until(EC.visibility_of_element_located((By.ID, "SerialNoProductListSession2")))
+                self.send_keys(By.ID, "SerialNoProductListSession2", "ELDR-002")
+                self.switch_frames("SerialNoProductListSession3")
+                self.wait.until(EC.visibility_of_element_located((By.ID, "SerialNoProductListSession3")))
+                self.send_keys(By.ID, "SerialNoProductListSession3", "ELDR-003")
+                self.switch_frames("SerialNoProductListSession4")
+                self.wait.until(EC.visibility_of_element_located((By.ID, "SerialNoProductListSession4")))
+                self.send_keys(By.ID, "SerialNoProductListSession4", "ELDR-004")
+                self.switch_frames("SerialNoProductListSession5")
+                self.wait.until(EC.visibility_of_element_located((By.ID, "SerialNoProductListSession5")))
+                self.send_keys(By.ID, "SerialNoProductListSession5", "ELDR-005")
+                self.switch_frames("SerialNoProductListSession6")
+                self.wait.until(EC.visibility_of_element_located((By.ID, "SerialNoProductListSession6")))
+                self.send_keys(By.ID, "SerialNoProductListSession6", "ELDR-006")
+                self.click_element(By.ID,"GenerateSerialNo")
+                if self.switch_frames("mysubmit"):
                     self.click_element(By.ID, "mysubmit")
                     time.sleep(2)
-
 
     @classmethod
     def tearDownClass(cls):

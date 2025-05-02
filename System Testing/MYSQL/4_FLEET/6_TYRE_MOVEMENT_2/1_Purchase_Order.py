@@ -90,11 +90,10 @@ class PurchaseOrder(unittest.TestCase):
 
     def test_purchase_order(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9RLS/")
+        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
 
-        print("Logging in...")
-        self.send_keys(By.ID, "Login", "Riddhi")
-        self.send_keys(By.ID, "Password", "omsgn9")
+        self.send_keys(By.ID, "Login", "admin")
+        self.send_keys(By.ID, "Password", "Omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
@@ -107,26 +106,25 @@ class PurchaseOrder(unittest.TestCase):
                 time.sleep(2)
 
                 if self.switch_frames("OrganizationId"):
-                    self.select_dropdown(By.ID, "OrganizationId", "PUNE")
+                    self.select_dropdown(By.ID, "OrganizationId", "HYDERABAD")
                     # Calendar
                     self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
                     self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Feb")
                     self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2025")
-                    self.click_element(By.XPATH, "//a[text()='5']")
+                    self.click_element(By.XPATH, "//a[text()='1']")
 
                 # Vendor Information
                 if self.switch_frames("PartyId-select"):
-                    self.autocomplete_select(By.ID, "PartyId-select", "INTER INDIA")
+                    self.autocomplete_select(By.ID, "PartyId-select", "BAJAJ CORPORATION")
                     self.click_element(By.ID,"VehicleId-select")
-                    self.select_dropdown(By.ID, "PlaceOfSupplierId", "MAHARASHTRA")
                     time.sleep(1)
 
                 #Item Details
                 self.click_element(By.ID,"ui-id-3")
                 self.switch_frames("ProductId-select")
-                self.autocomplete_select(By.ID,"ProductId-select","MRF Radial Tyre")
-                self.send_keys(By.ID,"Qunatity","08")
-                self.send_keys(By.ID, "Rate", "25000")
+                self.autocomplete_select(By.ID,"ProductId-select","EnduraceLDR")
+                self.send_keys(By.ID,"Qunatity","06")
+                self.send_keys(By.ID, "Rate", "20000")
                 self.click_element(By.ID, "CalValue")
                 time.sleep(1)
                 self.click_element(By.ID,"btnSave-PurchaseOrderProductTransactionSession")

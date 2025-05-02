@@ -23,7 +23,6 @@ class ProductParameter(unittest.TestCase):
         for i in range(retry):
             try:
                 self.wait.until(EC.element_to_be_clickable((by, value))).click()
-                print("Clicked on element", value)
                 return True
             except(ex.ElementClickInterceptedException, ex.StaleElementReferenceException, ex.TimeoutException):
                 print(f'Retrying click on {by} with value {value}, attempt {i + 1}/{retry}')
@@ -54,7 +53,6 @@ class ProductParameter(unittest.TestCase):
             element.is_enabled()
             element.clear()
             element.send_keys(text)
-            print("Sent keys", text)
             return True
         except ex.NoSuchElementException:
             print(f"Element not found: {value}")
@@ -65,11 +63,9 @@ class ProductParameter(unittest.TestCase):
             e = self.wait.until(EC.element_to_be_clickable((by, value)))
             e.is_enabled()
             e.click()
-            print("[SUCCESS] Clicked dropdown")
             self.wait.until(EC.visibility_of_element_located((by, value)))
             element = Select(self.driver.find_element(by, value))
             element.select_by_visible_text(text)
-            print(f"[SUCCESS] Selected dropdown option: {text}")
             return True
         except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
             return False
@@ -85,12 +81,9 @@ class ProductParameter(unittest.TestCase):
             if text.upper() in i.text.upper():
                 i.click()
                 time.sleep(1)
-                print("Selected autocomplete option:", text)
                 return
         input_text.send_keys(Keys.DOWN)
         input_text.send_keys(Keys.ENTER)
-        print("Selected autocomplete option using keyboard:", text)
-
     def test_product_parameter(self):
         driver = self.driver
         driver.get("https://rlogic9.com/RLogicSumeet/Login")
@@ -139,6 +132,7 @@ class ProductParameter(unittest.TestCase):
                             self.click_element(By.ID, "Remarks")
                             time.sleep(2)
                             self.click_element(By.ID, "btnSave-TyreMountSession")
+                            time.sleep(1)
 
                         # Tyre RO3
                         self.click_element(By.XPATH, "//table[5]//td[5]//a/img")
@@ -149,6 +143,7 @@ class ProductParameter(unittest.TestCase):
                             self.click_element(By.ID, "Remarks")
                             time.sleep(2)
                             self.click_element(By.ID, "btnSave-TyreMountSession")
+                            time.sleep(1)
 
                         # Tyre RI2
                         self.click_element(By.XPATH, "//table[3]//td[4]//a/img")
@@ -159,6 +154,7 @@ class ProductParameter(unittest.TestCase):
                             self.click_element(By.ID, "Remarks")
                             time.sleep(2)
                             self.click_element(By.ID, "btnSave-TyreMountSession")
+                            time.sleep(1)
 
                         # Tyre RI3
                         self.click_element(By.XPATH, "//table[5]//td[4]//a/img")
@@ -169,6 +165,7 @@ class ProductParameter(unittest.TestCase):
                             self.click_element(By.ID, "Remarks")
                             time.sleep(2)
                             self.click_element(By.ID, "btnSave-TyreMountSession")
+                            time.sleep(1)
 
                         # Tyre LO1
                         self.click_element(By.XPATH, "//table[1]//td[1]//a/img")
@@ -179,6 +176,7 @@ class ProductParameter(unittest.TestCase):
                             self.click_element(By.ID, "Remarks")
                             time.sleep(2)
                             self.click_element(By.ID, "btnSave-TyreMountSession")
+                            time.sleep(1)
 
                         # Tyre LO2
                         self.click_element(By.XPATH, "//table[3]//td[1]//a/img")
@@ -189,6 +187,7 @@ class ProductParameter(unittest.TestCase):
                             self.click_element(By.ID, "Remarks")
                             time.sleep(2)
                             self.click_element(By.ID, "btnSave-TyreMountSession")
+                            time.sleep(1)
 
                         # Tyre LO3
                         self.click_element(By.XPATH, "//table[5]//td[1]//a/img")
@@ -199,6 +198,7 @@ class ProductParameter(unittest.TestCase):
                             self.click_element(By.ID, "Remarks")
                             time.sleep(2)
                             self.click_element(By.ID, "btnSave-TyreMountSession")
+                            time.sleep(1)
 
                         # Tyre LI2
                         self.click_element(By.XPATH, "//table[3]//td[2]//a/img")
@@ -209,6 +209,7 @@ class ProductParameter(unittest.TestCase):
                             self.click_element(By.ID, "Remarks")
                             time.sleep(2)
                             self.click_element(By.ID, "btnSave-TyreMountSession")
+                            time.sleep(1)
 
                         # Tyre LI3
                         self.click_element(By.XPATH, "//table[5]//td[2]//a/img")
@@ -219,10 +220,12 @@ class ProductParameter(unittest.TestCase):
                             self.click_element(By.ID, "Remarks")
                             time.sleep(2)
                             self.click_element(By.ID, "btnSave-TyreMountSession")
+                            time.sleep(1)
 
                 if self.switch_frames("mysubmit"):
                     self.click_element(By.ID, "mysubmit")
                     time.sleep(2)
+                    print(f"[SUCCESS] Saved record:- {i['VehicleNo']}")
 
 
 if __name__ == "__main__":

@@ -96,8 +96,9 @@ class ProductParameter(unittest.TestCase):
         self.send_keys(By.ID, "Login", "admin")
         self.send_keys(By.ID, "Password", "Omsgn9")
         self.click_element(By.ID, "btnLogin")
+        print("Login successful.")
 
-        menus = ["Fleet", "Fleet Master »", "Tyre Movement »", "Tyre Mount"]
+        menus = ["Fleet", "Fleet Master »", "Vehicle »", "Vehicle Chasis"]
         for link_test in menus:
             self.click_element(By.LINK_TEXT, link_test)
 
@@ -106,52 +107,16 @@ class ProductParameter(unittest.TestCase):
                 time.sleep(2)
 
                 # Driver Info
-                if self.switch_frames("VehicleId-select"):
-                    self.autocomplete_select(By.ID, "VehicleId-select", "MH04AA7007")
-                    self.click_element(By.ID, "WorkDoneBy")
-
-                    # Tyre RO1
-                    self.click_element(By.XPATH, "/html/body/div[2]/div[2]/form/div/div[1]/table[2]/tbody/tr/td[1]/table[1]/tbody/tr/td/table/tbody/tr/td[3]/a/img")
+                if self.switch_frames("VehicleModelId"):
+                    self.select_dropdown(By.ID, "VehicleModelId", "TATA - 2516 TC")
                     time.sleep(1)
-                    if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-001")
-                        self.click_element(By.ID, "Remarks")
-                        time.sleep(2)
-                        self.click_element(By.ID, "btnSave-TyreMountSession")
+                    self.select_dropdown(By.ID, "StructureType", "Single")
+                    self.click_element(By.ID,"btnSave-VehicleChasisSessionName1096")
                     time.sleep(1)
-
-                    # Tyre RO2
-                    self.click_element(By.XPATH, "/html/body/div[2]/div[2]/form/div/div[1]/table[2]/tbody/tr/td[1]/table[3]/tbody/tr/td/table/tbody/tr/td[3]/a/img")
-                    time.sleep(1)
-                    if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-002")
-                        self.click_element(By.ID, "Remarks")
-                        time.sleep(2)
-                        self.click_element(By.ID, "btnSave-TyreMountSession")
-
-                    # Tyre LO1
-                    self.click_element(By.XPATH, "/html/body/div[2]/div[2]/form/div/div[1]/table[2]/tbody/tr/td[1]/table[1]/tbody/tr/td/table/tbody/tr/td[1]/a/img")
-                    time.sleep(1)
-                    if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-003")
-                        self.click_element(By.ID, "Remarks")
-                        time.sleep(2)
-                        self.click_element(By.ID, "btnSave-TyreMountSession")
-
-                    # Tyre LO2
-                    self.click_element(By.XPATH, "/html/body/div[2]/div[2]/form/div/div[1]/table[2]/tbody/tr/td[1]/table[3]/tbody/tr/td/table/tbody/tr/td[1]/a/img")
-                    time.sleep(1)
-                    if self.switch_frames("FromStorageHouseId"):
-                        self.select_dropdown(By.ID, "FromStorageHouseId", "AHMEDABAD")
-                        self.autocomplete_select(By.ID, "TyreSerialNo-select", "Endu-004")
-                        self.click_element(By.ID, "Remarks")
-                        time.sleep(2)
-                        self.click_element(By.ID, "btnSave-TyreMountSession")
-
-            if self.switch_frames("mysubmit"):
+                    self.select_dropdown(By.ID, "StructureType", "Dual")
+                    self.click_element(By.ID, "btnSave-VehicleChasisSessionName1096")
+                    time.sleep(2)
+                if self.switch_frames("mysubmit"):
                     self.click_element(By.ID, "mysubmit")
                     time.sleep(2)
 

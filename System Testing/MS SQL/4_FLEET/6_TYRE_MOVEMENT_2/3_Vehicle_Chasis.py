@@ -109,7 +109,7 @@ class ProductParameter(unittest.TestCase):
 
                 # Driver Info
                 if self.switch_frames("VehicleModelId"):
-                    self.select_dropdown(By.ID, "VehicleModelId", "EML")
+                    self.select_dropdown(By.ID, "VehicleModelId", "TATA - 2516 TC")
                     time.sleep(1)
                     self.select_dropdown(By.ID, "StructureType", "Single")
                     self.click_element(By.ID,"btnSave-VehicleChasisSessionName1096")
