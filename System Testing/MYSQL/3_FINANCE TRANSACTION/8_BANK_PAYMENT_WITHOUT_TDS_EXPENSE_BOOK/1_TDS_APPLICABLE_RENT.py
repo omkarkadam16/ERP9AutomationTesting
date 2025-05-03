@@ -10,7 +10,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-class PurchaseVoucherWithTDS(unittest.TestCase):
+class PurchaseVoucherWithTDS1(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -80,22 +80,22 @@ class PurchaseVoucherWithTDS(unittest.TestCase):
 
     def test_tsd_rent(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9RLS/")
+        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "Riddhi")
-        self.send_keys(By.ID, "Password", "omsgn9")
+        self.send_keys(By.ID, "Login", "admin")
+        self.send_keys(By.ID, "Password", "Omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
-        menus = ["Finance", "Finance Master »", "Account Master »", "Account Sub Ledger"]
+        menus = ["Finance", "Finance Master »", "Account Master »", "Account Ledger"]
         for link_test in menus:
             self.click_element(By.LINK_TEXT, link_test)
             if self.switch_frames("ddl_SearchField"):
-                self.select_dropdown(By.ID, "ddl_SearchField","Sub Ledger Name")
-                self.send_keys(By.ID, "txt_search", "BHORUKA LOGISTICS")
+                self.select_dropdown(By.ID, "ddl_SearchField","Uid")
+                self.send_keys(By.ID, "txt_search", "109")
                 self.click_element(By.ID, "btn_Seach")
-                self.click_element(By.ID, "dd 232")
+                self.click_element(By.ID, "dd 109")
                 self.click_element(By.PARTIAL_LINK_TEXT, "Edit")
                 time.sleep(2)
             # Finance Rule

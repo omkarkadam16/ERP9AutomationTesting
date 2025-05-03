@@ -10,7 +10,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-class PurchaseVoucherWithTDS(unittest.TestCase):
+class DocumentMappingSC(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -78,32 +78,35 @@ class PurchaseVoucherWithTDS(unittest.TestCase):
         input_text.send_keys(Keys.DOWN)
         input_text.send_keys(Keys.ENTER)
 
-    def test_tsd_rent(self):
+    def test_document_mapping_sc(self):
         driver = self.driver
-        driver.get("http://192.168.0.72/Rlogic9RLS/")
+        driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
 
         print("Logging in...")
-        self.send_keys(By.ID, "Login", "Riddhi")
-        self.send_keys(By.ID, "Password", "omsgn9")
+        self.send_keys(By.ID, "Login", "admin")
+        self.send_keys(By.ID, "Password", "Omsgn9")
         self.click_element(By.ID, "btnLogin")
         print("Login successful.")
 
-        menus = ["Finance", "Finance Master »", "Account Master »", "Account Sub Ledger"]
+        menus = ["Finance", "Finance Master »", "Account Master »", "Finance Rule"]
         for link_test in menus:
             self.click_element(By.LINK_TEXT, link_test)
             if self.switch_frames("ddl_SearchField"):
-                self.select_dropdown(By.ID, "ddl_SearchField","Sub Ledger Name")
-                self.send_keys(By.ID, "txt_search", "BHORUKA LOGISTICS")
+                self.select_dropdown(By.ID, "ddl_SearchField","Rule Name")
+                self.send_keys(By.ID, "txt_search", "Reference TDS Ledger Applicable")
                 self.click_element(By.ID, "btn_Seach")
-                self.click_element(By.ID, "dd 232")
+                self.click_element(By.ID, "dd 14")
                 self.click_element(By.PARTIAL_LINK_TEXT, "Edit")
                 time.sleep(2)
             # Finance Rule
-                if self.switch_frames("IsTDSApplicable"):
-                    self.click_element(By.ID, "IsTDSApplicable")
+                if self.switch_frames("ProcessId"):
+                    self.select_dropdown(By.ID, "ProcessId", "Payment Voucher")
+                    self.autocomplete_select(By.ID, "AccountGroupId-select", "Direct Expense")
+                    self.autocomplete_select(By.ID, "LedgerId-select", "Rent")
+                    self.click_element(By.ID, "btnSave-FinanceRuleConfigSession")
                     time.sleep(2)
+                    print("Finance Rule saved")
 
-                self.click_element(By.ID,"mysubmit")
 
     @classmethod
     def tearDownClass(cls):
