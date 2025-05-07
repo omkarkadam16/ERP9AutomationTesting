@@ -65,18 +65,39 @@ class RouteTimeBound(unittest.TestCase):
         except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
             return False
 
-    def autocomplete_select(self, by, value, text):
-        input_text = self.wait.until(EC.visibility_of_element_located((by, value)))
-        input_text.clear()
-        input_text.send_keys(text)
-        time.sleep(1)
-        suggest = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "ui-menu-item")))
-        for i in suggest:
-            if text.upper() in i.text.upper():
-                i.click()
+    def autocomplete_select(self, by, value, text, retries=3):
+        for attempt in range(retries):
+            try:
+                # Wait for input field to appear
+                input_text = self.wait.until(EC.element_to_be_clickable((by, value)))
+                input_text.clear()
+                input_text.send_keys(text)
+
+                # Wait for suggestions to load
+                self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "ui-menu-item")))
+                time.sleep(0.5)  # slight pause for dropdown animation
+
+                suggestions = self.driver.find_elements(By.CLASS_NAME, "ui-menu-item")
+
+                for item in suggestions:
+                    try:
+                        if text.upper() in item.text.upper():
+                            item.click()
+                            return
+                    except ex.StaleElementReferenceException:
+                        continue  # if a suggestion becomes stale, skip to next
+
+                # If no match, try navigating with keyboard
+                input_text.send_keys(Keys.DOWN)
+                input_text.send_keys(Keys.ENTER)
                 return
-        input_text.send_keys(Keys.DOWN)
-        input_text.send_keys(Keys.ENTER)
+
+            except (ex.StaleElementReferenceException, ex.TimeoutException):
+                print(f"Attempt {attempt + 1} failed due to stale element. Retrying...")
+                time.sleep(1)
+                continue
+
+        raise Exception(f"Failed to select '{text}' from autocomplete after {retries} attempts.")
 
     def test_Route_Time_Bound(self):
         driver = self.driver
@@ -151,9 +172,11 @@ class RouteTimeBound(unittest.TestCase):
                 self.send_keys(By.ID, "GraceTimeTimePickerMins", i["GM1"])
                 self.click_element(By.ID, "btnSave-RouteServiceNetworkSession754")
                 time.sleep(1)
+                i = self.driver.find_element(By.ID, "RouteName").get_attribute("value")
 
             if self.switch_frames("mysubmit"):
                 self.click_element(By.ID, "mysubmit")
+                print("Route", i, "created successfully.")
                 time.sleep(2)
 
         print("All routes created successfully.")

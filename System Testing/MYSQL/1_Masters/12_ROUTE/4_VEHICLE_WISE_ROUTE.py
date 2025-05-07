@@ -66,7 +66,7 @@ class VehicleWiseRoute(unittest.TestCase):
             return False
 
     def autocomplete_select(self, by, value, text):
-        input_text = self.wait.until(EC.visibility_of_element_located((by, value)))
+        input_text = self.wait.until(EC.element_to_be_clickable((by, value)))
         input_text.clear()
         input_text.send_keys(text)
         time.sleep(1)
