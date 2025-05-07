@@ -10,7 +10,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-class SubLedgerMaster(unittest.TestCase):
+class LedgerMaster(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -85,21 +85,15 @@ class SubLedgerMaster(unittest.TestCase):
         self.send_keys(By.ID, "Login", "admin")
         self.send_keys(By.ID, "Password", "Omsgn9")
         self.click_element(By.ID, "btnLogin")
+        print("Login successful.")
 
-        menus = ["Finance", "Ledger Mapping »", "Vendor Mapping"]
+        menus = ["Finance", "Finance Master »", "Account Master »", "Account Ledger"]
         for link_test in menus:
             self.click_element(By.LINK_TEXT, link_test)
 
         series = [
-            {"SubLedger": "BHORUKA LOGISTICS PVT LTD"},
-            {"SubLedger": "BAJAJ CORPORATION PVT LTD"},
-            {"SubLedger": "INTER INDIA ROADWAYS LTD"},
-            {"SubLedger": "VIJAY ENTERPRISES",},
-            {"SubLedger": "SHAKTI FREIGHT CARRIERS"},
-            {"SubLedger": "AKIL KHAN SO HABIB KHAN"},
-            {"SubLedger": "BHAGAT SINGH"},
-            {"SubLedger": "DARSHAN SINGH"},
-            {"SubLedger": "IOCL FUEL PUMP"},
+            {"LedgerName": "SBI Bank", "LedgerAlias": "SBI Bank"},
+            {"LedgerName": "HDFC Bank", "LedgerAlias": "HDFC Bank"},
         ]
 
         for i in series:
@@ -107,23 +101,19 @@ class SubLedgerMaster(unittest.TestCase):
                 self.click_element(By.ID, "btn_NewRecord")
                 time.sleep(2)
 
-                if self.switch_frames("MappingType"):  # Ensure frame switch
-                    self.select_dropdown(By.ID, "MappingType", "General Mapping")
-                    self.click_element(By.ID, "btn_Seach")
-                    time.sleep(2)
+            # General Information
+            if self.switch_frames("LedgerName"):
+                self.send_keys(By.ID, "LedgerName", i["LedgerName"])
+                self.send_keys(By.ID, "LedgerAlias", i["LedgerAlias"])
+                self.select_dropdown(By.ID, "LedgerTypeId", "General Ledger")
+                self.select_dropdown(By.ID, "AccountGroupId", "BANK")
+                time.sleep(2)
 
-                    for index in range(1, 10):  # Loop through mapping elements
-                        element_id = f"LedgerMappingGridSession244-{index}"
 
-                        if self.click_element(By.ID, element_id):  # Click each mapping element
-                            self.send_keys(By.ID, "SubLedgerLedgerMappingSession-select", i["SubLedger"])
-                            time.sleep(2)  # Ensure input processing
-
-                            self.click_element(By.ID, "LedgerLedgerMappingSession-select")
-                            time.sleep(1)
-
-                            self.click_element(By.ID, "btnSave-LedgerMappingGridSession244")  # Save after each entry
-                            time.sleep(2)
+            if self.switch_frames("mysubmit"):
+                self.click_element(By.ID, "mysubmit")
+                print("Successfully submitted", i["LedgerName"])
+                time.sleep(2)
 
         print("All BankName created successfully.")
 

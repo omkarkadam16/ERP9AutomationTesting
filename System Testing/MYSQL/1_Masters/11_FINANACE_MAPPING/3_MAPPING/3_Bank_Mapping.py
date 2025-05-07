@@ -11,7 +11,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-class CustomerMapping(unittest.TestCase):
+class BankMapping(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -66,46 +66,80 @@ class CustomerMapping(unittest.TestCase):
         except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
             return False
 
-    def autocomplete_select(self, by, value, text):
-        input_text = self.wait.until(EC.visibility_of_element_located((by, value)))
-        input_text.clear()
-        input_text.send_keys(text)
-        time.sleep(1)
-        suggest = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "ui-menu-item")))
-        for i in suggest:
-            if text.upper() in i.text.upper():
-                i.click()
-                return
-        input_text.send_keys(Keys.DOWN)
-        input_text.send_keys(Keys.ENTER)
+    def autocomplete_select(self, by, value, text, retries=3):
+        for attempt in range(retries):
+            try:
+                # Wait for input field to appear
+                input_text = self.wait.until(EC.element_to_be_clickable((by, value)))
+                input_text.clear()
+                input_text.send_keys(text)
 
-    def test_Customer_Mapping(self):
+                # Wait for suggestions to load
+                self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "ui-menu-item")))
+                time.sleep(0.5)  # slight pause for dropdown animation
+
+                suggestions = self.driver.find_elements(By.CLASS_NAME, "ui-menu-item")
+
+                for item in suggestions:
+                    try:
+                        if text.upper() in item.text.upper():
+                            item.click()
+                            return
+                    except ex.StaleElementReferenceException:
+                        continue  # if a suggestion becomes stale, skip to next
+
+                # If no match, try navigating with keyboard
+                input_text.send_keys(Keys.DOWN)
+                input_text.send_keys(Keys.ENTER)
+                return
+
+            except (ex.StaleElementReferenceException, ex.TimeoutException):
+                print(f"Attempt {attempt + 1} failed due to stale element. Retrying...")
+                time.sleep(1)
+                continue
+
+        raise Exception(f"Failed to select '{text}' from autocomplete after {retries} attempts.")
+
+    def test_Bank_Mapping(self):
         driver = self.driver
         driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
 
         self.send_keys(By.ID, "Login", "admin")
         self.send_keys(By.ID, "Password", "Omsgn9")
         self.click_element(By.ID, "btnLogin")
+        print("Login successful.")
 
-        menus = ["Finance", "Ledger Creation »", "Customer Ledger Creation"]
+        menus = ["Finance", "Ledger Mapping »", "Bank Mapping"]
         for link_test in menus:
             self.click_element(By.LINK_TEXT, link_test)
+
+        series = [
+            {"Name": "SBI Bank", "SubLedger": "SBI Bank"},
+            {"Name": "HDFC Bank", "SubLedger": "HDFC Bank"},
+        ]
+
+        for i in series:
 
             # General Information
             if self.switch_frames("MappingType"):
                 self.select_dropdown(By.ID, "MappingType", "General Mapping")
+                self.send_keys(By.ID, "txt_search", i["Name"])
                 self.click_element(By.ID, "btn_Seach")
-                time.sleep(5)
+                self.click_element(By.ID, "LedgerMappingGridSession351-1")
+                self.autocomplete_select(By.ID, "LedgerLedgerMappingSession-select", i["SubLedger"])
+                # Save after each selection
+                self.click_element(By.ID, "btnSave-LedgerMappingGridSession351")
+                time.sleep(2)
 
-                if self.switch_frames("chkIsSelectAll"):
-                    self.click_element(By.ID, "chkIsSelectAll")
-                    time.sleep(2)
+                # Switch back to default content after submission
+                driver.switch_to.default_content()
+                time.sleep(2)
 
-                if self.switch_frames("LedgerTypeId"):
-                    self.select_dropdown(By.ID, "LedgerTypeId", "Sub Ledger")
-                    self.select_dropdown(By.ID, "ControlLedgerId", "Sundry Debtors")
-                    self.click_element(By.ID, "btnCreateLedger")
-                    time.sleep(2)
+                menus = ["Finance", "Ledger Mapping »", "Bank Mapping"]
+                for link_test in menus:
+                    self.click_element(By.LINK_TEXT, link_test)
+
+        print("All data created successfully.")
 
 
     @classmethod
