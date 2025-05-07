@@ -10,7 +10,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-class VehicleMaster1(unittest.TestCase):
+class VehicleMaster(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -78,7 +78,7 @@ class VehicleMaster1(unittest.TestCase):
         input_text.send_keys(Keys.DOWN)
         input_text.send_keys(Keys.ENTER)
 
-    def test_vehicle1(self):
+    def test_VehicleMaster(self):
         driver = self.driver
         driver.get("http://192.168.0.72/Rlogic9UataScript?ccode=UATASCRIPT")
 
@@ -86,70 +86,16 @@ class VehicleMaster1(unittest.TestCase):
         self.send_keys(By.ID, "Password", "Omsgn9")
         self.click_element(By.ID, "btnLogin")
 
-        menus = ["Fleet", "Fleet Master »", "Vehicle »", "Vehicle"]
+        menus = ["Fleet", "Fleet Master »", "Vehicle »", "Vehicle Manufacturer"]
         for link_test in menus:
             self.click_element(By.LINK_TEXT, link_test)
 
         Series = [
             {
-                "VehicleNo": "MH12XB2005",
-                "VehicleTypeId": "10 MT",
-                "VehicleCategory": "Attached",
-                "VehicleBody": "CONTAINER BODY",
-                "ControllingBranchId": "Ahmedabad",
-                "VehicleOwnerId": "None",
-                "Manufacture": "EICHER MOTORS",
-                "VehicleModel": "EML",
-                "ChasisNo": "ch88",
-                "EngineNo": "eng88"
+                "ManufacturerName": "FORCE MOTORS"
             },
             {
-                "VehicleNo": "MH06RR1006",
-                "VehicleTypeId": "10 MT",
-                "VehicleCategory": "Attached",
-                "VehicleBody": "CONTAINER BODY",
-                "ControllingBranchId": "Ahmedabad",
-                "VehicleOwnerId": "INTER INDIA ROADWAYS LTD",
-                "Manufacture": "TATA MOTORS",
-                "VehicleModel": "TATA - 2516 TC",
-                "ChasisNo": "ch88",
-                "EngineNo": "eng88"
-            },
-            {
-                "VehicleNo": "MH04TT9008",
-                "VehicleTypeId": "20 MT",
-                "VehicleCategory": "Owned",
-                "VehicleBody": "CLOSED BODY",
-                "ControllingBranchId": "Jaipur",
-                "VehicleOwnerId": "None",
-                "Manufacture": "TATA MOTORS",
-                "VehicleModel": "TATA - 2516 TC",
-                "ChasisNo": "ch99",
-                "EngineNo": "eng99"
-            },
-            {
-                "VehicleNo": "MH04AA0099",
-                "VehicleTypeId": "16 MT",
-                "VehicleCategory": "Managed",
-                "VehicleBody": "CONTAINER BODY",
-                "ControllingBranchId": "Delhi",
-                "VehicleOwnerId": "Bhoruka Logistics Pvt Ltd",
-                "Manufacture": "TATA MOTORS",
-                "VehicleModel": "TATA - 3516",
-                "ChasisNo": "ch810",
-                "EngineNo": "eng810"
-            },
-            {
-                "VehicleNo": "MH04AA7007",
-                "VehicleTypeId": "15 MT",
-                "VehicleCategory": "Owned",
-                "VehicleBody": "FULL BODY",
-                "ControllingBranchId": "PUNE",
-                "VehicleOwnerId": "None",
-                "Manufacture": "TATA MOTORS",
-                "VehicleModel": "TATA - 3516",
-                "ChasisNo": "ch07",
-                "EngineNo": "eng07"
+                "ManufacturerName": "BHARAT BENZ"
             }
         ]
 
@@ -158,31 +104,13 @@ class VehicleMaster1(unittest.TestCase):
             if self.switch_frames("btn_NewRecord"):
                 self.click_element(By.ID, "btn_NewRecord")
 
-            # General Details
-            if self.switch_frames("VehicleNo"):
-                self.send_keys(By.ID, "VehicleNo", i["VehicleNo"])
-                self.select_dropdown(By.ID, "VehicleTypeId", i["VehicleTypeId"])
-                self.select_dropdown(By.ID, "VehicleCategoryId", i["VehicleCategory"])
-                self.select_dropdown(By.ID, "VehicleBodyId", i["VehicleBody"])
-                self.select_dropdown(By.ID, "CarrierCategoryId", "GOODS CARRIER")
-                self.send_keys(By.ID, "YearOfManufacturer", "2020")
-                self.select_dropdown(By.ID, "ManufactureId", i["Manufacture"])
-                self.select_dropdown(By.ID, "VehicleModelId", i["VehicleModel"])
-                self.send_keys(By.ID, "OnRoadDate", "05-03-2020")
-                self.autocomplete_select(By.ID, "ControllingBranchId-select",i["ControllingBranchId"])
-                if i["VehicleCategory"] != "Owned" and i["VehicleOwnerId"] != "None":
-                    self.autocomplete_select(By.ID, "VehicleOwnerId-select", i["VehicleOwnerId"])
-
-            #Specification Details
-                self.send_keys(By.ID, "ChasisNo", i["ChasisNo"])
-                self.send_keys(By.ID, "EngineNo", i["EngineNo"])
-                self.select_dropdown(By.ID, "FuelTypeId", "DIESEL")
-                self.send_keys(By.ID, "GrossWeight", "2000")
-                self.send_keys(By.ID, "UnLadenWeight", "1000")
+            # Fill out the form
+            if self.switch_frames("ProductManufacturerName"):
+                self.send_keys(By.ID, "ProductManufacturerName", i["ManufacturerName"])
 
             if self.switch_frames("mysubmit"):
                 self.click_element(By.ID, "mysubmit")
-                print("Successfully submitted", i["VehicleNo"])
+                print("Successfully submitted", i["ManufacturerName"])
                 time.sleep(2)
         print("All data created successfully.")
 
