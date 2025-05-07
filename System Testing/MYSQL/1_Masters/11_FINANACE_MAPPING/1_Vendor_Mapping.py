@@ -95,7 +95,7 @@ class VendorMapping(unittest.TestCase):
             if self.switch_frames("MappingType"):
                 self.select_dropdown(By.ID, "MappingType", "General Mapping")
                 self.click_element(By.ID, "btn_Seach")
-                time.sleep(5)
+                time.sleep(6)
 
                 if self.switch_frames("chkIsSelectAll"):
                     self.click_element(By.ID, "chkIsSelectAll")

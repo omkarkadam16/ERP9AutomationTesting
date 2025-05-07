@@ -91,7 +91,7 @@ class BankMaster(unittest.TestCase):
             self.click_element(By.LINK_TEXT, link_test)
 
         series = [
-            {"BankAccountNo": "123456789012", "BankName": "State Bank of India", "City": "MUMBAI", "IFSCCode": "SBIN0001234"},
+            {"BankAccountNo": "123456789012", "BankName": "SBI Bank", "City": "MUMBAI", "IFSCCode": "SBIN0001234"},
             {"BankAccountNo": "987654321098", "BankName": "HDFC Bank", "City": "MUMBAI","IFSCCode": "HDFC0005678"},
         ]
 
