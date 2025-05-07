@@ -62,7 +62,7 @@ class VendorMaster(unittest.TestCase):
             element = Select(self.driver.find_element(by, value))
             element.select_by_visible_text(text)
             return True
-        except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
+        except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.StaleElementReferenceException):
             return False
 
     def autocomplete_select(self, by, value, text):
@@ -144,6 +144,7 @@ class VendorMaster(unittest.TestCase):
                 self.dropdown_select(By.ID, "BusinessVerticalId", "TRANSPORTATION")
                 self.send_keys(By.ID, "GSTNumber", i["gst"])
                 self.click_element(By.ID, "btnSave-CustGSTRegistrationSession29")
+                time.sleep(2)
 
             driver.execute_script("window.scrollTo(0, 0);")
             time.sleep(2)
@@ -155,6 +156,7 @@ class VendorMaster(unittest.TestCase):
                 self.click_element(By.ID, "btnSave-VendorRouteConfigVTSession")
                 self.dropdown_select(By.ID, "VehicleGroupId", "FULL BODY")
                 self.click_element(By.ID, "btnSave-VendorRouteConfigVTSession")
+                time.sleep(2)
 
                 self.dropdown_select(By.ID, "FromZoneId","EAST")
                 self.dropdown_select(By.ID, "ToZoneId", "WEST")
