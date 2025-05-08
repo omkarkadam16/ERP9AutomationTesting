@@ -114,7 +114,7 @@ class BillSubmission(unittest.TestCase):
             if self.switch_frames("OrganizationId"):
                 self.select_dropdown(By.ID, "OrganizationId", "AHMEDABAD")
                 time.sleep(1)
-                # Calendor
+                # Calendar
                 self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")

@@ -127,10 +127,6 @@ class Delivery(unittest.TestCase):
         time.sleep(2)
 
         # Arrival Detail
-        self.click_element(By.XPATH, "(//img[@title='...'])[6]")
-        self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
-        self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
-        self.click_element(By.XPATH, "(//a[normalize-space()='1'])[1]")
         self.select_dropdown(By.ID, "ReasonDelayId", "TRAFFIC JAAM")
 
         # Submit form

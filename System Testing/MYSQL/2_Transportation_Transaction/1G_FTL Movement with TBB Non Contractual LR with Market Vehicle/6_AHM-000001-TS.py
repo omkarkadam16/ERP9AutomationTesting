@@ -125,7 +125,7 @@ class TripSettlement(unittest.TestCase):
 
             # Balance / Payment Slip Details
             self.autocomplete_select(By.ID, "OrganizationalLocationId-select", "AHMEDABAD")
-            self.send_keys(By.ID, "AdvanceAmount", "5000")
+            self.send_keys(By.ID, "AdvanceAmount", "500")
             self.click_element(By.ID, "btnSave-VehicleTripAdvanceVehicleTripSessionName658")
 
             # Submit Trip

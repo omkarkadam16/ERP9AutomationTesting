@@ -126,14 +126,14 @@ class Memo(unittest.TestCase):
             self.click_element(By.ID, "btn_Pick_Booking")
             if self.switch_frames("btn_GetBookingStock"):
                 self.click_element(By.ID, "btn_GetBookingStock")
-                time.sleep(1)
+                time.sleep(3)
                 self.click_element(By.ID, "IsSelectBookingSearchSessionName9061")
                 self.click_element(By.ID, "IsSelectBookingSearchSessionName9062")
                 self.click_element(By.ID, "IsSelectBookingSearchSessionName9063")
                 self.click_element(By.ID, "btn_PickSelectedBookingStock")
 
             if self.switch_frames("CheckAll"):
-                self.wait.until(EC.visibility_of_element_located((By.ID, "MemoBookingMovementGrid")))
+                self.wait.until(EC.visibility_of_all_elements_located((By.ID, "MemoBookingMovementGrid")))
                 self.click_element(By.ID, "CheckAll")
 
             #Save Memo

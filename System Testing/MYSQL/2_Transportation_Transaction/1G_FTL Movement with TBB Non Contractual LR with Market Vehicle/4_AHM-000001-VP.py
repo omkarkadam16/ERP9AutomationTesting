@@ -127,6 +127,7 @@ class Payment(unittest.TestCase):
             #Trip Reference Info
             if self.switch_frames("btn_GetOperationalBillReference"):
                 self.click_element(By.ID, "btn_GetOperationalBillReference")
+                time.sleep(2)
                 self.click_element(By.ID, "IsSelectOperationalBillSearchSessionName6671")
                 self.click_element(By.ID, "btn_OperationalBillReference")
 
@@ -135,7 +136,7 @@ class Payment(unittest.TestCase):
                 self.select_dropdown(By.ID, "FuelSlipTypeId", "FuelCard")
                 self.autocomplete_select(By.ID, "FuelVendorId-select", "IOCL FUEL PUMP")
                 self.autocomplete_select(By.ID, "FuelCardId-select", "F-9212")
-                self.send_keys(By.ID, "Rate", "5000")
+                self.send_keys(By.ID, "Rate", "500")
                 self.click_element(By.ID, "btnSave-FuelSlipConsumptionSession667")
 
             #Payment Detail

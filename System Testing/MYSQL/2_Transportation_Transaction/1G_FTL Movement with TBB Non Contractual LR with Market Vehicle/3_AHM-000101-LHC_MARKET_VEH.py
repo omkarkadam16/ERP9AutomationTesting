@@ -81,7 +81,7 @@ class LHC(unittest.TestCase):
         input_text = self.wait.until(EC.visibility_of_element_located((by, value)))
         input_text.clear()
         input_text.send_keys(text)
-        time.sleep(1)
+        time.sleep(2)
         suggest = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "ui-menu-item")))
         for item in suggest:
             if text.upper() in item.text.upper():
@@ -159,14 +159,14 @@ class LHC(unittest.TestCase):
         # Hire Charges Details
         self.select_dropdown(By.ID, "FreightUnitId", "Fixed")
         time.sleep(2)
-        self.send_keys(By.ID, "FreightRate", "15000")
+        self.send_keys(By.ID, "FreightRate", "1500")
         self.click_element(By.ID, "FreightUnitId")
         time.sleep(2)
         self.handle_alert()
 
         if self.switch_frames("OrganizationalLocationId-select"):
             self.auto_select(By.ID, "OrganizationalLocationId-select", "AHMEDABAD")
-            self.send_keys(By.ID, "AdvanceAmount", "10000")
+            self.send_keys(By.ID, "AdvanceAmount", "1000")
             self.click_element(By.ID, "btnSave-VehicleTripAdvanceVehicleTripSessionName661")
             time.sleep(1)
 
