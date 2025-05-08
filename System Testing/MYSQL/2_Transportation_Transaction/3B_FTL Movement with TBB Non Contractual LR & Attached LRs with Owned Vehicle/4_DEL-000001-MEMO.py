@@ -114,7 +114,7 @@ class Memo(unittest.TestCase):
                 self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-                self.click_element(By.XPATH, "//a[text()='1']")
+                self.click_element(By.XPATH, "//a[text()='3']")
 
             # Memo Info
             self.select_dropdown(By.ID, "MemoTypeId", "Direct Door Delivery")
@@ -133,6 +133,7 @@ class Memo(unittest.TestCase):
                 self.click_element(By.ID, "btn_PickSelectedBookingStock")
             time.sleep(1)
             if self.switch_frames("CheckAll"):
+                time.sleep(2)
                 self.click_element(By.ID, "CheckAll")
 
             #Save Memo

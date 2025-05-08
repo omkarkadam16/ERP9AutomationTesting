@@ -116,7 +116,7 @@ class Payment(unittest.TestCase):
                 self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-                self.click_element(By.XPATH, "//a[text()='1']")
+                self.click_element(By.XPATH, "//a[text()='3']")
 
             # general Details
             self.autocomplete_select(By.ID,"VehicleId-select","MH04TT9008")

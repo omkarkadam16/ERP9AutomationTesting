@@ -64,18 +64,22 @@ class LHC(unittest.TestCase):
                 driver.switch_to.default_content()
         return False
 
-    def select_dropdown(self, by, value, text):
-        """Select dropdown by visible text"""
-        try:
-            element = self.wait.until(EC.element_to_be_clickable((by, value)))
-            element.is_enabled()
-            element.click()
-            self.wait.until(EC.visibility_of_element_located((by, value)))
-            Select(self.driver.find_element(by, value)).select_by_visible_text(text)
-            print(f"Selected dropdown option: {text}")
-            return True
-        except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
-            return False
+    def select_dropdown(self, by, value, text, retry=3):
+        for i in range(retry):
+            try:
+                e = self.wait.until(EC.element_to_be_clickable((by, value)))
+                e.is_enabled()
+                e.click()
+                print("[SUCCESS] Clicked dropdown")
+                self.wait.until(EC.visibility_of_element_located((by, value)))
+                element = Select(self.driver.find_element(by, value))
+                element.select_by_visible_text(text)
+                print(f"[SUCCESS] Selected dropdown option: {text}")
+                return True
+            except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
+                print(f'Retrying click on {by} with value {value}, attempt {i + 1}/{retry}')
+                continue
+        return False
 
     def auto_select(self, by, value, text):
         """Auto-select suggestions"""
@@ -135,15 +139,16 @@ class LHC(unittest.TestCase):
             self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
             self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
             self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-            self.click_element(By.XPATH, "//a[text()='1']")
+            self.click_element(By.XPATH, "//a[text()='3']")
             time.sleep(1)
 
         # Route Details
         self.auto_select(By.ID, "ServiceNetworkId-select", "HYDERABAD")
-        self.send_keys(By.ID, "ScheduleTime", "01-06-2024")
+        self.send_keys(By.ID, "ScheduleTime", "03-06-2024")
         self.click_element(By.ID, "btnSave-VehicleTripRouteVehicleTripSessionName661")
         time.sleep(1)
         self.select_dropdown(By.ID, "VehiclePlacementId", "DEL-000001-Vehicle Placement")
+        self.click_element(By.ID, "StartLocationId-select")
         time.sleep(2)
 
         # Hire Details
@@ -162,7 +167,7 @@ class LHC(unittest.TestCase):
         # Hire Charges Details
         self.select_dropdown(By.ID, "FreightUnitId", "Fixed")
         time.sleep(2)
-        self.send_keys(By.ID, "FreightRate", "35000")
+        self.send_keys(By.ID, "FreightRate", "3500")
         self.click_element(By.ID, "FreightUnitId")
         time.sleep(2)
         self.handle_alert()

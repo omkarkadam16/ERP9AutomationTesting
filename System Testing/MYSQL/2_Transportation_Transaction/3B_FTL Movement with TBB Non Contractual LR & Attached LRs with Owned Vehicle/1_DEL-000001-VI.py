@@ -59,19 +59,21 @@ class Indent(unittest.TestCase):
             print(f"Element not found: {value}")
             return False
 
-    def select_dropdown(self, by, value, text):
-        try:
-            e = self.wait.until(EC.element_to_be_clickable((by, value)))
-            e.is_enabled()
-            e.click()
-            print("[SUCCESS] Clicked dropdown")
-            self.wait.until(EC.visibility_of_element_located((by, value)))
-            element = Select(self.driver.find_element(by, value))
-            element.select_by_visible_text(text)
-            print(f"[SUCCESS] Selected dropdown option: {text}")
-            return True
-        except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
-            return False
+    def select_dropdown(self, by, value, text, retry=3):
+        for i in range(retry):
+            try:
+                e = self.wait.until(EC.element_to_be_clickable((by, value)))
+                e.is_enabled()
+                e.click()
+                print("[SUCCESS] Clicked dropdown")
+                self.wait.until(EC.visibility_of_element_located((by, value)))
+                element = Select(self.driver.find_element(by, value))
+                element.select_by_visible_text(text)
+                print(f"[SUCCESS] Selected dropdown option: {text}")
+                return True
+            except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
+                print(f'Retrying click on {by} with value {value}, attempt {i + 1}/{retry}')
+        return False
 
     def autocomplete_select(self,by,value,text):
         input_text=self.wait.until(EC.visibility_of_element_located((by,value)))
@@ -116,15 +118,15 @@ class Indent(unittest.TestCase):
                 self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-                self.click_element(By.XPATH, "//a[text()='1']")
+                self.click_element(By.XPATH, "//a[text()='3']")
 
             #Indent Details
             self.select_dropdown(By.ID, "VehicleIndentTypeId","Non-Contractual")
             self.select_dropdown(By.ID, "CommChannelId", "Email")
-            self.send_keys(By.ID, "VehicleRequiredOn","01-06-2024")
+            self.send_keys(By.ID, "VehicleRequiredOn","03-06-2024")
             self.select_dropdown(By.ID, "VehicleTypeId", "15 MT")
             self.send_keys(By.ID, "VehicleCount", "2")
-            self.send_keys(By.ID, "ExpiryDate", "01-06-2025")
+            self.send_keys(By.ID, "ExpiryDate", "03-06-2025")
             self.autocomplete_select(By.ID, "FromServiceNetworkId-select", "DELHI")
             self.autocomplete_select(By.ID, "ToServiceNetworkId-select", "HYDERABAD")
             self.autocomplete_select(By.ID, "TransportItemId-select", "Cotton")

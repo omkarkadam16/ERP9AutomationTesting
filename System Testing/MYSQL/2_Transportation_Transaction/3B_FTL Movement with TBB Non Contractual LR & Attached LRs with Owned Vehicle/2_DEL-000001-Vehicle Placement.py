@@ -134,7 +134,7 @@ class Placement(unittest.TestCase):
                 self.select_dropdown(By.ID, "OrganizationId", "DELHI")
 
                 # Calendar
-                self.send_keys(By.ID, "DocumentDate", "01-06-2024")
+                self.send_keys(By.ID, "DocumentDate", "03-06-2024")
                 time.sleep(1)
 
                 # Indent Details
@@ -146,7 +146,7 @@ class Placement(unittest.TestCase):
                 # Vehicle Placement Details
                 self.autocomplete_select(By.ID, "VehicleId-select", "MH04TT9008")
                 self.select_dropdown(By.ID, "FreightUnitId", "Fixed")
-                self.send_keys(By.ID, "AdvanceAmount", "30000")
+                self.send_keys(By.ID, "AdvanceAmount", "3000")
 
 
 

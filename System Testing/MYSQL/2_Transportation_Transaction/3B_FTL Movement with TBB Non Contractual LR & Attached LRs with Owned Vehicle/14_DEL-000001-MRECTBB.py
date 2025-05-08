@@ -59,19 +59,22 @@ class MoneyReceipt(unittest.TestCase):
             print(f"Element not found: {value}")
             return False
 
-    def select_dropdown(self, by, value, text):
-        try:
-            e = self.wait.until(EC.element_to_be_clickable((by, value)))
-            e.is_enabled()
-            e.click()
-            print("[SUCCESS] Clicked dropdown")
-            self.wait.until(EC.visibility_of_element_located((by, value)))
-            element = Select(self.driver.find_element(by, value))
-            element.select_by_visible_text(text)
-            print(f"[SUCCESS] Selected dropdown option: {text}")
-            return True
-        except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
-            return False
+    def select_dropdown(self, by, value, text, retry=3):
+        for i in range(retry):
+            try:
+                e = self.wait.until(EC.element_to_be_clickable((by, value)))
+                e.is_enabled()
+                e.click()
+                print("[SUCCESS] Clicked dropdown")
+                self.wait.until(EC.visibility_of_element_located((by, value)))
+                element = Select(self.driver.find_element(by, value))
+                element.select_by_visible_text(text)
+                print(f"[SUCCESS] Selected dropdown option: {text}")
+                return True
+            except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
+                print(f'Retrying click on {by} with value {value}, attempt {i + 1}/{retry}')
+                continue
+        return False
 
     def autocomplete_select(self,by,value,text):
         input_text=self.wait.until(EC.visibility_of_element_located((by,value)))
@@ -115,7 +118,7 @@ class MoneyReceipt(unittest.TestCase):
                 self.select_dropdown(By.ID, "OrganizationId", "DELHI")
                 time.sleep(1)
                 # Calendar
-                self.send_keys(By.ID, "DocumentDate", "01-06-2024")
+                self.send_keys(By.ID, "DocumentDate", "03-06-2024")
 
             # Customer Info
             if self.switch_frames("CustomerId-select"):
