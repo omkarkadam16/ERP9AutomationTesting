@@ -133,7 +133,7 @@ class Booking(unittest.TestCase):
         self.autocomplete_select(By.ID, "ToServiceNetworkId-select", "PUNE")
         self.autocomplete_select(By.ID, "VehicleId-select", "MHO4ER9009")
 
-    #Consignor/Consignee Details(selectedtext="P M Enterprises Pvt. LTD")
+    #Consignor/Consignee Details(selected text="P M Enterprises Pvt. LTD")
         self.autocomplete_select(By.ID, "ConsignorId-select", "P M Enterprise")
         self.autocomplete_select(By.ID, "ConsigneeId-select", "Adani Wilmar")
         self.select_dropdown(By.ID, "BillingOnId", "Consignor")
