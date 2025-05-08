@@ -13,5 +13,7 @@ numpy as np: A library for numerical operations, especially with arrays."""
 x = np.array([1, 2, 3, 4]) # X-axis points
 y = x # Y-axis points
 
+plt.scatter(x, y)
+
 plt.plot(x, y) # Plots the points (x, y) on a 2D line chart
 plt.show() # Displays the plot window with the chart
