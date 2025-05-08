@@ -116,7 +116,7 @@ class Booking3(unittest.TestCase):
             self.click_element(By.CLASS_NAME,"ui-datepicker-trigger")
             self.select_dropdown(By.CLASS_NAME,"ui-datepicker-month","Jun")
             self.select_dropdown(By.CLASS_NAME,"ui-datepicker-year","2024")
-            self.click_element(By.XPATH,"//a[text()='1']")
+            self.click_element(By.XPATH,"//a[text()='2']")
 
     #Booking Details
         self.select_dropdown(By.ID, "FreightOnId", "Fixed")
@@ -149,7 +149,7 @@ class Booking3(unittest.TestCase):
         self.click_element(By.ID, "RFRSGSTDetails")
 
     #Invoice Details
-        self.send_keys(By.ID, "InvoiceDate", "01-06-2024")
+        self.send_keys(By.ID, "InvoiceDate", "02-06-2024")
         self.click_element(By.ID, "IsNVC")
         self.click_element(By.ID, "btnSave-BookingInvoiceSession633")
         time.sleep(1)

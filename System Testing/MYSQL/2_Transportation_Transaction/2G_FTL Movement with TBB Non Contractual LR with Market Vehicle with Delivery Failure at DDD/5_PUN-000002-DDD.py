@@ -16,7 +16,7 @@ class Delivery(unittest.TestCase):
     def setUpClass(cls):
         cls.driver=webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         cls.driver.maximize_window()
-        cls.wait=WebDriverWait(cls.driver,15)
+        cls.wait=WebDriverWait(cls.driver,10)
 
     def click_element(self,by,value,retry=2):
         for i in range(retry):
@@ -59,19 +59,21 @@ class Delivery(unittest.TestCase):
             print(f"Element not found: {value}")
             return False
 
-    def select_dropdown(self, by, value, text):
-        try:
-            e = self.wait.until(EC.element_to_be_clickable((by, value)))
-            e.is_enabled()
-            e.click()
-            print("[SUCCESS] Clicked dropdown")
-            self.wait.until(EC.visibility_of_element_located((by, value)))
-            element = Select(self.driver.find_element(by, value))
-            element.select_by_visible_text(text)
-            print(f"[SUCCESS] Selected dropdown option: {text}")
-            return True
-        except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
-            return False
+    def select_dropdown(self, by, value, text,retry=3):
+        for i in range(retry):
+            try:
+                e = self.wait.until(EC.element_to_be_clickable((by, value)))
+                e.is_enabled()
+                e.click()
+                print("[SUCCESS] Clicked dropdown")
+                self.wait.until(EC.visibility_of_element_located((by, value)))
+                element = Select(self.driver.find_element(by, value))
+                element.select_by_visible_text(text)
+                print(f"[SUCCESS] Selected dropdown option: {text}")
+                return True
+            except (ex.NoSuchElementException, ex.ElementClickInterceptedException, ex.TimeoutException):
+                print(f'Retrying click on {by} with value {value}, attempt {i+1}/{retry}')
+        return False
 
     def autocomplete_select(self,by,value,text):
         input_text=self.wait.until(EC.visibility_of_element_located((by,value)))
@@ -117,20 +119,16 @@ class Delivery(unittest.TestCase):
             self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
             self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
             self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-            self.click_element(By.XPATH, "//a[text()='1']")
+            self.click_element(By.XPATH, "//a[text()='2']")
 
         # Booking Detail
         self.autocomplete_select(By.ID, "VehicleId-select", "MH18AC0358")
-        self.select_dropdown(By.ID, "VehicleTripId", "BWD-000101-LHC")
+        self.select_dropdown(By.ID, "VehicleTripId", "BWD-000501-LHC")
         self.select_dropdown(By.ID, "BookingId", "BWD-000101-BKG")
         self.select_dropdown(By.ID, "BookingId", "Select LR")
         time.sleep(2)
 
         # Arrival Detail
-        self.click_element(By.XPATH, "(//img[@title='...'])[6]")
-        self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-month'])[1]", "Jun")
-        self.select_dropdown(By.XPATH, "(//select[@class='ui-datepicker-year'])[1]", "2024")
-        self.click_element(By.XPATH, "(//a[normalize-space()='1'])[1]")
         self.select_dropdown(By.ID, "ReasonDelayId", "TRAFFIC JAAM")
 
         # Submit form

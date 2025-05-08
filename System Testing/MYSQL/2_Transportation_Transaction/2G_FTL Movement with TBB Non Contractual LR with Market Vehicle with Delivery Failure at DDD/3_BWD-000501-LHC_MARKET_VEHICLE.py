@@ -135,12 +135,12 @@ class LHC(unittest.TestCase):
             self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
             self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
             self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-            self.click_element(By.XPATH, "//a[text()='1']")
+            self.click_element(By.XPATH, "//a[text()='2']")
             time.sleep(1)
 
         # Route Details
         self.auto_select(By.ID, "ServiceNetworkId-select", "PUNE")
-        self.send_keys(By.ID, "ScheduleTime", "01-06-2024")
+        self.send_keys(By.ID, "ScheduleTime", "02-06-2024")
         self.click_element(By.ID, "btnSave-VehicleTripRouteVehicleTripSessionName661")
         self.auto_select(By.ID, "VehicleId-select", "MH18AC0358")
 
@@ -161,14 +161,14 @@ class LHC(unittest.TestCase):
         # Hire Charges Details
         self.select_dropdown(By.ID, "FreightUnitId", "Fixed")
         time.sleep(2)
-        self.send_keys(By.ID, "FreightRate", "20000")
+        self.send_keys(By.ID, "FreightRate", "2000")
         self.click_element(By.ID, "FreightUnitId")
         time.sleep(2)
         self.handle_alert()
 
         if self.switch_frames("OrganizationalLocationId-select"):
             self.auto_select(By.ID, "OrganizationalLocationId-select", "BHIWANDI")
-            self.send_keys(By.ID, "AdvanceAmount", "18000")
+            self.send_keys(By.ID, "AdvanceAmount", "1800")
             self.click_element(By.ID, "btnSave-VehicleTripAdvanceVehicleTripSessionName661")
             time.sleep(1)
 

@@ -116,7 +116,7 @@ class Payment(unittest.TestCase):
                 self.click_element(By.CLASS_NAME, "ui-datepicker-trigger")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-month", "Jun")
                 self.select_dropdown(By.CLASS_NAME, "ui-datepicker-year", "2024")
-                self.click_element(By.XPATH, "//a[text()='1']")
+                self.click_element(By.XPATH, "//a[text()='2']")
 
             # general Details
             self.autocomplete_select(By.ID,"VendorId-select","BHAGAT SINGH")
@@ -127,6 +127,7 @@ class Payment(unittest.TestCase):
             #Trip Reference Info
             if self.switch_frames("btn_GetOperationalBillReference"):
                 self.click_element(By.ID, "btn_GetOperationalBillReference")
+                time.sleep(2)
                 self.click_element(By.ID, "IsSelectOperationalBillSearchSessionName6671")
                 self.click_element(By.ID, "btn_OperationalBillReference")
 
